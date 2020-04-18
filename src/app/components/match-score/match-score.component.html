@@ -1,0 +1,66 @@
+<div class="form-horizontal">
+ <h2>MATCH-SCORE HTML</h2>
+  <h2>{{matchscores.name }}  {{matchscores.scName }} {{matchscores.datePlayed | date: "longDate"}}</h2>
+</div>
+
+<div >
+<form  class="detail-form" [formGroup]="matchScoreForm" >
+<table mat-table  [dataSource]="dataSource">
+    <ng-container matColumnDef="playerNames">
+        <th mat-header-cell *matHeaderCellDef
+        > Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.playerNames}} </td>
+    </ng-container>
+    <ng-container matColumnDef="playershCap">
+      <th mat-header-cell *matHeaderCellDef
+      > HCAP </th>
+      <td mat-cell *matCellDef="let element"> {{element.playersHCap}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="todaysScore">
+      <th mat-header-cell *matHeaderCellDef > Score </th>
+        <td mat-cell *matCellDef="let element; let i = index">
+          <mat-form-field>
+            <input matInput type="text" formControlName="todaysScore"  placeholder="Enter Score">
+          </mat-form-field>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns; let element" ></tr>
+    </table>
+
+  <div class="button-space">
+    <button *ngIf=true mat-raised-button color="primary" id="btnUpdate" (click)="updateMatch()" class="btn btn-primary">Update</button>
+    <button mat-raised-button color="basic" id="btnCancel" routerLink = "../">Cancel</button>
+  </div>
+</form>
+</div>
+
+<!-- Second table  match[].playerNames raises an error that allows MatTable above to load,  Second table unaffected  TODO -->
+<div *ngIf="match;">
+   <h2>{{match[1].playerNames}} </h2>
+    <ng-template #loading>Loading User Data...</ng-template>
+ <div class="col-md-12">
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Cap</th>
+      <th>Score</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let scoredm of match;">
+      <td>{{scoredm.playerNames}}</td>
+      <td>{{scoredm.playersHCap}}</td>
+      <td>{{scoredm.score}}</td>
+
+    </tr>
+    </tbody>
+    <a class="btn btn-primary col-sm-offset-2 " (click)="onSelectScore(score)">
+      <i class="glyphicon glyphicon-edit"></i>
+    </a>
+  </table>
+</div>
+</div>

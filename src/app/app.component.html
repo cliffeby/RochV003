@@ -1,0 +1,26 @@
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Rochester Golf</a>
+    </div>
+    <ul class="nav navbar-nav" >
+    <li><a routerLink="/home" routerLinkActive="active">Home</a></li>
+
+      <li><a routerLink="/matches" routerLinkActive="active">Matches</a></li>
+      <li><a routerLink="/members" routerLinkActive="active">Members</a></li>
+      <li><a routerLink="/scorecards" routerLinkActive="active">Scorecards</a></li>
+      <li><a routerLink="/scores" routerLinkActive="active">Scores</a></li>
+    </ul>
+
+  <ul class="nav navbar-nav navbar-right" >
+    <li ui-sref-active="active">
+      <a  *ngIf="!auth.isAuthenticated()" (click)="auth.login()">Sign In</a>
+      <a *ngIf="auth.isAuthenticated()" (click)="auth.logout()">Sign Out</a>
+      <a> {{auth.userProfile}} </a>
+    </li>
+  </ul>
+  </div>
+</nav>
+<div class="container">
+  <router-outlet></router-outlet>
+</div>

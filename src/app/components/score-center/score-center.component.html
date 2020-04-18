@@ -1,0 +1,45 @@
+<div class="row">
+  <div *ngIf="!hidenewScore">
+    <h2>New Score</h2>
+    <form #form="ngForm" (ngSubmit)="onSubmitAddScore(form.value)" class="well">
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" class="form-control" required name="name" ngModel>
+      </div>
+      <div class="form-group">
+        <label>Cap</label>
+        <input type="text" class="form-control" required name="cap" ngModel>
+      </div>
+      <div class="form-group">
+        <label>MatchId</label>
+        <input type="text" class="form-control" name="matchId" ngModel>
+      </div>
+      <div class="form-group">
+        <label>MemberId</label>
+        <input type="text" class="form-control" name="memberId" ngModel>
+      </div>
+      <button type="submit" class="btn btn-success">Save</button>
+    </form>
+  </div>
+  <score-detail *ngIf="selectedScore && hidenewScore"
+                 (updateScoreEvent)="onUpdateScoreEvent($event)"
+                 (deleteScoreEvent)="onDeleteScoreEvent($event)"
+                 (ScoreMatchEvent) = 'onScoreMatchEvent($event)'
+                 [score]="selectedScore">
+  </score-detail>
+</div>
+<div *ngIf="!selectedScore && hidenewScore && canCreate">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="error" *ngIf="error">{{error}}</div>
+      <div class="pull-right">
+        <button class="btn btn-primary" type="button" (click)="newScore()" >
+          <i class="glyphicon glyphicon-plus"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  </div>
+<div>
+  <score-list *ngIf="!selectedScore && hidenewScore" [scores]="scores" (SelectScore)="onSelectScore($event)"></score-list>
+</div>

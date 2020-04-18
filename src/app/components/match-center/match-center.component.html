@@ -1,0 +1,58 @@
+<div class="row">
+    <div *ngIf="!hidenewMatch && !scoreMatch">
+      <h2>New Match</h2>
+      <match-detail
+
+        (deleteMatchEvent)="onDeleteMatchEvent($event)"
+        (submitAddMatchEvent) = "onSubmitAddMatchEvent($event)"
+       >
+      </match-detail>
+
+    </div>
+
+  <match-detail *ngIf="selectedMatch && hidenewMatch && !scoreMatch"
+                (updateMatchEvent) = "onUpdateMatchEvent($event)"
+                (submitAddMatchEvent) = 'onSubmitAddMatchEvent($event)'
+
+                (deleteMatchEvent) = "onDeleteMatchEvent($event)"
+                [match] = "selectedMatch">
+  </match-detail>
+  <member-block *ngIf="selectedMatch && hidenewMatch && !scoreMatch"
+                [members]="members"
+                [scores]="scores"
+                [match]="selectedMatch">
+  </member-block>
+</div>
+
+<div *ngIf="!selectedMatch && hidenewMatch">
+
+    <div *ngIf = "!scoreMatch" class="row">
+
+        <div class="col-md-12">
+          <div class="pull-right">
+            <button mat-icon-button color="primary" (click)="addMatch()">
+                <mat-icon class="mat-18">create</mat-icon>
+                Add
+            </button>
+          </div>
+        </div>
+      </div>
+      <h2 *ngIf="!selectedMatch && hidenewMatch && !scoreMatch"
+      >Match List</h2>
+      <match-list *ngIf="!selectedMatch && hidenewMatch && !scoreMatch"
+
+                  (PairMatch) = "onPairMatch(match)"
+                  (DeleteMatchEvent) = "onDeleteMatchEvent($event)"
+                  [matches]="matches">
+      </match-list>
+  </div>
+<div>
+  <match-score *ngIf="!selectedMatch && hidenewMatch && scoreMatch"
+
+              [match] = 'ds'
+              >
+  </match-score>
+</div>
+
+
+

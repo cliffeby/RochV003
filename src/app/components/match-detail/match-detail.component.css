@@ -1,0 +1,40 @@
+.input-group > .input-group-btn:last-child > .selectpicker {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.input-group > .input-group-btn:first-child > .selectpicker {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+p {
+  font-family: Lato;
+}
+.detail-form {
+  min-width: 150px;
+  max-width: 1500px;
+  width: 100%;
+}
+
+.detail-full-width {
+  width: 100%;
+}
+
+td {
+  padding-right: 8px;
+}
+p {
+  font-family: Lato;
+}
+.detail-form {
+  min-width: 150px;
+  max-width: 1500px;
+  width: 100%;
+}
+
+.button-space button,
+.button-space a {
+  margin-right: 8px;
+}
+

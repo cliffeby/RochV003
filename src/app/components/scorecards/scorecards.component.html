@@ -1,0 +1,25 @@
+<div class="row">
+  <div *ngIf="!hidenewScorecard">
+    <h2>New Scorecard</h2>
+    <scorecard-detail
+              (submitAddScorecardEvent)="onSubmitAddScorecardEvent($event)"
+              [scorecard]="selectedScorecard">
+    </scorecard-detail>
+  </div>
+  <scorecard-detail *ngIf="selectedScorecard && hidenewScorecard;"
+                    (updateScorecardEvent)="onUpdateScorecardEvent($event)"
+                    (deleteScorecardEvent)="onDeleteScorecardEvent($event)"
+                    (submitAddScorecardEvent)="onSubmitAddScorecardEvent($event)"
+                    [scorecard]="selectedScorecard">
+  </scorecard-detail>
+</div>
+
+  <scorecard-list *ngIf="!selectedScorecard && hidenewScorecard"
+                  (SelectScorecard)="onSelectScorecard($event)"
+                  (DeleteScorecardEvent)="onDeleteScorecardEvent($event)"
+                  (CopyScorecardEvent)="onCopyAddScorecardEvent($event)"
+                  (AddScorecardEvent) = "onAddScorecardEvent($event)"
+
+                  [scorecards]="scorecards">
+  </scorecard-list>
+
