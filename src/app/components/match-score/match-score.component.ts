@@ -47,13 +47,6 @@ export class MatchScoreComponent implements OnInit, OnChanges {
   public displayedColumns = ["playerNames", "playershCap", "todaysScore"];
   public dataSource: MatTableDataSource<any>;
 
-  // public displayedColumns1: string[] = ["position", "name", "weight", "symbol"];
-
-  // p_DATA: any = [
-  //   { playerNames: "Crew Cut", playersHCap: 15 },
-  //   { playerNames: "London Catcher", playersHCap: 16 },
-  //   { playerNames: "Teddy Baker", playersHCap: 14 }
-  // ];
   matchscores:any;
   constructor(
     private _matchscoreservice: MatchScoreService,
@@ -67,31 +60,10 @@ export class MatchScoreComponent implements OnInit, OnChanges {
     });
   }
 
-  // ngOnInit() {
-  //   if (this.match == null) {
-  //     this.match = new Match();
-  //   }
-  //   this._scorecardservice
-  //     .getScorecards()
-  //     .subscribe(resSCData => (this.scorecards = resSCData));
-  //   this.matchDetailForm = this.fb.group({
-  //     name: [this.match.name, [Validators.required, Validators.minLength(5)]],
-  //     course: [this.match.scorecardId],
-  //     date: [
-  //       this.match.datePlayed,
-  //       [Validators.required, ValidationService.dateValidator]
-  //     ]
-  //   });
-  // }
-
   ngOnInit() {
                this._matchscoreservice.matchscore.subscribe(
                  (res) => (this.matchscores = res)
                );
-               
-               // this._matchscoreservice.changeMS(this.matchscores);
-
-               // this.dataSource = new MatTableDataSource(this.matchscores);
                this.dataSource = new MatTableDataSource(this.match);
                console.log(
                  "MATCHscoreComp1",
@@ -101,52 +73,6 @@ export class MatchScoreComponent implements OnInit, OnChanges {
                  "DataSource",
                  this.dataSource
                );
-               // this.DS = this.match;
-               // console.log("MatchCenter SCORE DS1", this.DS);
-               // this._matchservice.dsArray.subscribe(DS => {
-               //   console.log("MatchCenter SCORE DS2", DS);
-               //   this.DS = DS;
-               //   // this.onSelectMatch(match);
-               //   this.DS.push({playerNames: "Crew Cut212", playersHCap: 15});
-               //   DS = [...DS, ...[{ playerNames: "Crew Cut228", playersHCap: 15 }]];
-               //   this.dataSource = new MatTableDataSource(DS);
-               //   this.cd.detectChanges();
-               //   this.DS = DS;
-               // });
-               // this.dataSource = new MatTableDataSource(this.DS);
-               // this.cd.markForCheck();
-               // this.cd.detectChanges();
-               // this.match = {
-               //   ...this.match,
-               //   name: this.match.name + "."
-               // };
-               // console.log("matchscorengOnInit1", this.match, this.dataSource);
-               // this.dataSource = new MatTableDataSource(this.DS);
-               // // this.datasourceInit(this.match);
-
-               // this.matchScoreForm = this.fb.group({
-               //   playerNames: [this.match.playerNames],
-               //   hCap: [this.match.playersHCap],
-               //   todaysScore: []
-               // });
-              //  this.matchScoreForm.setValue({
-              //    playerNames: [this.matchscores.playerNames],
-              //    hCap: [this.matchscores.playersHCap],
-              //    todaysScore: []
-              //  });
-
-              //  setTimeout(() => {
-              //    console.log('msf',this.matchScoreForm.value, this.match);
-              //  });
-
-               // this.matchScoreForm.valueChanges.subscribe(
-               //   (res) =>
-               //     ( {
-               //       playerNames: [this.matchscores.playerNames],
-               //       hCap: [this.matchscores.playersHCap],
-               //       todaysScore: [],
-               //     })
-               // );
                console.log(
                  "matchscorengOnInit2",
                  this.DS,
@@ -160,7 +86,6 @@ export class MatchScoreComponent implements OnInit, OnChanges {
     // this.DS.push({ playerNames: "ADDon"});
     // this.DS = [...this.DS,...[ { playerNames: "Crew Cut21", playersHCap: 99 }]];
     this.dataSource = new MatTableDataSource(this.match);
-    // this.dataSource._renderChangesSubscription;
      console.log(
        "matchscorengOnInit3",
        this.DS,
@@ -174,10 +99,5 @@ export class MatchScoreComponent implements OnInit, OnChanges {
       this._matchscoreservice.matchscore.subscribe(
         res => (this.match = res)
       );
-    // this.authService.getAuthenticatedUser().subscribe((res) => {
-    //   this.user = res;
-    //   this.teachDS = new LanguageDataSource(this.user.profile.languages.teach);
-    //   this.cd.detectChanges();cxcxc
-    // });
     }
 }

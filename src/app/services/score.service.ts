@@ -25,7 +25,6 @@ export class ScoreService {
   }
 
   addScore(score: Score) {
-
     const headers = new Headers({ 'Content-Type': 'application/json' });
     const options = new RequestOptions({ headers: headers });
     return this._authHttp.post(this._server + this._postUrl, JSON.stringify(score), options)

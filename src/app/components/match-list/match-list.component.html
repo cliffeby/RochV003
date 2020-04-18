@@ -1,15 +1,3 @@
-<!-- <h2>Match List</h2>
-    <div class="row">
-        <div class="col-md-12">
-          <div class="pull-right">
-            <button mat-icon-button color="primary" (click)="addMatch()">
-                <mat-icon class="mat-18">create</mat-icon>
-                Add
-            </button>
-          </div>
-        </div>
-      </div> -->
-
 <table mat-table [dataSource]="dataSource" matSort (matSortChange) = "ngAfterViewInit()" [ngClass]="{true:'bold'}[dateFlag]">
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>

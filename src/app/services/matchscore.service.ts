@@ -20,7 +20,6 @@ export class MatchScoreService {
   public dataSource = new BehaviorSubject<Match>(new Match());
   // matchSelected = new EventEmitter<Match>();
   matchScored = new EventEmitter<any>();
-  // dsArray = new EventEmitter<Match>();
 
   constructor(
     public auth: AuthService,

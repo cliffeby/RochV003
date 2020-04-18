@@ -54,23 +54,18 @@ export class MatchListComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
-    // undefined console.log("matchesOnInit", this.matches)
     this.dataSource.sort = this.sort;
   }
+  
   onSelectMatch(mtc: Match) {
     this._matchService.matchSelected.emit(mtc);
-
-    // this.SelectMatch.emit(mtc);
   }
 
   onScoreMatch(mtc: Match){
     this.ScoreMatchEvent.emit(mtc);
-
     this.matchscores = this._matchscoreservice.changeMS(mtc);
-    //  this._matchscoreservice.changeMS(this.matchscores);
     this._matchService.matchScored.emit(mtc);
     console.log("ListonSelectMatchmtc", mtc);
-
   }
 
   deleteMatch(mtc:Match){
