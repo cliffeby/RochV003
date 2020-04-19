@@ -28,6 +28,7 @@ export class MatchCenterComponent implements OnInit {
   public mat: Match;
   private hidenewMatch = true;
   private scoreMatch: boolean = false;
+  private pairMatch: boolean = false;
   private queryString: string;
   matches: Array<Match>;
   members: Array<Member>;
@@ -44,6 +45,7 @@ export class MatchCenterComponent implements OnInit {
   // public ds: { playerNames: string; playersHCap: string }[] = [];
   // public ds: Array<Match>
   public ds = new Array();
+  public dp = new Array();
   private myDatePickerOptions: IMyDpOptions = {
     // other options... see https://github.com/kekeh/mydatepicker
     dateFormat: "mm.dd.yyyy",
@@ -94,18 +96,25 @@ export class MatchCenterComponent implements OnInit {
       });
     });
     this._matchservice.matchSelected.subscribe((match: Match) => {
-      console.log("MatchCenter OnInit", match);
+      console.log("MatchCenter OnInitSe", match);
       this.selectedMatch = match;
       this.onSelectMatch(match);
     });
     this._matchservice.matchScored.subscribe((match: Match) => {
-      console.log("MatchCenter OnInit", match);
+      console.log("MatchCenterSc OnInit", match);
       this.scoredMatch = match;
       // this.onSelectMatch(match);
       this.onScoreMatch(match);
     });
+        this._matchservice.matchPaired.subscribe((match: Match) => {
+          console.log("MatchCenterP OnInit", match);
+          this.scoredMatch = match;
+          // this.onSelectMatch(match);
+          this.onPairMatch(match);
+        });
     console.log("MatchedScoresNgOninit", this.matchscores);
     this._matchscoreservice.changeMS(this.matchscores);
+    // this.onPairMatch(this.match);
   }
 
   addMatch() {
@@ -155,42 +164,69 @@ export class MatchCenterComponent implements OnInit {
       });
     });
     console.log("Match from center", match);
-    return match;
+    // return match;
   }
 
   onPairMatch(match: any) {
-    this.selectedMatch = match;
-    if (match.scorecardId) {
-      this._scorecardservice
-        .getScorecard(match.scorecardId)
-        .subscribe((resSCData) => {
-          this.scorecard = resSCData;
-          match.scName = this.scorecard.name;
-        });
-    }
-    this._scoreservice.getScoreByMatch(match._id).subscribe((resScoreData) => {
-      this.scores = resScoreData;
-      this._memberservice.getMembers().subscribe((resMemData) => {
-        this.members = resMemData;
-        match.players = 0;
-        for (let index = 0; index < this.scores.length; index++) {
-          for (let i = 0; i < this.members.length; i++) {
-            if (this.members[i]._id === this.scores[index].memberId) {
-              this.members[i].isPlaying = true;
-              match.players++;
-            } else {
-              if (!this.members[i].isPlaying) {
-                this.members[i].isPlaying = false;
-              }
-            }
-          }
+  this.pairMatch = true;
+   this.match = match;
+    console.log('PairMatch', this.pairMatch, match, this.dp)
+
+        if (match.scorecardId) {
+          this._scorecardservice
+            .getScorecard(match.scorecardId)
+            .subscribe((resSCData) => {
+              this.scorecard = resSCData;
+              match.scName = this.scorecard.name;
+              match.memberIds = [];
+              match.playerNames = [];
+              match.playersHCap = [];
+            });
         }
-      });
-    });
+        this._scoreservice
+          .getScoreByMatch(match._id)
+          .subscribe((resScoreData) => {
+            this.scores = resScoreData;
+            this._memberservice.getMembers().subscribe((resMemData) => {
+              this.members = resMemData;
+              match.players = 0;
+              for (let index = 0; index < this.scores.length; index++) {
+                for (let i = 0; i < this.members.length; i++) {
+                  if (this.members[i]._id === this.scores[index].memberId) {
+                    this.fullName =
+                      this.members[i].firstName +
+                      " " +
+                      this.members[i].lastName;
+                    this.members[i].isPlaying = true;
+                    match.playerNames = [...match.playerNames, this.fullName];
+
+                    match.memberIds = [...match.memberIds, this.members[i]._id];
+                    match.playersHCap = [
+                      ...match.playersHCap,
+                      this.members[i].currentHCap,
+                    ];
+                    this.dp.push({
+                      playerNames: this.fullName,
+                      playersHCap: this.members[i].currentHCap,
+                    });
+                    match.players++;
+                  } else {
+                    if (!this.members[i].isPlaying) {
+                      this.members[i].isPlaying = false;
+                    }
+                  }
+                }
+              }
+            });
+          });
+
+        console.log("DPfromCenter", this.dp);
+        console.log("OnScoreMatchfromCenter", match);
+        this.pairMatch = true;
+
   }
 
   onSubmitAddMatchEvent(match: Match) {
-
     this._matchservice.addMatch(match).subscribe((resNewMatch) => {
       // TODO Populate SCName on match list Not working
       // this._scorecardservice.getScorecard(match.scorecardId)
@@ -261,8 +297,9 @@ export class MatchCenterComponent implements OnInit {
         }
       });
     });
+
     console.log("DSfromCenter", this.ds);
-    console.log("OnScoredfromCenter", this.match);
+    console.log("OnScoreMatchfromCenter", match);
     this.scoreMatch = true;
     this.scoredMatch = match;
   }

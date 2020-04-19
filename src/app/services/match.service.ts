@@ -19,6 +19,7 @@ export class MatchService {
   public dataSource = new BehaviorSubject<Match>(new Match());
   matchSelected = new EventEmitter<Match>();
   matchScored = new EventEmitter<Match>();
+  matchPaired = new EventEmitter<Match>();
   dsArray = new EventEmitter<Match>();
 
   constructor(public auth: AuthService, public _authHttp: AuthHttp) {

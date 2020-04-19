@@ -25,5 +25,6 @@ export class MemberListComponent implements OnInit {
   onSelect(mem: Member) {
     this.SelectMember.emit(mem);
   }
+  // TODO  Implenet delete member
 
 }

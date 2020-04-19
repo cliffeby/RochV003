@@ -1,5 +1,5 @@
 <div class="row">
-    <div *ngIf="!hidenewMatch && !scoreMatch">
+    <div *ngIf="!hidenewMatch && !scoreMatch && !pairMatch">
       <h2>New Match</h2>
       <match-detail
 
@@ -24,9 +24,9 @@
   </member-block>
 </div>
 
-<div *ngIf="!selectedMatch && hidenewMatch">
+<div *ngIf="!selectedMatch && hidenewMatch && !scoreMatch && !pairMatch">
 
-    <div *ngIf = "!scoreMatch" class="row">
+      <div *ngIf = "!scoreMatch" class="row">
 
         <div class="col-md-12">
           <div class="pull-right">
@@ -37,22 +37,30 @@
           </div>
         </div>
       </div>
-      <h2 *ngIf="!selectedMatch && hidenewMatch && !scoreMatch"
+      <h2 *ngIf="!selectedMatch && hidenewMatch && !scoreMatch && !pairMatch"
       >Match List</h2>
       <match-list *ngIf="!selectedMatch && hidenewMatch && !scoreMatch"
-
-                  (PairMatch) = "onPairMatch(match)"
                   (DeleteMatchEvent) = "onDeleteMatchEvent($event)"
+                  (PairMatchEvent) = "onPairMatch($event)"
                   [matches]="matches">
       </match-list>
-  </div>
-<div>
-  <match-score *ngIf="!selectedMatch && hidenewMatch && scoreMatch"
-
-              [match] = 'ds'
-              >
-  </match-score>
 </div>
+
+<div>
+  <match-score *ngIf="!selectedMatch && hidenewMatch && scoreMatch && !pairMatch"
+
+  [match] = 'ds'
+  >
+</match-score>
+
+  <div>
+    <match-pair *ngIf="!selectedMatch && hidenewMatch && !scoreMatch && pairMatch "
+     [match] = 'dp'
+    >
+    </match-pair>
+  </div>
+
+
 
 
 

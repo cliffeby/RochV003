@@ -9,17 +9,14 @@ import { MatchScoreService } from "../../services/matchscore.service";
 // import { match } from 'minimatch';
 
 @Component({
-  selector: 'match-list',
-  templateUrl: 'match-list.component.html',
-  styleUrls: ['match-list.component.css'],
-  outputs: [ 'AddMatchEvent','DeleteMatchEvent']
+  selector: "match-list",
+  templateUrl: "match-list.component.html",
+  styleUrls: ["match-list.component.css"],
+  outputs: ["AddMatchEvent", "DeleteMatchEvent"],
 })
-
-  @NgModule({
-    imports: [
-      MaterialModule, MatTableDataSource, MatSort, CommonModule
-    ]
-  })
+@NgModule({
+  imports: [MaterialModule, MatTableDataSource, MatSort, CommonModule],
+})
 export class MatchListComponent implements OnInit {
   @Input() matches: Match[];
   // @Output() match = new EventEmitter();
@@ -27,49 +24,66 @@ export class MatchListComponent implements OnInit {
   public AddMatchEvent = new EventEmitter();
   public DeleteMatchEvent = new EventEmitter();
   public ScoreMatchEvent = new EventEmitter();
+  public PairMatchEvent = new EventEmitter();
   private queryString: string;
-  public displayedColumns = ['name', 'datePlayed', 'scName', 'details', 'pair', 'scores', 'delete'];
+  public displayedColumns = [
+    "name",
+    "datePlayed",
+    "scName",
+    "details",
+    "pair",
+    "scores",
+    "delete",
+  ];
   myString: string = "test";
   public dataSource: MatTableDataSource<Match>;
-  matchscores: any
+  matchscores: any;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  constructor(private _matchService: MatchService,
-              private _matchscoreservice: MatchScoreService) {
+  constructor(
+    private _matchService: MatchService,
+    private _matchscoreservice: MatchScoreService
+  ) {
     this.myString = "Updated1";
-   }
+  }
 
   ngOnInit() {
     this.queryString = "";
     this.myString = "Updated";
     this._matchscoreservice.matchscore.subscribe(
-      res => (this.matchscores = res)
+      (res) => (this.matchscores = res)
     );
-    console.log('MatchedScoresNgOninit', this.matchscores)
+    console.log("MatchedScoresNgOninit", this.matchscores);
     this._matchscoreservice.changeMS(this.matchscores);
   }
 
   ngOnChanges() {
-    this.dataSource = new MatTableDataSource<Match>(this.matches)
-    console.log('DATASOURCElistComp', this.dataSource);
+    this.dataSource = new MatTableDataSource<Match>(this.matches);
+    console.log("DATASOURCElistComp", this.dataSource);
   }
 
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
   }
-  
+
   onSelectMatch(mtc: Match) {
     this._matchService.matchSelected.emit(mtc);
   }
 
-  onScoreMatch(mtc: Match){
-    this.ScoreMatchEvent.emit(mtc);
+  onPairMatch(mtc: Match) {
+    this._matchService.matchPaired.emit(mtc);
+    this.matchscores = this._matchscoreservice.changeMS(mtc);
+    console.log("match Pair", mtc);
+  }
+
+  onScoreMatch(mtc: Match) {
+    // this.ScoreMatchEvent.emit(mtc);
     this.matchscores = this._matchscoreservice.changeMS(mtc);
     this._matchService.matchScored.emit(mtc);
     console.log("ListonSelectMatchmtc", mtc);
   }
 
-  deleteMatch(mtc:Match){
-    console.log("Emit delete match")
+  deleteMatch(mtc: Match) {
+    console.log("Emit delete match");
     this.DeleteMatchEvent.emit(mtc);
   }
 }
