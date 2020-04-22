@@ -60,6 +60,7 @@ exports.postScore = function(req, res){
   console.log('Post a score', req.body);
   var newScore = new Score();
   newScore.name = req.body.name;
+  newScore.memberName = req.body.memberName;
   newScore.cap = req.body.cap;
   newScore.wonTwoBall = req.body.wonTwoBall;
   newScore.wonOneBall = req.body.wonOneBall;
@@ -83,6 +84,7 @@ exports.putScore = function(req, res){
     {
       $set: {
         name: req.body.name,
+        memberName = req.body.memberName,
         cap: req.body.cap,
         wonTwoBall: req.body.wonTwoBall,
         wonOneBall: req.body.wonOneBall,

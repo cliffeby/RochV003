@@ -82,7 +82,7 @@ router.route('/scores')
   .post(jwtCheck, jwtAuthz(['create:score']), scoreController.postScore)
   .get(jwtCheck, jwtAuthz(['read:scores']), scoreController.getScores);
 
-// Create endpoint handlers for /scores/:beer_id
+// Create endpoint handlers for /scores/_id
 router.route('/scores/:id')
   .get(jwtCheck, jwtAuthz(['read:scores']), scoreController.getScore)
   .put(jwtCheck, jwtAuthz(['create:score']), scoreController.putScore)

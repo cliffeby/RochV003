@@ -7,13 +7,17 @@ import {MemberCenterComponent} from "./components/member-center/member-center.co
 import {ScoreCenterComponent} from "./components/score-center/score-center.component";
 import {ScopeGuardService as ScopeGuard} from "./services/scope-guard.service";
 import {AuthGuardService as AuthGuard} from "./services/auth-guard.service";
+import { MatchListComponent } from './components/match-list/match-list.component';
+import { MatchPairComponent } from './components/match-pair/match-pair.component';
 
 
 const routes: Routes = [
   {path: '', redirectTo:'/home', pathMatch:'full'},
   {path: 'home', component: HomeComponent},
   {path:  'scorecards', component: ScorecardsComponent, canActivate: [ScopeGuard], data: { expectedScopes: ['read:scorecards']}},
-  {path:  'matches', component: MatchCenterComponent, canActivate: [ScopeGuard], data: { expectedScopes: ['read:matches','read:scorecards', 'read:members']}},
+  {path:  'matches', component: MatchCenterComponent, canActivate: [ScopeGuard], data: { expectedScopes: ['read:matches','read:scorecards', 'read:members']},
+      children: [{path: '', component: MatchListComponent},
+                 {path: ':id', component: MatchPairComponent}]},
   { path: 'members', component: MemberCenterComponent, canActivate: [ScopeGuard], data: { expectedScopes: [ 'read:members'] } },
   { path: 'scores', component: ScoreCenterComponent, canActivate: [ScopeGuard], data: { expectedScopes: ['read:scores', 'remove:score'] } }
 ];

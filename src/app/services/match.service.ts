@@ -20,16 +20,17 @@ export class MatchService {
   matchSelected = new EventEmitter<Match>();
   matchScored = new EventEmitter<Match>();
   matchPaired = new EventEmitter<Match>();
+  matchPaired2 = new EventEmitter<string>();
   dsArray = new EventEmitter<Match>();
 
   constructor(public auth: AuthService, public _authHttp: AuthHttp) {
-    console.log('frommatchserviceMTC', this.matchScored)
+    // console.log("frommatchserviceMTC", this.matchScored);
   }
 
   getMatches(): Observable<Match[]> {
-    return this.data = this._authHttp
+    return (this.data = this._authHttp
       .get(this._server + this._getUrl)
-      .map((response: Response) => response.json());
+      .map((response: Response) => response.json()));
   }
 
   getMatch(_id: string) {

@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 
 const ScoreSchema = new Schema({
   name: String,
+  memberName: String,
   cap: String,
   wonTwoBall: Boolean,
   wonOneBall: Boolean,

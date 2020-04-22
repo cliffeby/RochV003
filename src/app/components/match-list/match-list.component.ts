@@ -6,6 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material';
 import { MatchService } from "../../services/match.service";
 import { MatchScoreService } from "../../services/matchscore.service";
+import { ScoreService } from "../../services/score.service";
 // import { match } from 'minimatch';
 
 @Component({
@@ -26,6 +27,7 @@ export class MatchListComponent implements OnInit {
   public ScoreMatchEvent = new EventEmitter();
   public PairMatchEvent = new EventEmitter();
   private queryString: string;
+  public matchId: string;
   public displayedColumns = [
     "name",
     "datePlayed",
@@ -38,10 +40,12 @@ export class MatchListComponent implements OnInit {
   myString: string = "test";
   public dataSource: MatTableDataSource<Match>;
   matchscores: any;
+  scores: any;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   constructor(
     private _matchService: MatchService,
-    private _matchscoreservice: MatchScoreService
+    private _matchscoreservice: MatchScoreService,
+    private _scoreservice: ScoreService
   ) {
     this.myString = "Updated1";
   }
@@ -54,6 +58,10 @@ export class MatchListComponent implements OnInit {
     );
     console.log("MatchedScoresNgOninit", this.matchscores);
     this._matchscoreservice.changeMS(this.matchscores);
+
+    this._matchscoreservice.BSMatch.subscribe((c) => {
+      this.matchId = c;
+    });
   }
 
   ngOnChanges() {
@@ -73,6 +81,20 @@ export class MatchListComponent implements OnInit {
     this._matchService.matchPaired.emit(mtc);
     this.matchscores = this._matchscoreservice.changeMS(mtc);
     console.log("match Pair", mtc);
+  }
+  onPairMatch2(mtc: Match) {
+    const mtcId = mtc._id;
+    this._matchService.matchPaired2.emit(mtcId);
+    // this._matchscoreservice.BSMatch.subscribe;
+    this.nextMatch(mtcId);
+    console.log("match Pair ID", mtcId, this.matchId);
+    this._scoreservice.getScoreByMatch(mtcId).subscribe((resScoreData) => {
+      this.scores = resScoreData;
+      console.log("msfromList", this.scores);
+    });
+  }
+  nextMatch(mtcId) {
+    this._matchscoreservice.nextMatch(mtcId);
   }
 
   onScoreMatch(mtc: Match) {

@@ -40,11 +40,12 @@ export class MemberBlockComponent implements OnInit {
       this.score.memberId = member._id;
       this.score.cap = member.currentHCap;
       this.score.name = this.match.name + ' ' + member.lastName;
+      this.score.memberName = member.firstName + " " + member.lastName;
       this._scoreservice.addScore(this.score)
         .subscribe(resNewScore => {
           this.scores= [...this.scores,resNewScore];
         });
-        console.log('From member-block1', this.match.players, this.score.name)
+        console.log('From member-block1', this.match.players, this.score.name, this.score.memberName)
     } else {
       this.match.players--;
       const scoreArray = this.scores;
