@@ -1,14 +1,21 @@
+
+
+
 <!-- <div *ngIf="match" class="form-horizontal"> -->
-  <div>
+<!-- <div  [routerLink] = "[index]">
+
+    </div> -->
+
+
     <h2>MATCH PAIR</h2>
-  <h2>{{match.name}} | {{match.scName}} | {{match.datePlayed | date: "longDate"}}</h2>
+  <!-- <h2>{{match.name}} | {{match.scName}} | {{match.datePlayed | date: "longDate"}}</h2>
 
 {{match | json}}
 <br>
-{{match.nmae | json }}
+{{match.name | json }} -->
 
-<!-- Second table  match[].playerNames raises an error that allows MatTable above to load,  Second table unaffected  TODO -->
-<div *ngIf="match;">
+<!-- Second table  match[].playerNames  raises an error that allows MatTable above to load,  Second table unaffected  TODO -->
+<!-- <div *ngIf="match;"> -->
   <h2>{{match.playerNames}} </h2>
    <ng-template #loading>Loading User Data...</ng-template>
 <div class="col-md-12">
@@ -20,14 +27,17 @@
    </tr>
    </thead>
    <tbody>
-   <tr *ngFor="let scoredm of match;">
+   <tr *ngFor="let scoredm of scores;">
      <td>{{scoredm.playerNames}}</td>
      <td>{{scoredm.playersHCap}}</td>
    </tr>
    </tbody>
    <button mat-icon-button color="primary" (click)="onPairing()">
     <mat-icon class="mat-18">file_copy</mat-icon>
-</button>
+  </button>
+  </table>
+  </div>
+
 
 
 <h2>{{matchSorted.playerNames}} </h2>

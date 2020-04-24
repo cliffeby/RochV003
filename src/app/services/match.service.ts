@@ -32,6 +32,9 @@ export class MatchService {
       .get(this._server + this._getUrl)
       .map((response: Response) => response.json()));
   }
+  getMatchroute(index: number): Observable<Match[]> {
+    return this.getMatches()[index];
+  }
 
   getMatch(_id: string) {
     return this._authHttp

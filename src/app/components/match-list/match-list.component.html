@@ -1,7 +1,7 @@
-<table mat-table [dataSource]="dataSource" matSort (matSortChange) = "ngAfterViewInit()" [ngClass]="{true:'bold'}[dateFlag]">
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+<table mat-table [dataSource]="dataSource"  matSort (matSortChange) = "ngAfterViewInit()" [ngClass]="{true:'bold'}[dateFlag]">
+  <ng-container matColumnDef="name" >
+    <th mat-header-cell *matHeaderCellDef mat-sort-header > Name </th>
+    <td mat-cell *matCellDef="let element" > {{element.name}} </td>
   </ng-container>
 
   <ng-container matColumnDef="datePlayed" >
@@ -25,9 +25,10 @@
 
   <ng-container matColumnDef="pair">
       <th mat-header-cell *matHeaderCellDef> Pair </th>
-      <td mat-cell *matCellDef="let element">
-        <button mat-icon-button color="primary" (click)="onPairMatch2(element)">
+      <td mat-cell *matCellDef="let element; let i = index" >{{i}}
+        <button mat-icon-button color="primary" (click)="onPairMatch2(element, i)" >
             <mat-icon class="mat-18">file_copy</mat-icon>
+
         </button>
       </td>
     </ng-container>
@@ -52,4 +53,5 @@
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky true"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns; let element"[ngClass] = "{'bold': element.dateFlag}" ></tr>
+
 </table>

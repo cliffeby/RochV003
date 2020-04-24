@@ -15,13 +15,14 @@ import { Match } from "../models/match";
 
 @Injectable()
 export class MatchScoreService {
-  public newMatch = [];
+  public newMatch:Match = new Match;
   public dataSource = new BehaviorSubject<Match>(new Match());
   private scores: [];
   // matchSelected = new EventEmitter<Match>();
   matchScored = new EventEmitter<any>();
   matchId = "1";
-  public BSMatch: BehaviorSubject<string>;
+  public BSMatch: BehaviorSubject<Match>;
+  public BSIndex: BehaviorSubject<string>;
 
   constructor(
     public auth: AuthService,
@@ -29,10 +30,10 @@ export class MatchScoreService {
     private _scorecardservice: ScorecardService,
     private _memberservice: MemberService,
     private _matchservice: MatchService,
-    private _scoreservice: ScoreService,
-
+    private _scoreservice: ScoreService
   ) {
-    this.BSMatch = new BehaviorSubject(this.matchId);
+    this.BSMatch = new BehaviorSubject(this.newMatch);
+    this.BSIndex = new BehaviorSubject(this.matchId);
   }
   selectedMatch: Match;
   scoredMatch: Match;
@@ -49,15 +50,13 @@ export class MatchScoreService {
     console.log("MATCHscoreService", match, this.matchscore);
   }
 
-
-
-  nextMatch(mtc) {
-    this.BSMatch.next(mtc);
-    this.matchId = mtc;
-    console.log("MatchIdService", this.matchId);
+  nextMatch(mat) {
+    this.BSMatch.next(mat);
+    this.match = mat;
+    console.log("MatchIdService", this.match);
   }
 
-  getplayersandhcaps(id){
+  getplayersandhcaps(id) {
     // if (id) {
     //   this._scorecardservice
     //     .getScorecard(id)
@@ -71,7 +70,7 @@ export class MatchScoreService {
     // }
     this._scoreservice.getScoreByMatch(id).subscribe((resScoreData) => {
       this.scores = resScoreData;
-      console.log('mss', this.scores);
+      console.log("mss", this.scores);
       return this.scores;
       // this._memberservice.getMembers().subscribe((resMemData) => {
       //   this.members = resMemData;
@@ -103,6 +102,5 @@ export class MatchScoreService {
       //   }
       // });
     });
-
   }
 }

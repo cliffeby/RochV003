@@ -41,6 +41,7 @@ export class MatchCenterComponent implements OnInit {
   private fullName: string;
   messageFromList: any;
   matchscores: any;
+  index: number;
 
   // public ds: { playerNames: string; playersHCap: string }[] = [];
   // public ds: Array<Match>

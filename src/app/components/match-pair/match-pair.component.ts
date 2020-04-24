@@ -3,7 +3,7 @@ import { ScoreService } from "../../services/score.service";
 import { MatchScoreService } from "../../services/matchscore.service";
 import { MatchService } from "../../services/match.service";
 import { from } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: "match-pair",
@@ -11,10 +11,13 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ["./match-pair.component.css"],
 })
 export class MatchPairComponent implements OnInit {
-  @Input("match") match: any;
+
   matchSorted: any;
   scores: any;
   matchId: string;
+  // id: number;
+  match: any;
+
 
   constructor(
     private _scoreservice: ScoreService,
@@ -24,23 +27,21 @@ export class MatchPairComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-      this._matchscoreservice.BSMatch.subscribe((c) => {
-      this.matchId = c;
+    this._matchscoreservice.BSMatch.subscribe((c) => {
+      this.match = c;
+      console.log("Match from pair", this.match);
     });
-    this._matchservice.matchPaired.subscribe((res) => {
-      this.match = res;
-      console.log("Match to Pair", this.match);
-      this._scoreservice
-        .getScoreByMatch(this.matchId)
-        .subscribe((resScoreData) => {
-          this.scores = resScoreData;
-          console.log("msfromPair", this.scores);
-        });
+        this._scoreservice
+          .getScoreByMatch(this.match._id)
+          .subscribe((resScoreData) => {
+            this.scores = resScoreData;
+            console.log("msfromPair", this.scores);
     });
-  }
+}
+
   onPairing(){
     // Alphabetical
-    this.matchSorted = this.match;
+    this.matchSorted = this.scores;
     this.matchSorted = this.mysort(this.matchSorted);
 
   }

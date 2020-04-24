@@ -1,4 +1,5 @@
 import { Component, OnInit, EventEmitter, NgModule, Input,Output, ViewChild } from '@angular/core';
+import { Router, ActivatedRoute } from "@angular/router";
 import { Match } from '../../models/match';
 import { CommonModule } from "@angular/common"
 import { MaterialModule } from '../../material.module';
@@ -7,7 +8,6 @@ import { MatTableDataSource } from '@angular/material';
 import { MatchService } from "../../services/match.service";
 import { MatchScoreService } from "../../services/matchscore.service";
 import { ScoreService } from "../../services/score.service";
-// import { match } from 'minimatch';
 
 @Component({
   selector: "match-list",
@@ -20,7 +20,7 @@ import { ScoreService } from "../../services/score.service";
 })
 export class MatchListComponent implements OnInit {
   @Input() matches: Match[];
-  // @Output() match = new EventEmitter();
+  @Output() index: number;
   // public SelectMatch = new EventEmitter();
   public AddMatchEvent = new EventEmitter();
   public DeleteMatchEvent = new EventEmitter();
@@ -41,11 +41,14 @@ export class MatchListComponent implements OnInit {
   public dataSource: MatTableDataSource<Match>;
   matchscores: any;
   scores: any;
+  match:Match;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   constructor(
     private _matchService: MatchService,
     private _matchscoreservice: MatchScoreService,
-    private _scoreservice: ScoreService
+    private _scoreservice: ScoreService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.myString = "Updated1";
   }
@@ -60,7 +63,7 @@ export class MatchListComponent implements OnInit {
     this._matchscoreservice.changeMS(this.matchscores);
 
     this._matchscoreservice.BSMatch.subscribe((c) => {
-      this.matchId = c;
+      this.match = c;
     });
   }
 
@@ -77,25 +80,39 @@ export class MatchListComponent implements OnInit {
     this._matchService.matchSelected.emit(mtc);
   }
 
-  onPairMatch(mtc: Match) {
-    this._matchService.matchPaired.emit(mtc);
-    this.matchscores = this._matchscoreservice.changeMS(mtc);
-    console.log("match Pair", mtc);
-  }
-  onPairMatch2(mtc: Match) {
+  // onPairMatch(mtc: Match) {
+  //   this._matchService.matchPaired.emit(mtc);
+  //   this.matchscores = this._matchscoreservice.changeMS(mtc);
+  //   console.log("match Pair", mtc);
+  // }
+  // onPairMatch1(index: number) {
+  //   // this._matchService.matchPaired.emit(mtc);
+  //   // this.matchscores = this._matchscoreservice.changeMS(mtc);
+  //   console.log("match index1", index);
+  //   this.router.navigate([index], { relativeTo: this.route });
+  // }
+  onPairMatch2(mtc: Match, index: number) {
     const mtcId = mtc._id;
     this._matchService.matchPaired2.emit(mtcId);
     // this._matchscoreservice.BSMatch.subscribe;
-    this.nextMatch(mtcId);
-    console.log("match Pair ID", mtcId, this.matchId);
-    this._scoreservice.getScoreByMatch(mtcId).subscribe((resScoreData) => {
-      this.scores = resScoreData;
-      console.log("msfromList", this.scores);
-    });
+    this._matchscoreservice.nextMatch(mtc);
+    console.log(
+      "match Pair ID from List",
+      mtcId,
+      this.matchId,
+      this.dataSource.filteredData.indexOf(mtc),
+      index,
+      mtc
+    );
+    // this._scoreservice.getScoreByMatch(mtcId).subscribe((resScoreData) => {
+    //   this.scores = resScoreData;
+    //   console.log("msfromList", this.scores);
+    // });
+    this.router.navigate([index], { relativeTo: this.route });
   }
-  nextMatch(mtcId) {
-    this._matchscoreservice.nextMatch(mtcId);
-  }
+  // nextMatch(mtcId) {
+  //   this._matchscoreservice.nextMatch(mtcId);
+  // }
 
   onScoreMatch(mtc: Match) {
     // this.ScoreMatchEvent.emit(mtc);
