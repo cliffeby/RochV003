@@ -1,5 +1,5 @@
 import { Match } from "../models/match";
-import { Injectable, EventEmitter } from "@angular/core";
+import { Injectable, EventEmitter, Output } from "@angular/core";
 import { Response, Headers, RequestOptions } from "@angular/http";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/pluck";
@@ -20,13 +20,23 @@ export class MatchService {
   matchSelected = new EventEmitter<Match>();
   matchScored = new EventEmitter<Match>();
   matchPaired = new EventEmitter<Match>();
+  matchPairedShow;
   matchPaired2 = new EventEmitter<string>();
   dsArray = new EventEmitter<Match>();
 
   constructor(public auth: AuthService, public _authHttp: AuthHttp) {
     // console.log("frommatchserviceMTC", this.matchScored);
   }
-
+  onMatchSelected(mtc) {
+    this.matchSelected.emit(mtc);
+    this.matchPairedShow = true;
+    console.log("Called TRUE");
+  }
+  onMatchPaired(mtc, index: number) {
+    this.matchSelected.emit(mtc);
+    this.matchPairedShow= false;
+    console.log('Called FALSE');
+  }
   getMatches(): Observable<Match[]> {
     return (this.data = this._authHttp
       .get(this._server + this._getUrl)

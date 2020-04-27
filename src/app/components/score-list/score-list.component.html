@@ -11,6 +11,9 @@
         <tr>
           <th>Name1</th>
           <th>Cap</th>
+          <th>Today's Score</th>
+          <th>Partner</th>
+          <th>WonTwoBall</th>
           <th>MatchId</th>
           <th>MemberId</th>
           <th>Action</th>
@@ -20,6 +23,9 @@
         <tr *ngFor="let score of scores" [class.active]="score === selectedScore">
           <td>{{score.name}}</td>
           <td>{{score.cap}}</td>
+          <td>{{score.todaysscore}}</td>
+          <td>{{score.wonTwoBall}}</td>
+          <td>{{score.partnerIds}}</td>
           <td>{{score.matchId}}</td>
           <td>{{score.memberId}}</td>
           <a class="btn btn-primary col-sm-offset-2 " (click)="onSelectScore(score)">

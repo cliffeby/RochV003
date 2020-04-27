@@ -9,7 +9,7 @@ import { MemberService } from "../services/member.service";
 import { ScoreService } from "../services/score.service";
 import { ScorecardService } from "../services/scorecard.service";
 import { AuthHttp } from "angular2-jwt";
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject, Observable, forkJoin } from "rxjs";
 import { Match } from "../models/match";
 
 
@@ -55,52 +55,29 @@ export class MatchScoreService {
     this.match = mat;
     console.log("MatchIdService", this.match);
   }
+ loadedCharacter = {}
+  getScoreByMatchwithNames(matchId, memberId) {
 
-  getplayersandhcaps(id) {
-    // if (id) {
-    //   this._scorecardservice
-    //     .getScorecard(id)
-    //     .subscribe((resSCData) => {
-    //       this.scorecard = resSCData;
-    //       match.scName = this.scorecard.name;
-    //       match.memberIds = [];
-    //       match.playerNames = [];
-    //       match.playersHCap = [];
-    //     });
-    // }
-    this._scoreservice.getScoreByMatch(id).subscribe((resScoreData) => {
-      this.scores = resScoreData;
-      console.log("mss", this.scores);
-      return this.scores;
-      // this._memberservice.getMembers().subscribe((resMemData) => {
-      //   this.members = resMemData;
-      //   match.players = 0;
-      //   for (let index = 0; index < this.scores.length; index++) {
-      //     for (let i = 0; i < this.members.length; i++) {
-      //       if (this.members[i]._id === this.scores[index].memberId) {
-      //         this.fullName =
-      //           this.members[i].firstName + " " + this.members[i].lastName;
-      //         this.members[i].isPlaying = true;
-      //         match.playerNames = [...match.playerNames, this.fullName];
-
-      //         match.memberIds = [...match.memberIds, this.members[i]._id];
-      //         match.playersHCap = [
-      //           ...match.playersHCap,
-      //           this.members[i].currentHCap,
-      //         ];
-      //         this.dp.push({
-      //           playerNames: this.fullName,
-      //           playersHCap: this.members[i].currentHCap,
-      //         });
-      //         match.players++;
-      //       } else {
-      //         if (!this.members[i].isPlaying) {
-      //           this.members[i].isPlaying = false;
-      //         }
-      //       }
-      //     }
-      //   }
-      // });
+    const sbmwn = this._scoreservice.getScoreByMatch(matchId);
+    const mbid = this._memberservice.getMember(memberId);
+    console.log("forkJionIds", matchId, memberId, sbmwn, mbid);
+    forkJoin([sbmwn, mbid]).subscribe(results => {
+      // results[0] is our character
+      // results[1] is our character homeworld
+      results[0].homeworld = results[1];
+      this.loadedCharacter = results[0];
+      console.log('forkJoin', results, this.loadedCharacter);
     });
+  };
+mem = {};
+  getmemberNames(match) {
+    const ids: string[] = match.memberIds;
+    console.log("msfromPairSerIDS", match, ids);
+    this._memberservice.getMembers()
+      .subscribe((res) => {
+        this.mem = res._ids.indexOf(ids);
+        console.log("msfromPairSer", this.mem);
+      });
   }
+
 }

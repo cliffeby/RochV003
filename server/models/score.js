@@ -6,6 +6,7 @@ const ScoreSchema = new Schema({
   name: String,
   memberName: String,
   cap: String,
+  todaysscore: String,
   wonTwoBall: Boolean,
   wonOneBall: Boolean,
   wonIndo: Boolean,
@@ -23,6 +24,10 @@ const ScoreSchema = new Schema({
     ref: 'Member'
   },
   foursomeIds: [{
+    type: Schema.ObjectId,
+    ref: 'Member'
+  }],
+  partnerIds: [{
     type: Schema.ObjectId,
     ref: 'Member'
   }],

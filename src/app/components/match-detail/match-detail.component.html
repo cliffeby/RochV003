@@ -1,7 +1,7 @@
 <div *ngIf="match._id" class="form-horizontal">
   <h2>{{match.name}} | {{match.scName}} | {{match.datePlayed | date: "longDate"}}</h2>
 </div>
-<form class="detail-form" [formGroup]="matchDetailForm" (ngSubmit)="updateMatch()">
+<form *ngIf="showDetailBlock" class="detail-form" [formGroup]="matchDetailForm" (ngSubmit)="updateMatch()">
 
     <mat-form-field class = "detail-full-width">
       <input matInput type="text" placeholder=" Name" formControlName="name">

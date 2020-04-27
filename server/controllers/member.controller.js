@@ -29,6 +29,27 @@ exports.getMember=function(req, res){
     });
 };
 
+// exports.getFilteredMembers = function(req,res){
+//   console.log('Get members in array of ids');
+//   var obj_ids = req.body.map(function(id) { return ObjectId(id); })
+//   Member.find({"_id": {
+//     $elemMatch: {
+//       id: {
+//         $in: obj_ids
+//       }
+//     }
+//   }})
+//   .exec(function(err, members){
+//     if (err){
+//       console.log("Error retrieving filtered member");
+//     }else {
+//       res.json(members);
+//       console.log('Filterd members', res.json(members))
+//     }
+//   });
+// }
+
+
 exports.postMember=function(req, res){
   console.log('Post a member1');
   console.log('User?', req.body);

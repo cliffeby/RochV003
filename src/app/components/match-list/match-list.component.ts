@@ -77,14 +77,14 @@ export class MatchListComponent implements OnInit {
   }
 
   onSelectMatch(mtc: Match) {
-    this._matchService.matchSelected.emit(mtc);
+    this._matchService.onMatchSelected(mtc);
+    console.log('ListOnSelect', mtc, )
   }
 
-  // onPairMatch(mtc: Match) {
-  //   this._matchService.matchPaired.emit(mtc);
-  //   this.matchscores = this._matchscoreservice.changeMS(mtc);
-  //   console.log("match Pair", mtc);
-  // }
+  onPairMatch(mtc: Match) {
+    this._matchService.onMatchPaired(mtc, this.index);
+    console.log("ListOnPair", mtc);
+  }
   // onPairMatch1(index: number) {
   //   // this._matchService.matchPaired.emit(mtc);
   //   // this.matchscores = this._matchscoreservice.changeMS(mtc);

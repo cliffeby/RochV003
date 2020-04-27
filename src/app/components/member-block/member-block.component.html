@@ -1,5 +1,7 @@
+
+<div *ngIf="showPairBlock" >
 <input type="text" [(ngModel)]="queryString" id="search" placeholder="Search Last Name">
-<i class="glyphicon glyphicon-search"></i>                    Playing: {{match.players}}
+<i class="glyphicon glyphicon-search"></i>                    Playing: {{match?.players}}
 <div class ="container">
   <div *ngFor="let member of members | searchfilter: 'lastName' : queryString">
     <div >
@@ -13,3 +15,45 @@
     </div>
   </div>
 </div>
+</div>
+
+<div *ngIf="!showPairBlock" class="col-md-12">
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Cap</th>
+      <th>Partner</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let scoredm of scores;">
+     <td>{{scoredm.memberName}}</td>
+
+      <td>{{scoredm.cap}}</td>
+    </tr>
+    </tbody>
+    <button mat-icon-button color="primary" (click)="onPairing()">
+     <mat-icon class="mat-18">file_copy</mat-icon>
+   </button>
+   </table>
+
+   <!-- <div class="col-md-12">
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Cap</th>
+        <th>Partner</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let scoredm of scoresSorted;">
+       <td>{{scoredm.memberName}}</td>
+
+        <td>{{scoredm.cap}}</td>
+      </tr>
+      </tbody>
+     </table>
+     </div> -->
+    </div>

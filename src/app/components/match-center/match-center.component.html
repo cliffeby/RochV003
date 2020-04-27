@@ -20,10 +20,17 @@
                 (deleteMatchEvent) = "onDeleteMatchEvent($event)"
                 [match] = "selectedMatch">
   </match-detail>
-  <member-block *ngIf="selectedMatch && hidenewMatch && !scoreMatch"
+  <!-- <member-block *ngIf="selectedMatch && hidenewMatch && !scoreMatch"
                 [members]="members"
                 [scores]="scores"
-                [match]="selectedMatch">
+                (matchPairedShow) = "onNothing()"
+  >
+  </member-block> -->
+  <member-block *ngIf="selectedMatch && hidenewMatch && !scoreMatch"
+      [members]="members"
+      [scores]="scores"
+      [match]="selectedMatch"
+>
   </member-block>
 </div>
 

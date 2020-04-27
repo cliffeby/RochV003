@@ -62,10 +62,12 @@ exports.postScore = function(req, res){
   newScore.name = req.body.name;
   newScore.memberName = req.body.memberName;
   newScore.cap = req.body.cap;
+  newScore.todaysscore = req.body.todaysscore;
   newScore.wonTwoBall = req.body.wonTwoBall;
   newScore.wonOneBall = req.body.wonOneBall;
   newScore.wonIndo = req.body.wonIndo;
   newScore.foursomeIds = req.body.foursomeIds;
+  newScore.partnerIds = req.body.partnerIds;
   newScore.matchId  = req.body.matchId;
   newScore.memberId  = req.body.memberId;
   newScore.user = req.body.user;
@@ -84,12 +86,14 @@ exports.putScore = function(req, res){
     {
       $set: {
         name: req.body.name,
-        memberName = req.body.memberName,
+
         cap: req.body.cap,
+        todaysscore: req.todaysscore,
         wonTwoBall: req.body.wonTwoBall,
         wonOneBall: req.body.wonOneBall,
         wonIndo: req.body.wonIndo,
         foursomeIds: req.body.foursomeIds,
+        partnerIds: req.body.partnerIds,
         matchId: req.body.matchId,
         memberId: req.body.memberId
       }

@@ -42,6 +42,7 @@ export class MatchCenterComponent implements OnInit {
   messageFromList: any;
   matchscores: any;
   index: number;
+  showPairBlock: boolean = false;
 
   // public ds: { playerNames: string; playersHCap: string }[] = [];
   // public ds: Array<Match>
@@ -107,12 +108,13 @@ export class MatchCenterComponent implements OnInit {
       // this.onSelectMatch(match);
       this.onScoreMatch(match);
     });
-        this._matchservice.matchPaired.subscribe((match: Match) => {
-          console.log("MatchCenterP OnInit", match);
-          this.scoredMatch = match;
-          // this.onSelectMatch(match);
-          this.onPairMatch(match);
-        });
+    this._matchservice.matchPaired.subscribe((match: Match) => {
+      console.log("MatchCenterP OnInit", match);
+      this.scoredMatch = match;
+      // this.onSelectMatch(match);
+      this.onPairMatch(match);
+    });
+
     console.log("MatchedScoresNgOninit", this.matchscores);
     this._matchscoreservice.changeMS(this.matchscores);
     // this.onPairMatch(this.match);
@@ -167,6 +169,7 @@ export class MatchCenterComponent implements OnInit {
     console.log("Match from center", match);
     // return match;
   }
+
 
   onPairMatch(match: any) {
   this.pairMatch = true;
@@ -225,6 +228,9 @@ export class MatchCenterComponent implements OnInit {
         console.log("OnScoreMatchfromCenter", match);
         this.pairMatch = true;
 
+  }
+  onNothing(){
+    
   }
 
   onSubmitAddMatchEvent(match: Match) {

@@ -63,7 +63,7 @@ router.route('/members')
 
 // Create endpoint handlers for /members/_id
 router.route('/members/:id')
-  .get(jwtCheck, checkScopes, memberController.getMember)
+  .get(jwtCheck, jwtAuthz(['create:member']), memberController.getMember)
   .put(jwtCheck, jwtAuthz(['create:member']), memberController.putMember)
   .delete(jwtCheck, jwtAuthz(['remove:member']), memberController.deleteMember);
 

@@ -16,7 +16,11 @@
 
 <!-- Second table  match[].playerNames  raises an error that allows MatTable above to load,  Second table unaffected  TODO -->
 <!-- <div *ngIf="match;"> -->
-  <h2>{{match.playerNames}} </h2>
+  {{match | json }}
+  <h2>{{match.playerNames  }} </h2>
+  <h2>{{match.playersHCap  }} </h2>
+
+
    <ng-template #loading>Loading User Data...</ng-template>
 <div class="col-md-12">
  <table class="table table-bordered">
@@ -27,8 +31,9 @@
    </tr>
    </thead>
    <tbody>
-   <tr *ngFor="let scoredm of scores;">
-     <td>{{scoredm.playerNames}}</td>
+   <tr *ngFor="let scoredm of match;">
+    <td>{{scoredm.playerNames}}</td>
+
      <td>{{scoredm.playersHCap}}</td>
    </tr>
    </tbody>
@@ -40,7 +45,7 @@
 
 
 
-<h2>{{matchSorted.playerNames}} </h2>
+<!-- <h2>{{match.playerNames}} </h2> -->
 <div class="col-md-12">
 <table class="table table-bordered">
 <thead>
@@ -50,9 +55,9 @@
 </tr>
 </thead>
 <tbody>
-<tr *ngFor="let sortit of matchSorted;">
+<!-- <tr *ngFor="let sortit of matchSorted;">
   <td>{{sortit.playerNames}}</td>
   <td>{{sortit.playersHCap}}</td>
-</tr>
+</tr> -->
 </tbody>
 
