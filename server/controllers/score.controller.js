@@ -86,9 +86,8 @@ exports.putScore = function(req, res){
     {
       $set: {
         name: req.body.name,
-
         cap: req.body.cap,
-        todaysscore: req.todaysscore,
+        todaysscore: req.body.todaysscore,
         wonTwoBall: req.body.wonTwoBall,
         wonOneBall: req.body.wonOneBall,
         wonIndo: req.body.wonIndo,
@@ -113,6 +112,7 @@ exports.putScore = function(req, res){
         }
         res.json(updatedScore);
       }
+      // res.status(err).send(updatedScore);
     }
 
   );
