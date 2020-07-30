@@ -20,12 +20,22 @@ const config = require('./server/_config');
 console.log('ENVIRON', app.settings.env, process.env.NODE_ENV);
 // *** mongoose *** ///
 mongoose.Promise = global.Promise;
-mongoose.connect(config.mongoURI[app.settings.env], function(err, res) {
-  if(err) {
-    console.log('Error connecting to the database. ' + err);
-  } else {
+// mongoose.connect(config.mongoURI[app.settings.env], function(err, res) {
+//   if(err) {
+//     console.log('Error connecting to the database. ' + err);
+//   } else {
+//     console.log('Connected to Database: ' + config.mongoURI[app.settings.env]);
+//   }
+// });
+var promise = mongoose.connect(config.mongoURI[app.settings.env],{
+  useMongoClient: true,
+});
+promise.then(function(db){
+  // if(err) {
+  //   console.log('Error connecting to the database. ' + err);
+  // } else {
     console.log('Connected to Database: ' + config.mongoURI[app.settings.env]);
-  }
+  // }
 });
 app.use(cors());
 
