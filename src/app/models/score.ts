@@ -2,8 +2,9 @@ export class Score {
          _id: string;
          name: string;
          memberName: string;
+        //  playerNames: string;
          cap: number;
-         todayssscore: number;
+         todaysscore: number;
          memberId: string;
          matchId: string;
          partnerId: string;
