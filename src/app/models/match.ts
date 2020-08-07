@@ -9,6 +9,7 @@ export class Match {
     playerNames: string[];
     lineUpIds: string[];
     playersHCap: string[];
+    scoreIds: string[];
     players: number;
     created: string;
     user: string;
@@ -18,6 +19,7 @@ export class Match {
       this.playerNames = [];
       this.lineUpIds = [];
       this.playersHCap = [];
+      this.scoreIds = [];
     }
 }
 
