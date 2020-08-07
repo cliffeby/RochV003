@@ -1,3 +1,5 @@
-[{ "username": "admin@roch.com", "password": "Password" },
-{ "username": "rplayer@roch.com", "password": "Password" },
-{ "username": "rmember@roch.com", "password": "Password" }]
+[
+  { "username": "rplayer@roch.com", "password": "cce4135" },
+  { "username": "admin@roch.com", "password": "cce4135" },
+  { "username": "rmember@roch.com", "password": "cce4135" }]
+
