@@ -15,8 +15,7 @@
   <ul class="nav navbar-nav navbar-right" >
     <li ui-sref-active="active">
       <a  *ngIf="!auth.isAuthenticated()" (click)="auth.login()">Sign In</a>
-      <a *ngIf="auth.isAuthenticated()" (click)="auth.logout()">Sign Out</a>
-      <a> {{auth.userProfile}} </a>
+      <a *ngIf="auth.isAuthenticated()" (click)="auth.logout()">Sign Out {{userId}}</a>
     </li>
   </ul>
   </div>

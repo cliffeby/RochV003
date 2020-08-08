@@ -19,7 +19,7 @@ const routes: Routes = [
       children: [{path: '', component: MatchListComponent},
                  {path: ':id', component: MatchPairComponent}]},
   { path: 'members', component: MemberCenterComponent, canActivate: [ScopeGuard], data: { expectedScopes: [ 'read:members'] } },
-  { path: 'scores', component: ScoreCenterComponent, canActivate: [ScopeGuard], data: { expectedScopes: ['read:scores', 'remove:score'] } }
+  { path: 'scores', component: ScoreCenterComponent }
 ];
 
 // {path:  'members', component: MemberCenterComponent, canActivate: [ScopeGuard], data: { expectedScopes: [' read:members']} },

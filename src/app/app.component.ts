@@ -2,14 +2,16 @@ import { Component } from '@angular/core';
 import {AuthService} from "./services/auth.service";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.css"],
 })
 export class AppComponent {
+  profile: any;
   constructor(public auth: AuthService) {
     auth.handleAuthentication();
   }
-  title = 'Rochester Golf';
+  title = "Rochester Golf";
+  userId = localStorage.getItem("logonId");
 }
 
