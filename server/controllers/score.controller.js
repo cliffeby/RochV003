@@ -80,42 +80,20 @@ exports.postScore = function(req, res){
   });
 };
 
-exports.putScore = function(req, res){
+
+exports.putScore = function(req, res, next){
   console.log('Update a score', req.params.id);
   Score.findByIdAndUpdate(req.params.id,
-    {
-      $set: {
-        name: req.body.name,
-        cap: req.body.cap,
-        todaysscore: req.body.todaysscore,
-        wonTwoBall: req.body.wonTwoBall,
-        wonOneBall: req.body.wonOneBall,
-        wonIndo: req.body.wonIndo,
-        foursomeIds: req.body.foursomeIds,
-        partnerIds: req.body.partnerIds,
-        matchId: req.body.matchId,
-        memberId: req.body.memberId
-      }
-    },
-    {
-      new: true
-    },
-    function(err, updatedScore){
-
-      if(err){
-        res.send("Error updating score",err);
-        // res.status(status).send(body);
-      }else{
-        if (!updatedScore) {
-          res.statusCode = 404;
-          console.log("Not FOUND - update")
-        }
-        res.json(updatedScore);
-      }
-      // res.status(err).send(updatedScore);
-    }
-
-  );
+   req.body)
+   .then(function(){
+     Score.findOne({_id:req.params.id}).then(function(score){
+       res.send(score)
+     });
+   })
+   .catch(function(err){
+      err = res.status(400).json('Error: ' + err)
+      console.log('Error :', err.statusMessage)
+   })
 };
 
 exports.deleteScore = function(req, res){
