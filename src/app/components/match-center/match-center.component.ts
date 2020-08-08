@@ -135,6 +135,7 @@ export class MatchCenterComponent implements OnInit {
           this.scorecard = resSCData;
           match.scName = this.scorecard.name;
           match.memberIds = [];
+          match.scoreIds = [];
           match.playerNames = [];
           match.playersHCap = [];
         });
@@ -152,6 +153,7 @@ export class MatchCenterComponent implements OnInit {
               this.members[i].isPlaying = true;
               match.playerNames = [...match.playerNames, this.fullName];
               match.memberIds = [...match.memberIds, this.members[i]._id];
+              match.scoreIds = [...match.scoreIds, this.scores[index]._id];
               match.playersHCap = [
                 ...match.playersHCap,
                 this.members[i].currentHCap,
@@ -230,7 +232,7 @@ export class MatchCenterComponent implements OnInit {
 
   }
   onNothing(){
-    
+
   }
 
   onSubmitAddMatchEvent(match: Match) {
@@ -268,6 +270,7 @@ export class MatchCenterComponent implements OnInit {
           this.scorecard = resSCData;
           match.scName = this.scorecard.name;
           match.memberIds = [];
+          match.scoreIds = [];
           match.playerNames = [];
           match.playersHCap = [];
         });
@@ -284,15 +287,18 @@ export class MatchCenterComponent implements OnInit {
                 this.members[i].firstName + " " + this.members[i].lastName;
               this.members[i].isPlaying = true;
               match.playerNames = [...match.playerNames, this.fullName];
-
+              match.scoreIds = [...match.scoreIds, this.scores[index]._id];
               match.memberIds = [...match.memberIds, this.members[i]._id];
               match.playersHCap = [
                 ...match.playersHCap,
                 this.members[i].currentHCap,
               ];
               this.ds.push({
+                //
                 playerNames: this.fullName,
                 playersHCap: this.members[i].currentHCap,
+                todaysscore: "",
+                _id: this.scores[index]._id
               });
               match.players++;
             } else {

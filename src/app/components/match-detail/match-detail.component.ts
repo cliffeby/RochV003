@@ -47,11 +47,12 @@ export class MatchDetailComponent implements OnInit {
       course: "",
     });
   }
-  
+
   ngOnInit() {
     this.showDetailBlock = this._matchservice.matchPairedShow;
     if (this.match == null) {
       this.match = new Match();
+      this.showDetailBlock = true;
     }
     this._scorecardservice
       .getScorecards()

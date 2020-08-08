@@ -1,5 +1,6 @@
 import { Component, OnInit, EventEmitter, NgModule, Input, ViewChild, AfterViewInit, OnChanges, SimpleChanges, ChangeDetectorRef } from '@angular/core';
 import { Scorecard } from "../../models/scorecard";
+import { Score } from "../../models/score";
 import { Match } from "../../models/match";
 import { Datasource } from "../../models/datasource";
 import { Member } from "../../models/member";
@@ -7,6 +8,7 @@ import { ScorecardService } from "../../services/scorecard.service"
 import { MemberService } from "../../services/member.service";
 import { MatchService } from "../../services/match.service";
 import { MatchScoreService } from "../../services/matchscore.service";
+import { ScoreService } from "../../services/score.service";
 import { FormControl, FormGroup, FormBuilder, Validators, ReactiveFormsModule, FormsModule, FormGroupDirective, NgForm } from '@angular/forms'
 import { NgModel } from '@angular/forms';
 import { ValidationService } from '../../services/validation.service';
@@ -33,8 +35,9 @@ import { MatSort } from '@angular/material/sort';
 })
 export class MatchScoreComponent implements OnInit, OnChanges {
   @Input() DS: any;
-  @Input("match") match: any;
-
+  @Input("match") match: Array<Score>;
+  myScores:any = {};
+  score:Score;
   selected: any;
   hidenewMatch: boolean;
   scoreMatch: boolean;
@@ -50,13 +53,14 @@ export class MatchScoreComponent implements OnInit, OnChanges {
   matchscores:any;
   constructor(
     private _matchscoreservice: MatchScoreService,
+    private _scoreservice: ScoreService,
     public cd: ChangeDetectorRef,
     private fb: FormBuilder
   ) {
     this.matchScoreForm = this.fb.group({
       playerNames: "",
       hCap: "",
-      todaysScore: ""
+      todaysscore: ""
     });
   }
 
@@ -64,24 +68,36 @@ export class MatchScoreComponent implements OnInit, OnChanges {
                this._matchscoreservice.matchscore.subscribe(
                  (res) => (this.matchscores = res)
                );
+
+              // this.matchscores =  this._scoreservice.getScoreByMatch(this.matchscores.matchId);
+
                this.dataSource = new MatTableDataSource(this.match);
                console.log(
-                 "MATCHscoreComp1",
-                 this.match,
+
                  "MatchScoreComp2",
                  this.matchscores,
-                 "DataSource",
-                 this.dataSource
+
                );
                console.log(
                  "matchscorengOnInit2",
-                 this.DS,
                  this.matchScoreForm,
                  this.dataSource
                );
 
              }
   ngOnChanges() {}
+  updateMatch() {
+    console.log('MatchData1',this.matchscores, this.myScores )
+    for (let index = 0; index < this.match.length; index++) {
+
+    // this.match[index]._id = this.match[index].scoreId
+
+
+  this._scoreservice
+    .updateScore(this.match[index])
+    .subscribe((resUpdatedScore) => (this.match = resUpdatedScore));
+    }
+  }
   onAddPlayer() {
     // this.DS.push({ playerNames: "ADDon"});
     // this.DS = [...this.DS,...[ { playerNames: "Crew Cut21", playersHCap: 99 }]];

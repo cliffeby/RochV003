@@ -1,11 +1,11 @@
 
-<router-outlet></router-outlet>
+<!-- <router-outlet></router-outlet> -->
 
 <div class="row">
-    <div *ngIf="!hidenewMatch && !scoreMatch && !pairMatch">
+    <!-- <div *ngIf="!hidenewMatch && !scoreMatch && !pairMatch"> -->
+      <div *ngIf="!hidenewMatch && !scoreMatch && !pairMatch">
       <h2>New Match</h2>
       <match-detail
-
         (deleteMatchEvent)="onDeleteMatchEvent($event)"
         (submitAddMatchEvent) = "onSubmitAddMatchEvent($event)"
        >
@@ -16,7 +16,6 @@
   <match-detail *ngIf="selectedMatch && hidenewMatch && !scoreMatch"
                 (updateMatchEvent) = "onUpdateMatchEvent($event)"
                 (submitAddMatchEvent) = 'onSubmitAddMatchEvent($event)'
-
                 (deleteMatchEvent) = "onDeleteMatchEvent($event)"
                 [match] = "selectedMatch">
   </match-detail>
