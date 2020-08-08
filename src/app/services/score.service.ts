@@ -20,12 +20,12 @@ export class ScoreService {
       .get(this._server + this._getUrl)
       .map((response: Response) => response.json());
   }
+
   getScoreByMatch(matchId: string) {
     return this._authHttp
       .get(this._server + this._getUrl + "ByMatch/" + matchId)
       .map((response: Response) => response.json());
   }
-  
 
   addScore(score: Score) {
     const headers = new Headers({ "Content-Type": "application/json" });
@@ -36,6 +36,7 @@ export class ScoreService {
   }
 
   updateScore(score: Score) {
+    console.log('Score from service', score);
     const headers = new Headers({ "Content-Type": "application/json" });
     const options = new RequestOptions({ headers: headers });
     return this._authHttp
