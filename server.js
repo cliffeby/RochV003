@@ -8,7 +8,6 @@ const scoreController = require('./server/controllers/score.controller');
 const scorecardController = require('./server/controllers/scorecard.controller');
 const passport = require('passport');
 const path = require('path');
-// const api = require('./server/routes/api');
 const port = process.env.PORT || 3000;
 //process.env['NODE_ENV'] = 'test';
 
@@ -17,6 +16,7 @@ const jwt = require('express-jwt');
 const jwtAuthz = require('express-jwt-authz');
 const jwks = require('jwks-rsa');
 const config = require('./server/_config');
+const options = { customScopeKey: 'permissions' };
 console.log('ENVIRON', app.settings.env, process.env.NODE_ENV);
 // *** mongoose *** ///
 mongoose.Promise = global.Promise;
@@ -31,22 +31,16 @@ var promise = mongoose.connect(config.mongoURI[app.settings.env],{
   useMongoClient: true,
 });
 promise.then(function(db){
-  // if(err) {
+  // if(err) {   ###ADD catch try for promise
   //   console.log('Error connecting to the database. ' + err);
   // } else {
     console.log('Connected to Database: ' + config.mongoURI[app.settings.env]);
   // }
 });
 app.use(cors());
-
-
-
-
 app.use(express.static(path.join(__dirname, 'dist')));
-
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-// app.use(passport.initialize());
 
 // Configure API to accept RS256 signed tokens
 var jwtCheck = jwt({
@@ -61,42 +55,42 @@ var jwtCheck = jwt({
   algorithms: ['RS256']
 });
 
-const checkScopes = jwtAuthz(['read:members read:matches']);
-
 app.use(jwtCheck);
-
 var router = express.Router();
+
 // Create endpoint handlers for /members
 router.route('/members')
-  .post(jwtCheck,  jwtAuthz(['create:member']), memberController.postMember)
-  .get(jwtCheck, jwtAuthz(['read:members']), memberController.getMembers);
+  .post(jwtCheck,  jwtAuthz(['create:member'], options), memberController.postMember)
+  .get(jwtCheck, jwtAuthz(['read:members'], options), memberController.getMembers)
+  ;
 
 // Create endpoint handlers for /members/_id
 router.route('/members/:id')
-  .get(jwtCheck, jwtAuthz(['create:member']), memberController.getMember)
-  .put(jwtCheck, jwtAuthz(['create:member']), memberController.putMember)
-  .delete(jwtCheck, jwtAuthz(['remove:member']), memberController.deleteMember);
+  .get(jwtCheck, jwtAuthz(['create:member'], options), memberController.getMember)
+  .put(jwtCheck, jwtAuthz(['create:member'], options), memberController.putMember)
+  .delete(jwtCheck, jwtAuthz(['remove:member'], options), memberController.deleteMember);
 
 
 router.route('/matches')
-  .post(jwtCheck, jwtAuthz(['create:match']), matchController.postMatch)
-  .get(jwtCheck, jwtAuthz(['read:matches']), matchController.getMatches);
+  .post(jwtCheck, jwtAuthz(['create:match'], options), matchController.postMatch)
+  .get(jwtCheck, jwtAuthz(['read:matches'], options), matchController.getMatches);
 
 // Create endpoint handlers for /matches/_id
 router.route('/matches/:id')
-  .get(jwtCheck, checkScopes, matchController.getMatch)
-  .put(jwtCheck, jwtAuthz(['create:match']), matchController.putMatch)
+  .get(jwtCheck, jwtAuthz(['read:matches'], options), matchController.getMatch)
+  .put(jwtCheck, jwtAuthz(['create:match'], options), matchController.putMatch)
   .delete(jwtCheck, jwtAuthz(['remove:match']), matchController.deleteMatch);
 
 router.route('/scores')
-  .post(jwtCheck, jwtAuthz(['create:score']), scoreController.postScore)
-  .get(jwtCheck, jwtAuthz(['read:scores']), scoreController.getScores);
+  .post(jwtCheck, jwtAuthz(['create:score'], options), scoreController.postScore)
+  .get(jwtCheck, jwtAuthz(['read:scores'], options), scoreController.getScores);
+  // .post(jwtCheck, checkScopes, jwtAuthz(['create:score']), scoreController.postScore)
 
 // Create endpoint handlers for /scores/_id
 router.route('/scores/:id')
-  .get(jwtCheck, jwtAuthz(['read:scores']), scoreController.getScore)
-  .put(jwtCheck, jwtAuthz(['create:score']), scoreController.putScore)
-  .delete(jwtCheck, jwtAuthz(['remove:score']), scoreController.deleteScore);
+  .get(jwtCheck,  jwtAuthz(['read:scores'], options), scoreController.getScore)
+  .put(jwtCheck, jwtAuthz(['create:score'], options), scoreController.putScore)
+  .delete(jwtCheck, jwtAuthz(['remove:score'], options), scoreController.deleteScore);
 
 router.route('/scoresByMatch/:id')
  .get(scoreController.getMatchScores);
@@ -105,14 +99,15 @@ router.route('/scoresByMatchPlayer/:matchId/:memberId')
   .get(scoreController.getMatchPlayer);
 
 router.route('/scorecards')
-  .post(jwtCheck, jwtAuthz(['create:scorecard']), scorecardController.postScorecard)
-  .get(jwtCheck, jwtAuthz(['read:scorecards']), scorecardController.getScorecards);
+  .post(jwtCheck, jwtAuthz(['create:scorecard'], options), scorecardController.postScorecard)
+  .get(jwtCheck, jwtAuthz(['read:scorecards'], options), scorecardController.getScorecards);
   // .get( scorecardController.getScorecards);
 // Create endpoint handlers for /scorecards/_id
 router.route('/scorecards/:id')
-  .get(jwtCheck, jwtAuthz(['read:scorecards']), scorecardController.getScorecard)
-  .put(jwtCheck, jwtAuthz(['create:scorecard']), scorecardController.putScorecard)
-  .delete(jwtCheck, jwtAuthz(['remove:scorecard']), scorecardController.deleteScorecard);
+  .get(jwtCheck, jwtAuthz(['read:scorecards'], options), scorecardController.getScorecard)
+  .put(jwtCheck, jwtAuthz(['create:scorecard'], options), scorecardController.putScorecard)
+  .delete(jwtCheck, jwtAuthz(['remove:scorecard'], options), scorecardController.deleteScorecard);
+
 
 // Register all our routes with /api
 app.use('/api', router);
