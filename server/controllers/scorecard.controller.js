@@ -23,6 +23,10 @@ exports.getScorecard = function(req, res){
       if (err){
         console.log("Error retrieving scorecard");
       }else {
+        if (!scorecard) {
+          res.statusCode = 404;
+          console.log("Scorecard not found - get")
+        }
         res.json(scorecard);
       }
     });
@@ -51,36 +55,50 @@ exports.postScorecard =  function(req, res){
   });
 };
 
-exports.putScorecard =  function(req, res){
-  console.log('Update a scorecard', req.user);
-  Scorecard.findByIdAndUpdate(req.params.id,
-    {
-      $set: {
-        name: req.body.name,
-        rating: req.body.rating,
-        slope: req.body.slope,
-        parInputString: req.body.parInputString,
-        // pars: req.body.pars,
-        hCapInputString: req.body.hCapInputString,
-        hCap: req.body.hCap,
-        yardsInputString: req.body.yardsInputString,
-        yards: req.body.yards,
-        created: req.body.created,
-        user: req.body.user}
-    },
-    {
-      new: true
-    },
-    function(err, updatedScorecard){
-      console.log('SCORECARD CONTROLer', updatedScorecard);
-      if(err){
-        res.send("Error updating scorecard");
-      }else{
-        res.json(updatedScorecard);
-      }
-    }
+// exports.putScorecard =  function(req, res){
+//   console.log('Update a scorecard', req.user);
+//   Scorecard.findByIdAndUpdate(req.params.id,
+//     {
+//       $set: {
+//         name: req.body.name,
+//         rating: req.body.rating,
+//         slope: req.body.slope,
+//         parInputString: req.body.parInputString,
+//         // pars: req.body.pars,
+//         hCapInputString: req.body.hCapInputString,
+//         hCap: req.body.hCap,
+//         yardsInputString: req.body.yardsInputString,
+//         yards: req.body.yards,
+//         created: req.body.created,
+//         user: req.body.user}
+//     },
+//     {
+//       new: true
+//     },
+//     function(err, updatedScorecard){
+//       console.log('SCORECARD CONTROLer', updatedScorecard);
+//       if(err){
+//         res.send("Error updating scorecard");
+//       }else{
+//         res.json(updatedScorecard);
+//       }
+//     }
 
-  );
+//   );
+// };
+exports.putScorecard = function(req, res, next){
+  console.log('Update a scorecard', req.params.id);
+  Scorecard.findByIdAndUpdate(req.params.id,
+   req.body)
+   .then(function(){
+     Scorecard.findOne({_id:req.params.id}).then(function(scorecard){
+       res.send(scorecard)
+     });
+   })
+   .catch(function(err){
+      err = res.status(400).json('Error: ' + err)
+      console.log('Error :', err.statusMessage)
+   })
 };
 
 exports.deleteScorecard = function(req, res){
