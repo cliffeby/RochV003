@@ -6,9 +6,7 @@ import * as auth0 from "auth0-js";
 
 @Injectable()
 export class AuthService {
-  // requestedScopes: string = "openid profile";
-  requestedScopes: string =
-    "openid profile read:scorecards read:matches create:match create:member read:members remove:scorecard";
+  requestedScopes: string = "openid profile";
 
   auth0 = new auth0.WebAuth({
     clientID: "9E3q7XC0qIfGdCgoLehJRhFoKKNstSIo",
@@ -103,6 +101,7 @@ export class AuthService {
     // console.log('isAuth', expiresAt- new Date().getTime());
     return new Date().getTime() < expiresAt;
   }
+
   public getProfile(cb): void {
     const accessToken = localStorage.getItem("access_token");
     if (!accessToken) {
