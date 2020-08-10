@@ -1,18 +1,30 @@
 {
 	"info": {
-		"name": "Roch",
 		"_postman_id": "38221d20-aa87-b035-9d26-cdb08e7d66fb",
+		"name": "Roch",
 		"description": "# Introduction\nCRUD operations for four endpoints accessing a MongoDB database. \n\n# Overview\nThese tests hit the DEV Mongo dataset - mean-dev04.  Unless interrupted, all data POSTed is DELETEd.\n\n# Authentication\nAuth0 is used for authentication.  Test accounts (email and password) are housed at roch.auth0.com.  Test emails are:\n1.  admin@roch.com\n2.  player@roch.com\n3.  member@roch.com\nEndpoints use JWT authorization with \"scopes\" passed to users in three categories - Admin, Player, and Member.  Password is Password.\n\n# Error Codes\nWhat errors and status codes can a user expect?\n\n# Rate limit\nIs there a limit to the number of requests an user can send?",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "Pre-login",
-			"description": "",
 			"item": [
 				{
 					"name": "Unauthorized Get",
 					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"postman.clearGlobalVariables();",
+									"postman.clearEnvironmentVariables();",
+									"",
+									"postman.setEnvironmentVariable(\"url\", \"http://localhost:3000/api/\");",
+									"postman.setEnvironmentVariable(\"auth0_domain\", \"roch.auth0.com\");"
+								]
+							}
+						},
 						{
 							"listen": "test",
 							"script": {
@@ -27,19 +39,6 @@
 									"",
 									"",
 									""
-								]
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"postman.clearGlobalVariables();",
-									"postman.clearEnvironmentVariables();",
-									"postman.setEnvironmentVariable(\"url\", \"http://localhost:3000/api/\");",
-									"",
-									"postman.setEnvironmentVariable(\"auth0_domain\", \"roch.auth0.com\");"
 								]
 							}
 						}
@@ -60,23 +59,29 @@
 								"value": "application/json"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \n    \"name\": \"April Fool Judy and Billy1\",\n    \n    \n    \"cap\": \"33\"\n   \n    \n    \n}"
-						},
 						"url": {
 							"raw": "{{url}}",
 							"host": [
 								"{{url}}"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Unauthorized Post",
 					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"postman.clearGlobalVariables();",
+									"postman.clearEnvironmentVariables();",
+									"postman.setEnvironmentVariable(\"url\", \"localhost:3000/api\");"
+								]
+							}
+						},
 						{
 							"listen": "test",
 							"script": {
@@ -91,17 +96,6 @@
 									"",
 									"",
 									""
-								]
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"postman.clearGlobalVariables();",
-									"postman.clearEnvironmentVariables();",
-									"postman.setEnvironmentVariable(\"url\", \"localhost:3000/api\");"
 								]
 							}
 						}
@@ -131,8 +125,7 @@
 							"host": [
 								"{{url}}"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -148,7 +141,7 @@
 									"",
 									"",
 									"tests[\"Show 'invalid JWT token' error\"] = responseBody === 'invalid JWT token...' ||",
-									"responseBody.includes('jwt malformed');;",
+									"responseBody.includes('jwt malformed');",
 									"",
 									"",
 									"",
@@ -182,8 +175,7 @@
 							"host": [
 								"{{url}}"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				}
@@ -191,39 +183,50 @@
 		},
 		{
 			"name": "Login",
-			"description": "Authenticate using Auth0 and its local database connection.  Successful authentication returns a JWT access-token with appropriate scopes.\n\nReturned access-token is stored globally and other data is stored in the Roch0 environment.",
 			"item": [
 				{
 					"name": "Login as {{data.username}}",
 					"event": [
 						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"tests[\"Successful Login request\"] = responseCode.code === 200 || responseCode.code === 201;",
-									"",
-									"",
-									"var jsonData = JSON.parse(responseBody);",
-									"postman.setGlobalVariable(\"access_token\", jsonData.access_token);",
-									"postman.setGlobalVariable(\"id_token\", jsonData.id_token);"
-								]
-							}
-						},
-						{
 							"listen": "prerequest",
 							"script": {
-								"type": "text/javascript",
+								"id": "caae88c4-425d-418a-89c5-0be11a3061b7",
 								"exec": [
 									"postman.setEnvironmentVariable(\"auth0_domain\", \"roch.auth0.com\");",
-
+									"postman.setEnvironmentVariable(\"username\", \"admin@roch.com\");",
+									"postman.setEnvironmentVariable(\"password\", \"cce4135\");",
 									"postman.setEnvironmentVariable(\"url\", \"http://localhost:3000/api/\");",
 									"postman.setEnvironmentVariable(\"pathScores\", \"scores\");",
 									"postman.setEnvironmentVariable(\"urlPath\", \"scores\");",
 									"postman.setEnvironmentVariable(\"pathMembers\", \"members\");",
 									"postman.setEnvironmentVariable(\"pathScorecards\", \"scorecards\");",
 									"postman.setEnvironmentVariable(\"pathMatches\", \"matches\");"
-								]
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "6e38943c-3217-4a17-9222-18c2cabf318b",
+								"exec": [
+									"tests[\"Successful Login request\"] = responseCode.code === 200 || responseCode.code === 201;",
+									"",
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setGlobalVariable(\"access_token\", jsonData.access_token);",
+									"postman.setGlobalVariable(\"id_token\", jsonData.id_token);",
+									"console.log(jsonData.access_token);",
+									"",
+									"var myToken = (atob(jsonData.access_token));",
+									"console.log('MyToken', (myToken));",
+									"postman.setEnvironmentVariable(\"role\",myToken.substring(myToken.search(\"https://roch.com/roles\")+26,myToken.search(\"https://roch.com/roles\")+30));",
+									"console.log('MyToken.role', myToken.substring(myToken.search(\"https://roch.com/roles\")+26,myToken.search(\"https://roch.com/roles\")+30));",
+									"pm.test(\"Role is \")",
+									"pm.test(postman.getEnvironmentVariable(\"role\"));",
+									"",
+									""
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -246,38 +249,32 @@
 								{
 									"key": "grant_type",
 									"value": "password",
-									"type": "text",
-									"description": ""
+									"type": "text"
 								},
 								{
 									"key": "client_id",
 									"value": "9E3q7XC0qIfGdCgoLehJRhFoKKNstSIo",
-									"type": "text",
-									"description": ""
+									"type": "text"
 								},
 								{
 									"key": "audience",
 									"value": "http://localhost:4200/home",
-									"type": "text",
-									"description": ""
+									"type": "text"
 								},
 								{
 									"key": "password",
 									"value": "{{password}}",
-									"type": "text",
-									"description": ""
+									"type": "text"
 								},
 								{
 									"key": "connection",
 									"value": "Username-Password-Authentication",
-									"type": "text",
-									"description": ""
+									"type": "text"
 								},
 								{
 									"key": "username",
 									"value": "{{username}}",
-									"type": "text",
-									"description": ""
+									"type": "text"
 								}
 							]
 						},
@@ -295,139 +292,106 @@
 						"description": "This is the OAuth 2.0 grant that highly trusted apps utilize in order to access an API. In this flow the end-user is asked to fill in credentials (username/password) typically using an interactive form. This information is later on sent to the Client and the Authorization Server. It is therefore imperative that the Client is absolutely trusted with this information.\n\n\"audience\": \"http://localhost:4200/home\""
 					},
 					"response": []
-				},
-				{
-					"name": "Return a user's email and role",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									"var jsonData = JSON.parse(responseBody);",
-									"console.log(\"Your are a - \", jsonData.app_metadata.roles);",
-									"",
-									"if (jsonData.app_metadata.roles == 'admin'){",
-									"    tests[\"You are an admin\"] = true;",
-									"    postman.setEnvironmentVariable(\"role\", jsonData.app_metadata.roles);",
-									"}",
-									"",
-									"if (jsonData.app_metadata.roles == 'player'){",
-									"    tests[\"You are a player\"] = true;",
-									"    postman.setEnvironmentVariable(\"role\", jsonData.app_metadata.roles);",
-									"}",
-									"",
-									"if (jsonData.app_metadata.roles == 'member'){",
-									"    tests[\"You are a member\"] = true;",
-									"    postman.setEnvironmentVariable(\"role\", jsonData.app_metadata.roles);",
-									"}"
-								]
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "id_token",
-									"value": "{{id_token}}",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "https://{{auth0_domain}}/tokeninfo",
-							"protocol": "https",
-							"host": [
-								"{{auth0_domain}}"
-							],
-							"path": [
-								"tokeninfo"
-							]
-						},
-						"description": "Validates a JSON Web Token (signature and expiration) and returns the user information associated with the user id (sub property) of the token."
-					},
-					"response": []
 				}
-			]
+			],
+			"description": "Authenticate using Auth0 and its local database connection.  Successful authentication returns a JWT access-token with appropriate scopes.\n\nReturned access-token is stored globally and other data is stored in the Roch0 environment."
 		},
 		{
 			"name": "Scores",
-			"description": "",
 			"item": [
 				{
 					"name": "Create a new score",
 					"event": [
 						{
+							"listen": "prerequest",
+							"script": {
+								"id": "3d601831-dc09-4605-bb25-6037b703ca2a",
+								"exec": [
+									"postman.setEnvironmentVariable(\"urlPath\", postman.getEnvironmentVariable(\"pathScores\"));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "4f5ef8f6-496f-4b38-a126-15c2ddb2607a",
 								"exec": [
-									"if (responseBody.includes(\"Insufficient\")=== true){",
-									"    tests[\"You are not an admin.  No authorization to create a score\"] = true;",
-									"    tests[\"Returns- 401 (Unauthorized)\"] = responseCode.code === 401",
-									"    postman.setEnvironmentVariable(\"scoreId\", \"58e93fe3295262a819df627f\"); //dummy ID",
-									"}",
+									"if (pm.environment.get(\"role\")=== \"Memb\" || pm.environment.get(\"role\")=== \"Visi\"){",
+									"    pm.test(\"Status code is 403\", function () {",
+									"        pm.expect(pm.response.code).to.be.oneOf([401,403]);",
 									"",
-									"else {",
-									"var jsonData = JSON.parse(responseBody);",
-									"console.log(\"RB\",responseBody);",
+									"        tests[\"You are not an Admin or Player.  No authorization to create a score\"] = true;",
+									"        postman.setEnvironmentVariable(\"scoreId\", \"58e93fe3295262a819df627f\"); //dummy ID",
 									"",
-									"",
-									"if (postman.getEnvironmentVariable(\"role\") === 'admin'){",
-									"    tests[\"You are an admin\"] = true;",
-									"",
-									"tests[\"Successful POST request\"] = responseCode.code === 200 || responseCode.code === 201 || responseCode.code === 202;",
-									"tests[\"Response time is less than 300ms\"] = responseTime < 500;",
-									"",
-									"tests[\"id is Present\"] = responseBody.has(\"id\");",
-									"tests[\"user Present\"] = responseBody.has(\"user\");",
-									"tests[\"matchId is Present\"] = responseBody.has(\"matchId\");",
-									"tests[\"memberId is Present\"] = responseBody.has(\"memberId\");",
-									"tests[\"wonIndo is Present\"] = responseBody.has(\"wonIndo\");",
-									"tests[\"wonOneBall is Present\"] = responseBody.has(\"wonOneBall\");",
-									"tests[\"wonTwoBall is Present\"] = responseBody.has(\"wonTwoBall\");",
-									"tests[\"name is Present\"] = responseBody.has(\"name\");",
-									"tests[\"cap is Present\"] = responseBody.has(\"cap\");",
-									"tests[\"created is Present\"] = responseBody.has(\"created\");",
-									"tests[\"foursomeIds is Present\"] = responseBody.has(\"foursomeIds\");",
-									"",
-									"var schema = {",
-									"    \"type\": \"object\",",
-									"    ",
-									"                \"properties\": {",
-									"                    \"id\": { \"type\": \"string\" },",
-									"                    \"user\": { \"type\": \"string\" },",
-									"                    \"matchId\": { \"type\": \"string\" },",
-									"                    \"memberId\": { \"type\": \"string\" },",
-									"                    \"cap\": { \"type\": \"string\" },",
-									"                    \"wonIndo\": { \"type\": \"boolean\" },",
-									"                    \"wonOneBall\": { \"type\": \"boolean\" },",
-									"                    \"wonTwoBall\": { \"type\": \"boolean\" },",
-									"                    \"created\": { \"type\": \"string\" },",
-									"                    \"name\": { \"type\": \"string\" },",
-									"                    \"foursomesIds\": { \"type\": [\"string\"] }",
-									"              ",
+									"    })",
 									"    }",
-									"};",
-									"var data = JSON.parse(responseBody);",
 									"",
-									"tests[\"Valid schema\"] = tv4.validate(data, schema);",
-									"console.log('DATA', data, tv4.error);",
-									"postman.setEnvironmentVariable(\"scoreId\", data._id);",
+									" else if (pm.environment.get(\"role\")=== \"Admi\" || pm.environment.get(\"role\")=== \"Play\") {",
+									"    var jsonData = JSON.parse(responseBody);",
+									"    console.log(\"RB\",responseBody);",
 									"",
-									"}",
 									"",
-									"}",
+									"    if (postman.getEnvironmentVariable(\"role\") === 'Admi'){",
+									"        tests[\"You are an admin\"] = true;",
+									"    }",
+									"    pm.test(\"Status code is 200\", function () {",
+									"        pm.expect(pm.response.code).to.be.oneOf([200,201,202]);",
+									"    });",
+									"    tests[\"Response time is less than 300ms\"] = responseTime < 500;",
 									"",
+									"    tests[\"id is Present\"] = responseBody.has(\"id\");",
+									"    tests[\"user Present\"] = responseBody.has(\"user\");",
+									"    tests[\"matchId is Present\"] = responseBody.has(\"matchId\");",
+									"    tests[\"memberId is Present\"] = responseBody.has(\"memberId\");",
+									"    tests[\"wonIndo is Present\"] = responseBody.has(\"wonIndo\");",
+									"    tests[\"wonOneBall is Present\"] = responseBody.has(\"wonOneBall\");",
+									"    tests[\"wonTwoBall is Present\"] = responseBody.has(\"wonTwoBall\");",
+									"    tests[\"name is Present\"] = responseBody.has(\"name\");",
+									"    tests[\"cap is Present\"] = responseBody.has(\"cap\");",
+									"    tests[\"created is Present\"] = responseBody.has(\"created\");",
+									"    tests[\"foursomeIds is Present\"] = responseBody.has(\"foursomeIds\");",
+									"",
+									"    var schema = {",
+									"        \"type\": \"object\",",
+									"        ",
+									"                    \"properties\": {",
+									"                        \"id\": { \"type\": \"string\" },",
+									"                        \"user\": { \"type\": \"string\" },",
+									"                        \"matchId\": { \"type\": \"string\" },",
+									"                        \"memberId\": { \"type\": \"string\" },",
+									"                        \"cap\": { \"type\": \"string\" },",
+									"                        \"todaysscore\" : { \"type\": \"number\"},",
+									"                        \"wonIndo\": { \"type\": \"boolean\" },",
+									"                        \"wonOneBall\": { \"type\": \"boolean\" },",
+									"                        \"wonTwoBall\": { \"type\": \"boolean\" },",
+									"                        \"created\": { \"type\": \"string\" },",
+									"                        \"name\": { \"type\": \"string\" },",
+									"                        \"foursomesIds\": { \"type\": [\"string\"] }",
+									"                ",
+									"        }",
+									"    };",
+									"    var data = JSON.parse(responseBody);",
+									"",
+									"    tests[\"Valid schema\"] = tv4.validate(data, schema);",
+									"    console.log('DATA', data, tv4.error);",
+									"    postman.setEnvironmentVariable(\"scoreId\", data._id);",
+									" }",
+									" else {",
+									"    pm.test(\"Role is \")",
+									"    pm.test(postman.getEnvironmentVariable(\"role\"));",
+									" }",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
 					"request": {
 						"method": "POST",
 						"header": [
@@ -449,9 +413,9 @@
 							"raw": "{\n \"name\": \"TEST - Postman\",\n        \"matchId\": \"58e1e32d4fb9c270337a6dc7\",\n        \"memberId\": \"58d60df0c2c0304804aa17fe\",\n        \"user\": \"58afd0948462ac0e9cd8bf30\",\n        \"datePlayed\": \"2017-04-01T07:00:00.000Z\",\n        \"cap\": 16,\n        \"partnerId\": \"58c59648418efafc258955e1\",\n        \"wonIndo\": false,\n        \"wonOneBall\": false,\n        \"wonTwoBall\": false,\n        \"foursomeIds\": [\n            \"58c59648418efafc258955e1\",\n            \"58b3a7cb4d03ed15382d0c09\",\n            \"58bef746f9fe3b18e80059ac\"\n        ]\n    }"
 						},
 						"url": {
-							"raw": "{{url}}{{pathScores}}",
+							"raw": "{{url}}{{urlPath}}",
 							"host": [
-								"{{url}}{{pathScores}}"
+								"{{url}}{{urlPath}}"
 							]
 						},
 						"description": "Score data are not manually entered.  Object_ids reference members and matches.  These _ids are not \"populated.\"\n\nPOST a new Score.  \n- Check DateCreated posts\n- Cap is a number"
@@ -464,26 +428,46 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "5ce641a0-8040-46d9-a8bd-67fa10d3ff3b",
 								"exec": [
-									"if (responseBody.includes(\"Insufficient\")=== true){",
-									"    tests[\"You are not an admin.  No authorization to update a score\"] = true;",
-									"    tests[\"Returns- 401 (Unauthorized)\"] = responseCode.code === 401",
-									"}",
+									"if (pm.environment.get(\"role\")=== \"Memb\" || pm.environment.get(\"role\")=== \"Visi\"){",
+									"    pm.test(\"Status code is 403\", function () {",
+									"        pm.expect(pm.response.code).to.be.oneOf([401,403]);",
 									"",
-									"else {",
-									"tests[\"Response time is less than 200ms\"] = responseTime < 200;",
+									"        tests[\"You are not an Admin or Player.  No authorization to update a score\"] = true;",
+									"    })",
+									"    }",
 									"",
-									"tests[\"Successful PUT by ID request\"] = responseCode.code === 200;",
+									" else if (pm.environment.get(\"role\")=== \"Admi\" || pm.environment.get(\"role\")=== \"Play\") {",
+									"    var jsonData = JSON.parse(responseBody);",
+									"    console.log(\"RB\",responseBody);",
 									"",
-									"var jsonData = JSON.parse(responseBody);",
+									"    pm.test(\"Status code is 200\", function () {",
+									"        pm.expect(pm.response.code).to.be.oneOf([200,201,202]);",
+									"    });",
+									"    tests[\"Response time is less than 300ms\"] = responseTime < 500;",
+									"",
+									"    var jsonData = JSON.parse(responseBody);",
 									"tests[\"Name contains TEST\"] = jsonData.name.includes(\"TEST\");",
 									"tests[\"Name contains Billy\"] = jsonData.name.includes(\"Billy\");",
-									"}"
-								]
+									" }",
+									" else {",
+									"    pm.test(\"Role is \")",
+									"    pm.test(postman.getEnvironmentVariable(\"role\"));",
+									"    tests[\"You are not an Admin or Player.  No authorization to update a score\"] = true",
+									" }",
+									"",
+									""
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
 					"request": {
 						"method": "PUT",
 						"header": [
@@ -502,18 +486,17 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n \"name\": \"TEST - Postman Billy\",\n        \"matchId\": \"58e1e32d4fb9c270337a6dc8\",\n        \"cap\": \"69\"\n    }"
+							"raw": "{\n \"name\": \"TEST - Postman Billy073020\",\n        \"matchId\": \"58e1e32d4fb9c270337a6dc8\",\n        \"cap\": \"19\",\n        \"todaysscore\": 75,\n        \"wonTwoBall\": true\n    }"
 						},
 						"url": {
-							"raw": "{{url}}{{pathScores}}/{{scoreId}}",
+							"raw": "{{url}}{{urlPath}}/{{scoreId}}",
 							"host": [
-								"{{url}}{{pathScores}}"
+								"{{url}}{{urlPath}}"
 							],
 							"path": [
 								"{{scoreId}}"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -523,14 +506,18 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "02eabc93-97cf-4af8-b1e8-905f441a0a57",
 								"exec": [
 									"tests[\"Successful GET ALL request\"] = responseCode.code === 200 || responseCode.code === 201",
 									""
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [
@@ -548,16 +535,15 @@
 							}
 						],
 						"body": {
-							"mode": "raw",
-							"raw": "{\n    \n    \"name\": \"April Fool Judy and Billy1\",\n    \n    \n    \"cap\": \"33\"\n   \n    \n    \n}"
+							"mode": "formdata",
+							"formdata": []
 						},
 						"url": {
-							"raw": "{{url}}{{pathScores}}",
+							"raw": "{{url}}{{urlPath}}",
 							"host": [
-								"{{url}}{{pathScores}}"
+								"{{url}}{{urlPath}}"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -606,17 +592,15 @@
 								"value": "Bearer {{access_token}}"
 							}
 						],
-						"body": {},
 						"url": {
-							"raw": "{{url}}{{pathScores}}/{{scoreId}}",
+							"raw": "{{url}}{{urlPath}}/{{scoreId}}",
 							"host": [
-								"{{url}}{{pathScores}}"
+								"{{url}}{{urlPath}}"
 							],
 							"path": [
 								"{{scoreId}}"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -655,17 +639,15 @@
 								"value": "Bearer {{access_token}}"
 							}
 						],
-						"body": {},
 						"url": {
-							"raw": "{{url}}{{pathScores}}/zzzzzzzzzzzz",
+							"raw": "{{url}}{{urlPath}}/zzzzzzzzzzzz",
 							"host": [
-								"{{url}}{{pathScores}}"
+								"{{url}}{{urlPath}}"
 							],
 							"path": [
 								"zzzzzzzzzzzz"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -675,40 +657,47 @@
 						{
 							"listen": "test",
 							"script": {
-								"type": "text/javascript",
+								"id": "c37d7f74-a5f6-4dae-97f8-7dcb185d4d06",
 								"exec": [
-									"if (responseBody.includes(\"Insufficient\")=== true){\r",
-									"    tests[\"You are not an admin.  No authorization to delete a score\"] = true;\r",
-									"    tests[\"Returns- 401 (Unauthorized)\"] = responseCode.code === 401\r",
-									"}\r",
+									"if (pm.environment.get(\"role\")=== \"Memb\" || pm.environment.get(\"role\")=== \"Visi\" || pm.environment.get(\"role\")=== \"Play\"){\r",
+									"    pm.test(\"Status code is 40X\", function () {\r",
+									"        pm.expect(pm.response.code).to.be.oneOf([401,403,404]);\r",
 									"\r",
-									"else {\r",
-									"var jsonData = JSON.parse(responseBody);\r",
-									"console.log(\"RB\",responseBody);\r",
+									"        tests[\"You are not an Admin or Player or did not create a score to test.  No authorization to delete a score\"] = true;\r",
+									"    })\r",
+									"    }\r",
 									"\r",
+									" else if (pm.environment.get(\"role\")=== \"Admi\") {\r",
+									"    var jsonData = JSON.parse(responseBody);\r",
+									"    console.log(\"RB\",responseBody);\r",
 									"\r",
-									"if (postman.getEnvironmentVariable(\"role\") === 'admin'){\r",
+									"    pm.test(\"Status code is 200\", function () {\r",
+									"        pm.expect(pm.response.code).to.be.oneOf([200,201,202]);\r",
+									"    });\r",
+									"    tests[\"Response time is less than 300ms\"] = responseTime < 500;\r",
 									"    tests[\"You are an admin\"] = true;\r",
+									"    var jsonData = JSON.parse(responseBody);\r",
+									"    console.log(\"RB\",responseBody);\r",
+									"    try{\r",
+									"        var jsonData = JSON.parse(responseBody);\r",
+									"        tests[\"Deleted score name contained TEST\"] = jsonData.name.includes(\"TEST\");\r",
+									"        tests[\"Deleted scorre name contained Billy\"] = jsonData.name.includes(\"Billy\");\r",
 									"\r",
-									"tests[\"Successful GET ID request\"] = responseCode.code === 200 || responseCode.code === 201\r",
+									"        }\r",
+									"    catch(err)\r",
+									"        {\r",
+									"            console.log(\"ResponseBody is null\", err);\r",
+									"        }\r",
+									" }\r",
 									"\r",
-									"var jsonData = JSON.parse(responseBody);\r",
-									"console.log(jsonData);\r",
-									"\r",
-									"tests[\"Id was found\"] =responseBody!=\"null\";\r",
-									"\r",
-									"try{\r",
-									"var jsonData = JSON.parse(responseBody);\r",
-									"tests[\"Deleted Name contained TEST\"] = jsonData.name.includes(\"TEST\");\r",
-									"tests[\"Deleted Name contained Billy\"] = jsonData.name.includes(\"Billy\");\r",
-									"}\r",
-									"catch(err)\r",
-									"{\r",
-									"    console.log(\"ResponseBody is null\", err);\r",
-									"}\r",
-									"}\r",
-									"}"
-								]
+									" else {\r",
+									"    pm.test(\"Role is \")\r",
+									"    pm.test(postman.getEnvironmentVariable(\"role\"));\r",
+									"    tests[\"You are not an Admin or Player.  No authorization to update a score\"] = true\r",
+									" }\r",
+									""
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -720,21 +709,446 @@
 								"value": "Bearer {{access_token}}"
 							}
 						],
-						"body": {},
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
 						"url": {
-							"raw": "{{url}}{{pathScores}}/{{scoreId}}",
+							"raw": "{{url}}{{urlPath}}/{{scoreId}}",
 							"host": [
-								"{{url}}{{pathScores}}"
+								"{{url}}{{urlPath}}"
 							],
 							"path": [
 								"{{scoreId}}"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Scorecards",
+			"item": [
+				{
+					"name": "Create a new scorecard",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "e8eb919d-fe43-40b1-89a7-104169e70aea",
+								"exec": [
+									"postman.setEnvironmentVariable(\"urlPath\", postman.getEnvironmentVariable(\"pathScorecards\"));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "50f9c48e-8ddb-42ca-8695-f0e4b55c19b8",
+								"exec": [
+									"if (pm.environment.get(\"role\")=== \"Memb\" || pm.environment.get(\"role\")=== \"Visi\"|| pm.environment.get(\"role\")=== \"Play\"){",
+									"    pm.test(\"Status code is 40X\", function () {",
+									"        pm.expect(pm.response.code).to.be.oneOf([401,403]);",
+									"",
+									"        tests[\"You are not an Admin.  No authorization to create a scorecard\"] = true;",
+									"        postman.setEnvironmentVariable(\"scorecardId\", \"58e93fe3295262a819df627f\"); //dummy ID",
+									"",
+									"    })",
+									"    }",
+									"",
+									" else if (pm.environment.get(\"role\")=== \"Admi\") {",
+									"    var jsonData = JSON.parse(responseBody);",
+									"    console.log(\"RB\",responseBody);",
+									"",
+									"",
+									"    if (postman.getEnvironmentVariable(\"role\") === 'Admi'){",
+									"        tests[\"You are an admin\"] = true;",
+									"    }",
+									"    pm.test(\"Status code is 200\", function () {",
+									"        pm.expect(pm.response.code).to.be.oneOf([200,201,202]);",
+									"    });",
+									"    tests[\"Response time is less than 300ms\"] = responseTime < 500;",
+									"",
+									"    tests[\"id is Present\"] = responseBody.has(\"id\");",
+									"    tests[\"user is Present\"] = responseBody.has(\"user\");",
+									"    tests[\"name is Present\"] = responseBody.has(\"name\");",
+									"    tests[\"yardsInputString is Present\"] = responseBody.has(\"yardsInputString\");",
+									"    tests[\"parInputString is Present\"] = responseBody.has(\"parInputString\");",
+									"    // tests[\"created is Present\"] = responseBody.has(\"created\");  TODO Why isn't created created?",
+									"    tests[\"hCapInputString is Present\"] = responseBody.has(\"hCapInputString\");",
+									"",
+									"    var schema = {",
+									"        \"type\": \"object\",",
+									"                   \"properties\": {",
+									"                        \"id\": { \"type\": \"string\" },",
+									"                        \"name\": { \"type\": \"string\" },",
+									"                        \"user\": { \"type\": \"string\" },",
+									"                        \"yardsInputString\": { \"type\": \"string\" },",
+									"                        \"parInputString\": { \"type\": \"string\" },",
+									"                        \"hCapInputString\": { \"type\": \"string\" },",
+									"                       ",
+									"                        \"rating\": { \"type\": \"number\" },",
+									"                        \"slope\": { \"type\": \"number\" }                ",
+									"        }",
+									"    };",
+									"    var data = JSON.parse(responseBody);",
+									"",
+									"    tests[\"Valid schema\"] = tv4.validate(data, schema);",
+									"    console.log('DATA', data, tv4.error);",
+									"    postman.setEnvironmentVariable(\"scorecardId\", data._id);",
+									" }",
+									" else {",
+									"    pm.test(\"Role is \")",
+									"    pm.test(postman.getEnvironmentVariable(\"role\"));",
+									" }",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "audience",
+								"value": "http://localhost:4200/home"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\"name\": \"Postman Test Scorecard\",\n    \"yardsInputString\": \"400,190,,440,333,1,1,1,1,1,1,1,1,1,1\",\n    \"user\": \"58afd0948462ac0e9cd8bf30\",\n    \"parInputString\": \"4,3,4,4,4,5,3,4,5,3,5,4,3,4,4,4,6,4\",\n    \"hCapInputString\": \"11,17,5,3,7,5,5,5,2,4,6,8,10,12,14,16,18,1,2\",\n\n    \"rating\": 74.2,\n    \"slope\": 133\n  } \n  "
+						},
+						"url": {
+							"raw": "{{url}}{{urlPath}}",
+							"host": [
+								"{{url}}{{urlPath}}"
+							]
+						},
+						"description": "Score data are not manually entered.  Object_ids reference members and matches.  These _ids are not \"populated.\"\n\nPOST a new Score.  \n- Check DateCreated posts\n- Cap is a number"
+					},
+					"response": []
+				},
+				{
+					"name": "Update this scorecard",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5c8ac61a-f2b1-4014-a6b5-a21c3bed1eef",
+								"exec": [
+									"if (pm.environment.get(\"role\")=== \"Memb\" || pm.environment.get(\"role\")=== \"Visi\" || pm.environment.get(\"role\")=== \"Play\"){",
+									"    pm.test(\"Status code is 403\", function () {",
+									"        pm.expect(pm.response.code).to.be.oneOf([401,403]);",
+									"",
+									"        tests[\"You are not an Admin or Player.  No authorization to update a score\"] = true;",
+									"    })",
+									"    }",
+									"",
+									" else if (pm.environment.get(\"role\")=== \"Admi\" ) {",
+									"    var jsonData = JSON.parse(responseBody);",
+									"    console.log(\"RB\",responseBody);",
+									"",
+									"    pm.test(\"Status code is 200\", function () {",
+									"        pm.expect(pm.response.code).to.be.oneOf([200,201,202]);",
+									"    });",
+									"    tests[\"Response time is less than 300ms\"] = responseTime < 500;",
+									"",
+									"    var jsonData = JSON.parse(responseBody);",
+									"tests[\"Name contains Update\"] = jsonData.name.includes(\"Update\");",
+									"tests[\"YardsInputString contains 600\"] = jsonData.yardsInputString.includes(\"600\");",
+									" }",
+									" else {",
+									"    pm.test(\"Role is \")",
+									"    pm.test(postman.getEnvironmentVariable(\"role\"));",
+									"    tests[\"You are not an Admin or Player.  No authorization to update a score\"] = true",
+									" }",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "audience",
+								"value": "http://localhost:4200/home"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n \"name\": \"Postman Scorecard Update\",\n \"slope\": 199,\n \"yardsInputString\": \"600,600,600\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}{{urlPath}}/{{scorecardId}}",
+							"host": [
+								"{{url}}{{urlPath}}"
+							],
+							"path": [
+								"{{scorecardId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all scorescards",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c549e3f3-2097-4b1c-aee3-e2da844e2604",
+								"exec": [
+									"tests[\"Successful GET ALL request\"] = responseCode.code === 200 || responseCode.code === 201",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "audience",
+								"value": "http://localhost:4200/home"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{url}}{{urlPath}}",
+							"host": [
+								"{{url}}{{urlPath}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get this scorecard",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0500d3d2-7649-4685-98ed-3d6006a970b8",
+								"exec": [
+									"//Member and Player roles\r",
+									"var x = postman.getEnvironmentVariable(\"scorecardId\")\r",
+									"if ( x === \"58e93fe3295262a819df627f\") {\r",
+									"    tests[\"No scorecard created.  \"] = true;\r",
+									"}\r",
+									"//Admin role\r",
+									"else {\r",
+									"tests[\"Successful GET ID request\"] = responseCode.code === 200 || responseCode.code === 201\r",
+									"\r",
+									"var jsonData = JSON.parse(responseBody);\r",
+									"console.log(jsonData);\r",
+									"\r",
+									"tests[\"Id was found\"] =responseBody!=\"null\";\r",
+									"\r",
+									"try{\r",
+									"var jsonData = JSON.parse(responseBody);\r",
+									"tests[\"Name contains Postman\"] = jsonData.name.includes(\"Postman\");\r",
+									"}\r",
+									"catch(err)\r",
+									"{\r",
+									"    console.log(\"ResponseBody is null\", err);\r",
+									"}\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{url}}{{urlPath}}/{{scorecardId}}",
+							"host": [
+								"{{url}}{{urlPath}}"
+							],
+							"path": [
+								"{{scorecardId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ID not found - scorecard",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "26e4f784-2351-436b-9255-585203529133",
+								"exec": [
+									"\r",
+									"tests[\"StatusCode 404 for not found\"] = responseCode.code === 404 \r",
+									"\r",
+									"\r",
+									"try{\r",
+									"var jsonData = JSON.parse(responseBody);\r",
+									"tests[\"Id not found.  Body is null\"] =responseBody === \"null\";\r",
+									"}\r",
+									"catch(err)\r",
+									"{\r",
+									"    console.log(\"ResponseBody is null\", err);\r",
+									"}\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{url}}{{urlPath}}/zzzzzzzzzzzz",
+							"host": [
+								"{{url}}{{urlPath}}"
+							],
+							"path": [
+								"zzzzzzzzzzzz"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete this scorecard",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "daefb126-8005-4334-8fe7-2546fcc7b4eb",
+								"exec": [
+									"if (pm.environment.get(\"role\")=== \"Memb\" || pm.environment.get(\"role\")=== \"Visi\" || pm.environment.get(\"role\")=== \"Play\"){\r",
+									"    pm.test(\"Status code is 40X\", function () {\r",
+									"        pm.expect(pm.response.code).to.be.oneOf([401,403,404]);\r",
+									"\r",
+									"        tests[\"You are not an Admin or Player or did not create a score to test.  No authorization to delete a score\"] = true;\r",
+									"    })\r",
+									"    }\r",
+									"\r",
+									" else if (pm.environment.get(\"role\")=== \"Admi\") {\r",
+									"    var jsonData = JSON.parse(responseBody);\r",
+									"    console.log(\"RB\",responseBody);\r",
+									"\r",
+									"    pm.test(\"Status code is 200\", function () {\r",
+									"        pm.expect(pm.response.code).to.be.oneOf([200,201,202]);\r",
+									"    });\r",
+									"    tests[\"Response time is less than 300ms\"] = responseTime < 500;\r",
+									"    tests[\"You are an admin\"] = true;\r",
+									"    var jsonData = JSON.parse(responseBody);\r",
+									"    console.log(\"RB\",responseBody);\r",
+									"    try{\r",
+									"        var jsonData = JSON.parse(responseBody);\r",
+									"        tests[\"Deleted scorecard name contained Postman\"] = jsonData.name.includes(\"Postman\");\r",
+									"\r",
+									"        }\r",
+									"    catch(err)\r",
+									"        {\r",
+									"            console.log(\"ResponseBody is null\", err);\r",
+									"        }\r",
+									" }\r",
+									"\r",
+									" else {\r",
+									"    pm.test(\"Role is \")\r",
+									"    pm.test(postman.getEnvironmentVariable(\"role\"));\r",
+									"    tests[\"You are not an Admin or Player.  No authorization to update a score\"] = true\r",
+									" }\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{url}}{{urlPath}}/{{scorecardId}}",
+							"host": [
+								"{{url}}{{urlPath}}"
+							],
+							"path": [
+								"{{scorecardId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
 		}
 	]
 }

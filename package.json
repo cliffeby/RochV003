@@ -11,7 +11,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "testserverfiles": "node ./node_modules/mocha/bin/mocha server/tests",
-    "newman": "newman run server/tests/roch.postman_collection.json -d server/tests/pdata.json",
+    "newman": "newman run server/tests/roch.postman_collection.json -e server/tests/roch1.postman_environment.json -d server/tests/pdata.json --verbose",
     "testserver": "node server"
   },
   "private": true,
