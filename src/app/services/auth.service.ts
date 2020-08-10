@@ -125,7 +125,7 @@ export class AuthService {
           localStorage.setItem("scopes", JSON.stringify(scopes));
             break;
         case 'Player':
-          scopes = `openid profile read:scorecards read:matches read:scores read:members create:match create:member create:score create:scorecard update:scorecard update:match update:score update:member`;
+          scopes = `openid profile read:scorecards read:matches read:scores read:members create:match create:member create:score update:match update:score update:member`;
           localStorage.setItem("scopes", JSON.stringify(scopes));
             break;
         case 'Member':
@@ -135,7 +135,7 @@ export class AuthService {
         case 'Vistor': console.log('not implemented')
             break;
         default:
-            console.log('invalid role');
+            console.log('invalid role'); 
         }
   }
 }
