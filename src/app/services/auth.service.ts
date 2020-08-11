@@ -135,7 +135,7 @@ export class AuthService {
         case 'Vistor': console.log('not implemented')
             break;
         default:
-            console.log('invalid role'); 
+            console.log('invalid role');
         }
   }
 }
