@@ -20,11 +20,11 @@ const ScorecardSchema = new Schema({
   //   type: String
   // }],
   hCapInputString: String,
-  hCaps: [{
+  hCaps: [{      //can reove but test
     type: String
   }],
   yardsInputString: String,
-  yards: [{
+  yards: [{       // can remove but test
     type: String
   }],
   created: {
