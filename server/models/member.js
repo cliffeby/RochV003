@@ -17,10 +17,10 @@ const MemberSchema = new Schema({
   }
   ,
   currentHCap: Number,
-  matchIds: [{
-    type: Schema.ObjectId,
-    ref: 'Match'
-  }],
+  // matchIds: [{
+  //   type: Schema.ObjectId,
+  //   ref: 'Match'
+  // }],
   created: {
     type: Date,
     default: Date.now
