@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import "rxjs/add/operator/filter";
 import * as auth0 from "auth0-js";
+import * as jwt_decode from "jwt-decode";
 
 @Injectable()
 export class AuthService {
@@ -36,6 +37,7 @@ export class AuthService {
           "AuthIDToken",
           authResult.idToken
         );
+
       } else if (err) {
         this.router.navigate(["/home"]);
         console.log(err);
@@ -69,6 +71,7 @@ export class AuthService {
     console.log("Result", authResult);
     console.log("PermissionsT", authResult.accessToken.permissions);
     console.log("SSSCOPESJSON", JSON.stringify(scopes));
+    console.log("decoded token", jwt_decode(authResult.accessToken));
     this.getProfile(gpcb.cb);
 
   }
@@ -117,25 +120,13 @@ export class AuthService {
     });
   }
   public rolesToScopes(roles){
+    const perms = jwt_decode(localStorage.getItem("access_token"));
     localStorage.removeItem("scopes");
-    var scopes: string;
-    switch (roles) {
-        case 'Admin':
-          scopes = `openid profile read:scorecards read:matches read:scores read:members create:match create:member create:score create:scorecard update:scorecard update:match update:score update:member remove:scorecard remove:match remove:score remove:member`;
-          localStorage.setItem("scopes", JSON.stringify(scopes));
-            break;
-        case 'Player':
-          scopes = `openid profile read:scorecards read:matches read:scores read:members create:match create:member create:score update:match update:score update:member`;
-          localStorage.setItem("scopes", JSON.stringify(scopes));
-            break;
-        case 'Member':
-          scopes = `openid profile read:scorecards read:matches read:scores read:members`;
-          localStorage.setItem("scopes", JSON.stringify(scopes));
-            break;
-        case 'Vistor': console.log('not implemented')
-            break;
-        default:
-            console.log('invalid role');
-        }
+    var scopes: string = "openid profile";
+    for (var p of perms.permissions) {
+      scopes = scopes + " " + p;
+    }
+    localStorage.setItem("scopes", JSON.stringify(scopes));
+    console.log('new scopes', scopes);
   }
 }
