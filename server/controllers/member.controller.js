@@ -67,7 +67,7 @@ exports.postMember=function(req, res){
     if (err){
       console.log('Error saving member');
     }else{
-      console.log('User2',insertedMember);
+      console.log('Member',insertedMember);
       res.json(insertedMember);
     }
   });

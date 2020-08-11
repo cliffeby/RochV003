@@ -46,6 +46,7 @@ exports.postMatch= function(req, res){
       console.log('Error saving match');
     }else{
       res.json(insertedMatch);
+      console.log('Match',insertedMatch);
     }
   });
 };
@@ -101,3 +102,4 @@ exports.deleteMatch = function(req, res){
     }
   });
 };
+
