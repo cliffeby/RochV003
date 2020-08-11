@@ -1086,7 +1086,7 @@
 									"    pm.test(\"Status code is 40X\", function () {\r",
 									"        pm.expect(pm.response.code).to.be.oneOf([401,403,404]);\r",
 									"\r",
-									"        tests[\"You are not an Admin or Player or did not create a score to test.  No authorization to delete a score\"] = true;\r",
+									"        tests[\"You are not an Admin or Player or did not create a scorecard to test.  No authorization to delete a scorecard\"] = true;\r",
 									"    })\r",
 									"    }\r",
 									"\r",
@@ -1115,7 +1115,7 @@
 									" else {\r",
 									"    pm.test(\"Role is \")\r",
 									"    pm.test(postman.getEnvironmentVariable(\"role\"));\r",
-									"    tests[\"You are not an Admin or Player.  No authorization to update a score\"] = true\r",
+									"    tests[\"You are not an Admin.  No authorization to delete a scorecard\"] = true\r",
 									" }\r",
 									""
 								],
@@ -1142,6 +1142,852 @@
 							],
 							"path": [
 								"{{scorecardId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Members",
+			"item": [
+				{
+					"name": "Create a new member",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "13512ae3-c790-464e-9aab-b7066c4908db",
+								"exec": [
+									"postman.setEnvironmentVariable(\"urlPath\", postman.getEnvironmentVariable(\"pathMembers\"));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "d4e8e9a2-ff5a-497b-87bd-fa80bca21910",
+								"exec": [
+									"if (pm.environment.get(\"role\")=== \"Memb\" || pm.environment.get(\"role\")=== \"Visi\"){",
+									"    pm.test(\"Status code is 40X\", function () {",
+									"        pm.expect(pm.response.code).to.be.oneOf([401,403]);",
+									"",
+									"        tests[\"You are not an Admin.  No authorization to create a member\"] = true;",
+									"        postman.setEnvironmentVariable(\"memberId\", \"58e93fe3295262a819df627f\"); //dummy ID",
+									"",
+									"    })",
+									"    }",
+									"",
+									" else if (pm.environment.get(\"role\")=== \"Admi\"|| pm.environment.get(\"role\")=== \"Play\") {",
+									"    var jsonData = JSON.parse(responseBody);",
+									"    console.log(\"RB\",responseBody);",
+									"",
+									"",
+									"    if (postman.getEnvironmentVariable(\"role\") === 'Admi'){",
+									"        tests[\"You are an admin\"] = true;",
+									"    }",
+									"    pm.test(\"Status code is 200\", function () {",
+									"        pm.expect(pm.response.code).to.be.oneOf([200,201,202]);",
+									"    });",
+									"    tests[\"Response time is less than 300ms\"] = responseTime < 500;",
+									"",
+									"    tests[\"id is Present\"] = responseBody.has(\"id\");",
+									"    // tests[\"user is Present\"] = responseBody.has(\"user\");  //TODO fails user but present in req, server and model",
+									"    tests[\"firstName is Present\"] = responseBody.has(\"firstName\");",
+									"    tests[\"lastName is Present\"] = responseBody.has(\"lastName\");",
+									"    tests[\"created is Present\"] = responseBody.has(\"created\");",
+									"    tests[\"currentHCap is Present\"] = responseBody.has(\"currentHCap\");",
+									"",
+									"    var schema = {",
+									"        \"type\": \"object\",",
+									"                   \"properties\": {",
+									"                        \"id\": { \"type\": \"string\" },",
+									"                        \"firstName\": { \"type\": \"string\" },",
+									"                        \"user\": { \"type\": \"string\" },",
+									"                        \"lastName\": { \"type\": \"string\" },                       ",
+									"                        \"currentHCap\": { \"type\": \"number\" }           ",
+									"        }",
+									"    };",
+									"    var data = JSON.parse(responseBody);",
+									"",
+									"    tests[\"Valid schema\"] = tv4.validate(data, schema);",
+									"    console.log('DATA', data, tv4.error);",
+									"    postman.setEnvironmentVariable(\"memberId\", data._id);",
+									" }",
+									" else {",
+									"    pm.test(\"Role is \")",
+									"    pm.test(postman.getEnvironmentVariable(\"role\"));",
+									" }",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "audience",
+								"value": "http://localhost:4200/home"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\"lastName\": \"Postman Test Members\",\n    \"firstName\": \"TEST\",\n    \"user\": \"58afd0948462ac0e9cd8bf30\",\n    \"currentHCap\": 4\n    } \n"
+						},
+						"url": {
+							"raw": "{{url}}{{urlPath}}",
+							"host": [
+								"{{url}}{{urlPath}}"
+							]
+						},
+						"description": "Score data are not manually entered.  Object_ids reference members and matches.  These _ids are not \"populated.\"\n\nPOST a new Score.  \n- Check DateCreated posts\n- Cap is a number"
+					},
+					"response": []
+				},
+				{
+					"name": "Update this member",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "12ed71e2-f7f8-4fd6-a28f-af33d2a3b0ce",
+								"exec": [
+									"if (pm.environment.get(\"role\")=== \"Memb\" || pm.environment.get(\"role\")=== \"Visi\" ){",
+									"    pm.test(\"Status code is 403\", function () {",
+									"        pm.expect(pm.response.code).to.be.oneOf([401,403]);",
+									"",
+									"        tests[\"You are not an Admin.  No authorization to update a member\"] = true;",
+									"    })",
+									"    }",
+									"",
+									" else if (pm.environment.get(\"role\")=== \"Admi\" || pm.environment.get(\"role\")=== \"Play\") {",
+									"    var jsonData = JSON.parse(responseBody);",
+									"    console.log(\"RB\",responseBody);",
+									"",
+									"    pm.test(\"Status code is 200\", function () {",
+									"        pm.expect(pm.response.code).to.be.oneOf([200,201,202]);",
+									"    });",
+									"    tests[\"Response time is less than 300ms\"] = responseTime < 500;",
+									"",
+									"    var jsonData = JSON.parse(responseBody);",
+									"tests[\"Name contains Update\"] = jsonData.lastName.includes(\"Update\");",
+									"tests[\"CurrenHCap is greater than 100\"] = jsonData.currentHCap > 100;",
+									" }",
+									" else {",
+									"    pm.test(\"Role is \")",
+									"    pm.test(postman.getEnvironmentVariable(\"role\"));",
+									"    tests[\"You are not an Admin or Player.  No authorization to update a member\"] = true",
+									" }",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "audience",
+								"value": "http://localhost:4200/home"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n \"lastName\": \"Postman Members Update\",\n \"currentHCap\": 199,\n \"firstName\": \"Bigger bad\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}{{urlPath}}/{{memberId}}",
+							"host": [
+								"{{url}}{{urlPath}}"
+							],
+							"path": [
+								"{{memberId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all members",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4242c3b2-b840-4abf-ad64-a6a783ff7b83",
+								"exec": [
+									"tests[\"Successful GET ALL request\"] = responseCode.code === 200 || responseCode.code === 201",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "audience",
+								"value": "http://localhost:4200/home"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{url}}{{urlPath}}",
+							"host": [
+								"{{url}}{{urlPath}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get this member",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9565eb58-6b99-4897-8ba1-998970d1c7a1",
+								"exec": [
+									"//Member and Visitor roles\r",
+									"var x = postman.getEnvironmentVariable(\"memberId\")\r",
+									"if ( x === \"58e93fe3295262a819df627f\") {\r",
+									"    tests[\"No member created.  \"] = true;\r",
+									"}\r",
+									"//Admin and Player role\r",
+									"else {\r",
+									"tests[\"Successful GET ID request\"] = responseCode.code === 200 || responseCode.code === 201\r",
+									"\r",
+									"var jsonData = JSON.parse(responseBody);\r",
+									"console.log(jsonData);\r",
+									"\r",
+									"tests[\"Id was found\"] =responseBody!=\"null\";\r",
+									"\r",
+									"try{\r",
+									"var jsonData = JSON.parse(responseBody);\r",
+									"tests[\"Last name contains Update\"] = jsonData.lastName.includes(\"Update\");\r",
+									"}\r",
+									"catch(err)\r",
+									"{\r",
+									"    console.log(\"ResponseBody is null\", err);\r",
+									"}\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{url}}{{urlPath}}/{{memberId}}",
+							"host": [
+								"{{url}}{{urlPath}}"
+							],
+							"path": [
+								"{{memberId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ID not found - member",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "62261631-73c9-460d-bd96-9353e92c8b71",
+								"exec": [
+									"\r",
+									"tests[\"StatusCode 404 for not found\"] = responseCode.code === 404 \r",
+									"\r",
+									"\r",
+									"try{\r",
+									"var jsonData = JSON.parse(responseBody);\r",
+									"tests[\"Id not found.  Body is null\"] =responseBody === \"null\";\r",
+									"}\r",
+									"catch(err)\r",
+									"{\r",
+									"    console.log(\"ResponseBody is null\", err);\r",
+									"}\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{url}}{{urlPath}}/zzzzzzzzzzzz",
+							"host": [
+								"{{url}}{{urlPath}}"
+							],
+							"path": [
+								"zzzzzzzzzzzz"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete this member",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ac46686a-30bc-4ecc-a888-15fe2924f3b3",
+								"exec": [
+									"if (pm.environment.get(\"role\")=== \"Memb\" || pm.environment.get(\"role\")=== \"Visi\" || pm.environment.get(\"role\")=== \"Play\"){\r",
+									"    pm.test(\"Status code is 40X\", function () {\r",
+									"        pm.expect(pm.response.code).to.be.oneOf([401,403,404]);\r",
+									"\r",
+									"        tests[\"You are not an Admin or did not create a member to test.  No authorization to delete a member\"] = true;\r",
+									"    })\r",
+									"    }\r",
+									"\r",
+									" else if (pm.environment.get(\"role\")=== \"Admi\") {\r",
+									"    var jsonData = JSON.parse(responseBody);\r",
+									"    console.log(\"RB\",responseBody);\r",
+									"\r",
+									"    pm.test(\"Status code is 200\", function () {\r",
+									"        pm.expect(pm.response.code).to.be.oneOf([200,201,202]);\r",
+									"    });\r",
+									"    tests[\"Response time is less than 300ms\"] = responseTime < 500;\r",
+									"    tests[\"You are an admin\"] = true;\r",
+									"    var jsonData = JSON.parse(responseBody);\r",
+									"    console.log(\"RB\",responseBody);\r",
+									"    try{\r",
+									"        var jsonData = JSON.parse(responseBody);\r",
+									"        tests[\"Deleted member last name contained Postman\"] = jsonData.lastName.includes(\"Postman\");\r",
+									"\r",
+									"        }\r",
+									"    catch(err)\r",
+									"        {\r",
+									"            console.log(\"ResponseBody is null\", err);\r",
+									"        }\r",
+									" }\r",
+									"\r",
+									" else {\r",
+									"    pm.test(\"Role is \")\r",
+									"    pm.test(postman.getEnvironmentVariable(\"role\"));\r",
+									"    tests[\"You are not an Admin.  No authorization to delete a member\"] = true\r",
+									" }\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{url}}{{urlPath}}/{{memberId}}",
+							"host": [
+								"{{url}}{{urlPath}}"
+							],
+							"path": [
+								"{{memberId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Matches",
+			"item": [
+				{
+					"name": "Create a new match",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "e01b431b-21e3-4e97-a8bc-66ff73be96a3",
+								"exec": [
+									"postman.setEnvironmentVariable(\"urlPath\", postman.getEnvironmentVariable(\"pathMatches\"));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "5a016076-946d-4956-803a-db362a998c63",
+								"exec": [
+									"if (pm.environment.get(\"role\")=== \"Memb\" || pm.environment.get(\"role\")=== \"Visi\"){",
+									"    pm.test(\"Status code is 40X\", function () {",
+									"        pm.expect(pm.response.code).to.be.oneOf([401,403]);",
+									"",
+									"        tests[\"You are not an Admin.  No authorization to create a match\"] = true;",
+									"        postman.setEnvironmentVariable(\"matchId\", \"58e93fe3295262a819df627f\"); //dummy ID",
+									"",
+									"    })",
+									"    }",
+									"",
+									" else if (pm.environment.get(\"role\")=== \"Admi\"|| pm.environment.get(\"role\")=== \"Play\") {",
+									"    var jsonData = JSON.parse(responseBody);",
+									"    console.log(\"RB\",responseBody);",
+									"",
+									"",
+									"    if (postman.getEnvironmentVariable(\"role\") === 'Admi'){",
+									"        tests[\"You are an admin\"] = true;",
+									"    }",
+									"    pm.test(\"Status code is 200\", function () {",
+									"        pm.expect(pm.response.code).to.be.oneOf([200,201,202]);",
+									"    });",
+									"    tests[\"Response time is less than 300ms\"] = responseTime < 500;",
+									"",
+									"    tests[\"id is Present\"] = responseBody.has(\"id\");",
+									"    tests[\"user is Present\"] = responseBody.has(\"user\");  //TODO fails user but present in req, server and model",
+									"    tests[\"Name is Present\"] = responseBody.has(\"name\");",
+									"    tests[\"datePlayed is Present\"] = responseBody.has(\"datePlayed\");",
+									"",
+									"",
+									"    var schema = {",
+									"        \"type\": \"object\",",
+									"                   \"properties\": {",
+									"                        \"id\": { \"type\": \"string\" },",
+									"                        \"name\": { \"type\": \"string\" },",
+									"                        \"user\": { \"type\": \"string\" },",
+									"                        \"datePlayed\": {\"type\": \"string\"},",
+									"                        \"lineUpIds\": { \"type\": \"array\" },                       ",
+									"                        \"memberIds\": { \"type\": \"array\" }           ",
+									"        }",
+									"    };",
+									"    var data = JSON.parse(responseBody);",
+									"",
+									"    tests[\"Valid schema\"] = tv4.validate(data, schema);",
+									"    console.log('DATA', data, tv4.error);",
+									"    postman.setEnvironmentVariable(\"matchId\", data._id);",
+									" }",
+									" else {",
+									"    pm.test(\"Role is \")",
+									"    pm.test(postman.getEnvironmentVariable(\"role\"));",
+									" }",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "audience",
+								"value": "http://localhost:4200/home"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\"name\": \"Postman Test Match\",\n    \"scorecardId\": \"5ceb479c18ebd1156c73013a\",\n    \"user\": \"58afd0948462ac0e9cd8bf30\",\n    \"datePlayed\": \"2020-08-19\"\n    }"
+						},
+						"url": {
+							"raw": "{{url}}{{urlPath}}",
+							"host": [
+								"{{url}}{{urlPath}}"
+							]
+						},
+						"description": "Score data are not manually entered.  Object_ids reference members and matches.  These _ids are not \"populated.\"\n\nPOST a new Score.  \n- Check DateCreated posts\n- Cap is a number"
+					},
+					"response": []
+				},
+				{
+					"name": "Update this match",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "00b4ebe1-8a45-47ab-a5e6-191f65bce181",
+								"exec": [
+									"if (pm.environment.get(\"role\")=== \"Memb\" || pm.environment.get(\"role\")=== \"Visi\" ){",
+									"    pm.test(\"Status code is 403\", function () {",
+									"        pm.expect(pm.response.code).to.be.oneOf([401,403]);",
+									"",
+									"        tests[\"You are not an Admin.  No authorization to update a match\"] = true;",
+									"    })",
+									"    }",
+									"",
+									" else if (pm.environment.get(\"role\")=== \"Admi\" || pm.environment.get(\"role\")=== \"Play\") {",
+									"    var jsonData = JSON.parse(responseBody);",
+									"    console.log(\"RB\",responseBody);",
+									"",
+									"    pm.test(\"Status code is 200\", function () {",
+									"        pm.expect(pm.response.code).to.be.oneOf([200,201,202]);",
+									"    });",
+									"    tests[\"Response time is less than 300ms\"] = responseTime < 500;",
+									"",
+									"    var jsonData = JSON.parse(responseBody);",
+									"tests[\"Name contains Updated\"] = jsonData.name.includes(\"Updated\");",
+									"tests[\"lineUpIds length is 4\"] = jsonData.lineUpIds.length === 4;",
+									" }",
+									" else {",
+									"    pm.test(\"Role is \")",
+									"    pm.test(postman.getEnvironmentVariable(\"role\"));",
+									"    tests[\"You are not an Admin or Player.  No authorization to update a match\"] = true",
+									" }",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "audience",
+								"value": "http://localhost:4200/home"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"datePlayed\": \"2020-08-20T00:00:00.000Z\",\n \"lineUpIds\": [\"5ceb479c18ebd1156c73013a\",\"5ceb479c18ebd1156c73013a\",\"5ceb479c18ebd1156c73013a\",\"5ceb479c18ebd1156c73013a\"],\n  \"memberIds\": [\"5ceb479c18ebd1156c73013a\",\"5ceb479c18ebd1156c73013a\"],\n \"name\": \"Postman Updated Match\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}{{urlPath}}/{{matchId}}",
+							"host": [
+								"{{url}}{{urlPath}}"
+							],
+							"path": [
+								"{{matchId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all match",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e58ba2f9-f1eb-44f6-88fe-d6e5617d9c11",
+								"exec": [
+									"tests[\"Successful GET ALL request\"] = responseCode.code === 200 || responseCode.code === 201",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "audience",
+								"value": "http://localhost:4200/home"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{url}}{{urlPath}}",
+							"host": [
+								"{{url}}{{urlPath}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get this match",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e9ef7dc7-f7cb-4603-ae7b-62d0a99308dd",
+								"exec": [
+									"//Member and Visitor roles\r",
+									"var x = postman.getEnvironmentVariable(\"memberId\")\r",
+									"if ( x === \"58e93fe3295262a819df627f\") {\r",
+									"    tests[\"No member created.  \"] = true;\r",
+									"}\r",
+									"//Admin and Player role\r",
+									"else {\r",
+									"tests[\"Successful GET ID request\"] = responseCode.code === 200 || responseCode.code === 201\r",
+									"\r",
+									"var jsonData = JSON.parse(responseBody);\r",
+									"console.log(jsonData);\r",
+									"\r",
+									"tests[\"Id was found\"] =responseBody!=\"null\";\r",
+									"\r",
+									"try{\r",
+									"var jsonData = JSON.parse(responseBody);\r",
+									"tests[\"Name contains Updated\"] = jsonData.name.includes(\"Updated\");\r",
+									"}\r",
+									"catch(err)\r",
+									"{\r",
+									"    console.log(\"ResponseBody is null\", err);\r",
+									"}\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{url}}{{urlPath}}/{{matchId}}",
+							"host": [
+								"{{url}}{{urlPath}}"
+							],
+							"path": [
+								"{{matchId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ID not found - match",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4d5f6272-8448-4a18-96e0-160c45dc7e7c",
+								"exec": [
+									"\r",
+									"tests[\"StatusCode 404 for not found\"] = responseCode.code === 404 \r",
+									"\r",
+									"\r",
+									"try{\r",
+									"var jsonData = JSON.parse(responseBody);\r",
+									"tests[\"Id not found.  Body is null\"] =responseBody === \"null\";\r",
+									"}\r",
+									"catch(err)\r",
+									"{\r",
+									"    console.log(\"ResponseBody is null\", err);\r",
+									"}\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{url}}{{urlPath}}/zzzzzzzzzzzz",
+							"host": [
+								"{{url}}{{urlPath}}"
+							],
+							"path": [
+								"zzzzzzzzzzzz"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete this match",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "38de54cc-9369-4e6f-98b3-5e6cf15faebc",
+								"exec": [
+									"if (pm.environment.get(\"role\")=== \"Memb\" || pm.environment.get(\"role\")=== \"Visi\" || pm.environment.get(\"role\")=== \"Play\"){\r",
+									"    pm.test(\"Status code is 40X\", function () {\r",
+									"        pm.expect(pm.response.code).to.be.oneOf([401,403,404]);\r",
+									"\r",
+									"        tests[\"You are not an Admin or did not create a match to test.  No authorization to delete a match\"] = true;\r",
+									"    })\r",
+									"    }\r",
+									"\r",
+									" else if (pm.environment.get(\"role\")=== \"Admi\") {\r",
+									"    var jsonData = JSON.parse(responseBody);\r",
+									"    console.log(\"RB\",responseBody);\r",
+									"\r",
+									"    pm.test(\"Status code is 200\", function () {\r",
+									"        pm.expect(pm.response.code).to.be.oneOf([200,201,202]);\r",
+									"    });\r",
+									"    tests[\"Response time is less than 300ms\"] = responseTime < 500;\r",
+									"    tests[\"You are an admin\"] = true;\r",
+									"    var jsonData = JSON.parse(responseBody);\r",
+									"    console.log(\"RB\",responseBody);\r",
+									"    try{\r",
+									"        var jsonData = JSON.parse(responseBody);\r",
+									"        tests[\"Deleted match name contained Postman\"] = jsonData.name.includes(\"Postman\");\r",
+									"\r",
+									"        }\r",
+									"    catch(err)\r",
+									"        {\r",
+									"            console.log(\"ResponseBody is null\", err);\r",
+									"        }\r",
+									" }\r",
+									"\r",
+									" else {\r",
+									"    pm.test(\"Role is \")\r",
+									"    pm.test(postman.getEnvironmentVariable(\"role\"));\r",
+									"    tests[\"You are not an Admin.  No authorization to delete a match\"] = true\r",
+									" }\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{url}}{{urlPath}}/{{matchId}}",
+							"host": [
+								"{{url}}{{urlPath}}"
+							],
+							"path": [
+								"{{matchId}}"
 							]
 						}
 					},
