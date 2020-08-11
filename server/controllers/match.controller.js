@@ -22,6 +22,10 @@ exports.getMatch = function(req, res){
       if (err){
         console.log("Error retrieving match");
       }else {
+        if (!match) {
+          res.statusCode = 404;
+          console.log("Match not found - get")
+        }
         res.json(match);
       }
     });
@@ -46,31 +50,45 @@ exports.postMatch= function(req, res){
   });
 };
 
-exports.putMatch = function(req, res){
-  console.log('Update a match', req.body.datePlayed);
+// exports.putMatch = function(req, res){
+//   console.log('Update a match', req.body.datePlayed);
+//   Match.findByIdAndUpdate(req.params.id,
+//     {
+//       $set: { name: req.body.name,
+//         scorecardId: req.body.scorecardId,
+//         memberId: req.body.memberId,
+//         lineUpId: req.body.lineUpId,
+//         datePlayed: req.body.datePlayed,
+//         created: req.body.created,
+//         user: req.body.user
+//       }
+//     },
+//     {
+//       new: true
+//     },
+//     function(err, updatedMatch){
+//       if(err){
+//         console.log("Error update match", err,updatedMatch);
+//         res.send("Error updating match");
+//       }else{
+//         res.json(updatedMatch);
+//       }
+//     }
+//   );
+// };
+exports.putMatch = function(req, res, next){
+  console.log('Update a Match', req.params.id);
   Match.findByIdAndUpdate(req.params.id,
-    {
-      $set: { name: req.body.name,
-        scorecardId: req.body.scorecardId,
-        memberId: req.body.memberId,
-        lineUpId: req.body.lineUpId,
-        datePlayed: req.body.datePlayed,
-        created: req.body.created,
-        user: req.body.user
-      }
-    },
-    {
-      new: true
-    },
-    function(err, updatedMatch){
-      if(err){
-        console.log("Error update match", err,updatedMatch);
-        res.send("Error updating match");
-      }else{
-        res.json(updatedMatch);
-      }
-    }
-  );
+   req.body)
+   .then(function(){
+     Match.findOne({_id:req.params.id}).then(function(match){
+       res.send(match)
+     });
+   })
+   .catch(function(err){
+      err = res.status(400).json('Error: ' + err)
+      console.log('Error :', err.statusMessage)
+   })
 };
 
 exports.deleteMatch = function(req, res){

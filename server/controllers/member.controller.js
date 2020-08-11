@@ -24,6 +24,10 @@ exports.getMember=function(req, res){
       if (err){
         console.log("Error retrieving member");
       }else {
+        if (!member) {
+          res.statusCode = 404;
+          console.log("Member not found - get")
+        }
         res.json(member);
       }
     });
@@ -68,29 +72,43 @@ exports.postMember=function(req, res){
     }
   });
 };
-
-exports.putMember=function(req, res){
-  console.log('Update a member');
+exports.putMember = function(req, res, next){
+  console.log('Update a member', req.params.id);
   Member.findByIdAndUpdate(req.params.id,
-    {
-      $set: {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        currentHCap: req.body.currentHCap,
-        user: req.body.user}
-    },
-    {
-      new: true
-    },
-    function(err, updatedMember){
-      if(err){
-        res.send("Error updating member");
-      }else{
-        res.json(updatedMember);
-      }
-    }
-  );
+   req.body)
+   .then(function(){
+     Member.findOne({_id:req.params.id}).then(function(member){
+       res.send(member)
+     });
+   })
+   .catch(function(err){
+      err = res.status(400).json('Error: ' + err)
+      console.log('Error :', err.statusMessage)
+   })
 };
+
+// exports.putMember=function(req, res){
+//   console.log('Update a member');
+//   Member.findByIdAndUpdate(req.params.id,
+//     {
+//       $set: {
+//         firstName: req.body.firstName,
+//         lastName: req.body.lastName,
+//         currentHCap: req.body.currentHCap,
+//         user: req.body.user}
+//     },
+//     {
+//       new: true
+//     },
+//     function(err, updatedMember){
+//       if(err){
+//         res.send("Error updating member");
+//       }else{
+//         res.json(updatedMember);
+//       }
+//     }
+//   );
+// };
 
 exports.deleteMember=function(req, res){
   console.log('Deleting a member');
