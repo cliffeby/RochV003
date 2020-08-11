@@ -66,7 +66,7 @@ router.route('/members')
 
 // Create endpoint handlers for /members/_id
 router.route('/members/:id')
-  .get(jwtCheck, jwtAuthz(['create:member'], options), memberController.getMember)
+  .get(jwtCheck, jwtAuthz(['read:members'], options), memberController.getMember)
   .put(jwtCheck, jwtAuthz(['create:member'], options), memberController.putMember)
   .delete(jwtCheck, jwtAuthz(['remove:member'], options), memberController.deleteMember);
 
@@ -79,7 +79,7 @@ router.route('/matches')
 router.route('/matches/:id')
   .get(jwtCheck, jwtAuthz(['read:matches'], options), matchController.getMatch)
   .put(jwtCheck, jwtAuthz(['create:match'], options), matchController.putMatch)
-  .delete(jwtCheck, jwtAuthz(['remove:match']), matchController.deleteMatch);
+  .delete(jwtCheck, jwtAuthz(['remove:match'], options), matchController.deleteMatch);
 
 router.route('/scores')
   .post(jwtCheck, jwtAuthz(['create:score'], options), scoreController.postScore)
