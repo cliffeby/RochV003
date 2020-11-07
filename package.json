@@ -18,17 +18,17 @@
   "dependencies": {
     "@angular/animations": "^8.2.14",
     "@angular/cdk": "^8.2.3",
-    "@angular/common": "8.1.2",
-    "@angular/compiler": "8.1.2",
+    "@angular/common": "8.2.14",
+    "@angular/compiler": "8.2.14",
     "@angular/core": "^8.2.14",
     "@angular/flex-layout": "^8.0.0-beta.27",
-    "@angular/forms": "8.1.2",
+    "@angular/forms": "8.2.14",
     "@angular/http": "^7.2.16",
     "@angular/material": "^8.2.3",
     "@angular/material-moment-adapter": "^8.2.3",
-    "@angular/platform-browser": "8.1.2",
-    "@angular/platform-browser-dynamic": "8.1.2",
-    "@angular/router": "8.1.2",
+    "@angular/platform-browser": "8.2.14",
+    "@angular/platform-browser-dynamic": "8.2.14",
+    "@angular/router": "8.2.14",
     "@auth0/angular-jwt": "^2.1.2",
     "@types/auth0-js": "^8.11.11",
     "angular2-jwt": "^0.2.3",
@@ -54,16 +54,16 @@
     "newman": "^5.1.2",
     "passport": "^0.4.1",
     "passport-http": "^0.3.0",
-    "rxjs": "^6.6.2",
+    "rxjs": "^6.6.3",
     "rxjs-compat": "^6.6.2",
     "tslib": "^1.13.0",
     "tslint": "^4.5.1",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.801.3",
-    "@angular/cli": "8.1.2",
-    "@angular/compiler-cli": "8.1.2",
+    "@angular-devkit/build-angular": "^0.803.29",
+    "@angular/cli": "8.3.29",
+    "@angular/compiler-cli": "8.2.14",
     "@types/jasmine": "2.5.38",
     "@types/node": "~6.0.60",
     "bluebird": "^3.7.2",
@@ -87,7 +87,7 @@
     "supertest": "^3.0.0",
     "ts-node": "~2.0.0",
     "tslint": "~4.5.0",
-    "typescript": "3.4.5"
+    "typescript": "3.5.3"
   },
   "resolutions": {
     "lodash": "^4.17.15"
