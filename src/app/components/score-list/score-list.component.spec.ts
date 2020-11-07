@@ -1,10 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ScoreListComponent } from './score-list.component';
-import {FormsModule} from "@angular/forms";
-import {SearchFilterPipe} from "../../search.pipe";
+import { FormsModule} from "@angular/forms";
+import { SearchFilterPipe} from "../../search.pipe";
 import { AuthService} from "../../services/auth.service";
-import {AuthHttp} from "angular2-jwt";
+import { AuthHttp} from "angular2-jwt";
 import { RouterTestingModule} from "@angular/router/testing";
+import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 
 // Mock our Auth service
 export class MockAuthService {
@@ -25,6 +26,7 @@ describe('ScoreListComponent ', () => {
     TestBed.configureTestingModule({
       declarations: [ ScoreListComponent, SearchFilterPipe ],
       imports: [FormsModule, RouterTestingModule],
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA],
       providers: [
         //   { provide: ScoreService, useClass: MockScoreService},
         {provide: AuthService, useClass: MockAuthService},

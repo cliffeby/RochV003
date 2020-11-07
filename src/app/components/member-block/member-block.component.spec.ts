@@ -21,7 +21,7 @@ export class MockAuthHttp {
 //@formatter:on
 
 
-describe('MemberBlockComponent', () => {
+xdescribe('MemberBlockComponent', () => {
   let component: MemberBlockComponent;
   let fixture: ComponentFixture<MemberBlockComponent>;
   // let match: Array<Match>;
@@ -30,7 +30,7 @@ describe('MemberBlockComponent', () => {
       declarations: [ MemberBlockComponent, SearchFilterPipe],
       imports: [FormsModule],
       providers: [ ScoreService,
-        {provide: MemberService, useClass: MockMemberService},
+        {provide: MemberService, useClass: MockMemberService}, 
         {provide: AuthService, useClass: MockAuthService},
         {provide: AuthHttp, useClass: MockAuthHttp}
       ]

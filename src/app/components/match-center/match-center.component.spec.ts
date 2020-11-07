@@ -15,7 +15,8 @@ import {MyDatePicker} from "mydatepicker";
 import {MemberBlockComponent} from "../member-block/member-block.component";
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
-import {FocusDirective} from 'mydatepicker/dist//directives/my-date-picker.focus.directive';import * as moment from 'moment/moment';
+import {FocusDirective} from 'mydatepicker/dist//directives/my-date-picker.focus.directive';
+import * as moment from 'moment/moment';
 // Mock our Auth service
 export class MockAuthService {
   isAuthenticated() {

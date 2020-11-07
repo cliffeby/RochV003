@@ -38,7 +38,7 @@ describe('Match Detail Comp and Service: My: TestBed', () => {
 
   beforeEach(async() => {
     TestBed.configureTestingModule({
-      declarations: [FocusDirective, MatchDetailComponent, MatchDetailComponent, MatchListComponent, MemberBlockComponent, SearchFilterPipe],
+      declarations: [FocusDirective, MatchDetailComponent, MatchListComponent, MemberBlockComponent, SearchFilterPipe],
       imports: [FormsModule],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA],
       providers: [

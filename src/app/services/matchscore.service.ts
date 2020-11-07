@@ -12,7 +12,6 @@ import { AuthHttp } from "angular2-jwt";
 import { BehaviorSubject, Observable, forkJoin } from "rxjs";
 import { Match } from "../models/match";
 
-
 @Injectable()
 export class MatchScoreService {
   public newMatch:Match = new Match;
@@ -57,7 +56,6 @@ export class MatchScoreService {
   }
  loadedCharacter = {}
   getScoreByMatchwithNames(matchId, memberId) {
-
     const sbmwn = this._scoreservice.getScoreByMatch(matchId);
     const mbid = this._memberservice.getMember(memberId);
     console.log("forkJionIds", matchId, memberId, sbmwn, mbid);
@@ -79,5 +77,4 @@ mem = {};
         console.log("msfromPairSer", this.mem);
       });
   }
-
 }

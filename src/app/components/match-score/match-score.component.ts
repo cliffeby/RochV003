@@ -14,7 +14,7 @@ import { NgModel } from '@angular/forms';
 import { ValidationService } from '../../services/validation.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from '../../material.module';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatTableModule } from '@angular/material';
 import { MatSort } from '@angular/material/sort';
 
 @NgModule({
@@ -24,7 +24,8 @@ import { MatSort } from '@angular/material/sort';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     FormsModule,
-    ValidationService
+    ValidationService,
+    MatTableDataSource
   ]
 })
 @Component({
@@ -39,7 +40,7 @@ export class MatchScoreComponent implements OnInit, OnChanges {
   myScores:any = {};
   score:Score;
   selected: any;
-  hidenewMatch: boolean;
+  hidenewMatch: boolean; 
   scoreMatch: boolean;
   scorecards: Array<Scorecard>;
   members: Array<Member>;
