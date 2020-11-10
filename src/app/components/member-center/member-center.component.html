@@ -30,7 +30,7 @@
 
 <div *ngIf="!selectedMember && hidenewMember && canCreate" class="row">
   <div class="col-md-12">
-    <div class="error" *ngIf="error">{{error}}</div>
+    <!-- <div class="error" *ngIf="error">{{error}}</div> -->
     <div class="pull-right">
       <button class="btn btn-primary" (click)="addMember()">
         <i class="glyphicon glyphicon-plus"></i>
@@ -38,6 +38,7 @@
     </div>
   </div>
 </div>
-<member-list *ngIf="!selectedMember && hidenewMember" [members]="members" [create]="canCreate"
-             (SelectMember)="onSelectMember($event)">
-</member-list>
+<member-list *ngIf="!selectedMember && hidenewMember"
+              [members]="members" [create]="canCreate"
+              (SelectMember)="onSelectMember($event)">
+</member-list>  

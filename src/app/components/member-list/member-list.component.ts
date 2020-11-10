@@ -12,7 +12,7 @@ import { Member } from '../../models/member';
 export class MemberListComponent implements OnInit {
   public SelectMember = new EventEmitter();
   public queryString: string;
-  @Input()
+  @Input() members;
   public create: boolean;
 
   constructor() { }

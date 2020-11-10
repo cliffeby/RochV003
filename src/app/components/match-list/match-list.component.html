@@ -1,5 +1,4 @@
-<table mat-table [dataSource]="dataSource"  >
-  <!-- <table mat-table [dataSource]="dataSource"  matSort (matSortChange) = "ngAfterViewInit()" [ngClass]="{true:'bold'}[dateFlag]"></table> -->
+<table mat-table [dataSource]="dataSource"  matSort (matSortChange) = "ngAfterViewInit()" [ngClass]="{true:'bold'}">
   <ng-container matColumnDef="name" >
     <th mat-header-cell *matHeaderCellDef mat-sort-header > Name </th>
     <td mat-cell *matCellDef="let element" > {{element.name}} </td>
@@ -12,13 +11,13 @@
 
   <ng-container matColumnDef="scName">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Course </th>
-    <td mat-cell *matCellDef="let element"> {{element.scName}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.scName}} </td>  
   </ng-container>
 
   <ng-container matColumnDef="details">
     <th mat-header-cell *matHeaderCellDef> Details </th>
     <td mat-cell *matCellDef="let element;">
-      <button mat-icon-button color="primary"(click)="onSelectMatch(element)"> 
+      <button mat-icon-button color="primary"(click)="onSelectMatch(element)">
           <mat-icon class="mat-18">reorder</mat-icon>
       </button>
     </td>

@@ -26,7 +26,7 @@ export class ScorecardListComponent implements OnInit, OnChanges {
   public displayedColumns = ['name', 'rating', 'slope' ,'details', 'copy', 'delete'];
   public dataSource:MatTableDataSource<Scorecard>;
 
-  // @ViewChild( MatSort, {static:true} ) sort: MatSort;
+  @ViewChild( MatSort, {static:true} ) sort: MatSort;
 
   constructor() { }
 
@@ -38,7 +38,8 @@ export class ScorecardListComponent implements OnInit, OnChanges {
   }
 
   ngAfterViewInit(): void {
-    // this.dataSource.sort = this.sort;
+    this.dataSource.sort = this.sort;
+     console.log('ListSCDataSource', this.dataSource, this.scorecards);
   }
 
   onSelect(scard: Scorecard) {
