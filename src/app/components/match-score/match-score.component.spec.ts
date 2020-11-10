@@ -4,7 +4,7 @@ import { MatTableDataSource } from "@angular/material/table";
 import { MatSort } from "@angular/material/sort";
 import { MatchScoreComponent } from './match-score.component';
 
-fdescribe('MatchScoreComponent', () => {
+describe('MatchScoreComponent', () => {
   let component: MatchScoreComponent;
   let fixture: ComponentFixture<MatchScoreComponent>;
 
