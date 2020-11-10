@@ -11,7 +11,7 @@ import { Member } from '../../models/member';
 })
 export class MemberListComponent implements OnInit {
   public SelectMember = new EventEmitter();
-  private queryString: string;
+  public queryString: string;
   @Input()
   public create: boolean;
 

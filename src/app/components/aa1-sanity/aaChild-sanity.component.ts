@@ -8,8 +8,8 @@ import { Component, Output, EventEmitter, OnInit } from '@angular/core';
     </div>
     <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
-      <button type="input" id = "btnUpdate" (click)="updateScorecard()" class="btn btn-primary">Update</button>
-      <button type="button" (click)="deleteScorecard()" class="btn btn-danger">Delete</button>
+      <!-- <button type="input" id = "btnUpdate" (click)="updateScorecard()" class="btn btn-primary">Update</button>
+      <button type="button" (click)="deleteScorecard()" class="btn btn-danger">Delete</button> -->
     </div>
   </div>
   `

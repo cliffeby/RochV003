@@ -9,15 +9,15 @@ import { ValidationService } from '../../services/validation.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from '../../material.module';
 
-@NgModule({
-  imports: [
-    MaterialModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    ValidationService,
-  ],
-})
+// @NgModule({
+//   imports: [
+//     MaterialModule,
+//     ReactiveFormsModule,
+//     BrowserAnimationsModule,
+//     FormsModule,
+//     ValidationService,
+//   ],
+// })
 @Component({
   selector: "match-detail",
   templateUrl: "./match-detail.component.html",

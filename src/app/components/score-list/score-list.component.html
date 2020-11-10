@@ -1,6 +1,7 @@
 <h2>Score Info</h2>
 
-<div *ngIf="!unauth; else unauthcontent">
+<div *ngIf="!unauth">
+  <!-- <div *ngIf="!unauth; else unauthcontent"></div> -->
   <ng-container #unauthcontent>UNAUTHORIZED</ng-container>
 </div>
 <div *ngIf="unauth">

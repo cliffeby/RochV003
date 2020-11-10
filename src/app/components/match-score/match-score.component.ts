@@ -14,20 +14,20 @@ import { NgModel } from '@angular/forms';
 import { ValidationService } from '../../services/validation.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from '../../material.module';
-import { MatTableDataSource, MatTableModule } from '@angular/material';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 
-@NgModule({
-  imports: [
-    MaterialModule,
-    MatSort,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    ValidationService,
-    MatTableDataSource
-  ]
-})
+// @NgModule({
+//   imports: [
+//     MaterialModule,
+//     MatSort,
+//     ReactiveFormsModule,
+//     BrowserAnimationsModule,
+//     FormsModule,
+//     ValidationService,
+//     MatTableDataSource
+//   ]
+// })
 @Component({
   selector: "match-score",
   templateUrl: "./match-score.component.html",
@@ -40,7 +40,7 @@ export class MatchScoreComponent implements OnInit, OnChanges {
   myScores:any = {};
   score:Score;
   selected: any;
-  hidenewMatch: boolean; 
+  hidenewMatch: boolean;
   scoreMatch: boolean;
   scorecards: Array<Scorecard>;
   members: Array<Member>;

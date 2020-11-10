@@ -6,11 +6,11 @@ import { ScorecardService } from "../../services/scorecard.service"
 import { NgModel } from '@angular/forms';
 import { ValidationService } from '../../services/validation.service';
 
-@NgModule({
-  imports: [
-    MaterialModule, ReactiveFormsModule
-  ]
-})
+// @NgModule({
+//   imports: [
+//     MaterialModule, ReactiveFormsModule
+//   ]
+// })
 
 @Component({
   selector: 'scorecard-detail',

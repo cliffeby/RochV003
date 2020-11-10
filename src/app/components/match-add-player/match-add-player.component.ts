@@ -10,7 +10,7 @@ import { MemberService } from '../../services/member.service';
 })
 export class MatchAddPlayerComponent implements OnInit {
   match: any;
-  private editTitle: boolean = false;
+  public editTitle: boolean = false;
   private updateMatchEvent = new EventEmitter();
   private deleteMatchEvent = new EventEmitter();
 

@@ -11,7 +11,7 @@ import {AuthService} from '../../services/auth.service';
 })
 export class ScorecardsComponent implements OnInit {
   selectedScorecard: Scorecard;
-  private hidenewScorecard = true;
+  public hidenewScorecard = true;
   scorecards: Array<Scorecard>;
 
   constructor(private _scorecardService: ScorecardService,

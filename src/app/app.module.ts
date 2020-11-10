@@ -92,7 +92,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     ReactiveFormsModule,
     HttpModule,
     AppRoutingModule,
-    MyDatePickerModule,
+    // MyDatePickerModule,
     NoopAnimationsModule,
     MaterialModule
 

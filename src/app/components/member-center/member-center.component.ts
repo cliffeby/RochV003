@@ -16,7 +16,7 @@ export class MemberCenterComponent implements OnInit {
   public canCreate: boolean;
   public canUpdate: boolean;
   public canDelete: boolean;
-  private hidenewMember = true;
+  public hidenewMember = true;
   members: Array<Member>;
 
   constructor(private _memberService: MemberService,

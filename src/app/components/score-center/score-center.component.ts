@@ -11,7 +11,7 @@ import { AuthService } from "../../services/auth.service";
 export class ScoreCenterComponent implements OnInit {
   selectedScore: Score;
   canCreate: boolean;
-  private hidenewScore: boolean = true;
+  public hidenewScore: boolean = true;
   scores: Array<Score>;
   constructor(private _scoreService: ScoreService,
               private auth: AuthService) { }

@@ -7,7 +7,8 @@ import {ScorecardService} from "../../services/scorecard.service";
 import {RouterTestingModule} from "@angular/router/testing";
 import {AuthHttp} from "angular2-jwt";
 import {FormsModule} from "@angular/forms";
-import { MatFormFieldModule, ErrorStateMatcher } from '@angular/material'
+import { ErrorStateMatcher } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule, FormGroupDirective, NgForm } from '@angular/forms'
 
 // Mock our Auth service

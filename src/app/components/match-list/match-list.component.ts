@@ -4,7 +4,7 @@ import { Match } from '../../models/match';
 import { CommonModule } from "@angular/common"
 import { MaterialModule } from '../../material.module';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 import { MatchService } from "../../services/match.service";
 import { MatchScoreService } from "../../services/matchscore.service";
 import { ScoreService } from "../../services/score.service";
@@ -15,9 +15,9 @@ import { ScoreService } from "../../services/score.service";
   styleUrls: ["match-list.component.css"],
   outputs: ["AddMatchEvent", "DeleteMatchEvent"],
 })
-@NgModule({
-  imports: [MaterialModule, MatTableDataSource, MatSort, CommonModule],
-})
+// @NgModule({
+//   imports: [MaterialModule, MatTableDataSource, MatSort, CommonModule],
+// })
 export class MatchListComponent implements OnInit {
   @Input() matches: Match[];
   @Output() index: number;

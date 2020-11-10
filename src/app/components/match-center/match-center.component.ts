@@ -26,9 +26,9 @@ export class MatchCenterComponent implements OnInit {
   scoredMatch: Match;
   public match: Match;
   public mat: Match;
-  private hidenewMatch = true;
-  private scoreMatch: boolean = false;
-  private pairMatch: boolean = false;
+  public hidenewMatch = true;
+  public scoreMatch: boolean = false;
+  public pairMatch: boolean = false;
   private queryString: string;
   matches: Array<Match>;
   members: Array<Member>;

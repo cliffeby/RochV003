@@ -9,7 +9,7 @@ import { Video } from "../video";
 })
 export class VideoCenterComponent implements OnInit {
   selectedVideo: Video;
-  private hidenewVideo: boolean = true;
+  public hidenewVideo: boolean = true;
   videos: Array<Video>;
   constructor(private _videoService: VideoService) { }
 

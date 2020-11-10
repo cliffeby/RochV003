@@ -14,7 +14,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let member of members | searchfilter:'lastName': queryString">
+      <!-- <tr *ngFor="let member of members | searchfilter:'lastName': queryString">
         <td>{{member.firstName}}</td>
         <td>{{member.lastName}}</td>
         <td>{{member.currentHCap}}</td>
@@ -24,7 +24,7 @@
         <a class="btn btn-primary" (click)="onSelect(member)">
           <i class="glyphicon glyphicon-trash"></i>
         </a>
-      </tr>
+      </tr> -->
       </tbody>
     </table>
 </div>

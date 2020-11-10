@@ -2,13 +2,13 @@ import { Component, OnInit, EventEmitter, NgModule, ViewChild, AfterViewInit, In
 import { Scorecard } from '../../models/scorecard';
 import { MaterialModule } from '../../material.module';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 
-@NgModule({
-  imports: [
-    MaterialModule, MatTableDataSource, MatSort
-  ]
-})
+// @NgModule({
+//   imports: [
+//     MaterialModule, MatTableDataSource, MatSort
+//   ]
+// })
 
 @Component({
   selector: 'scorecard-list',
@@ -16,7 +16,7 @@ import { MatTableDataSource } from '@angular/material';
   styleUrls: ['scorecard-list.component.css'],
   outputs: ['SelectScorecard', 'CopyScorecardEvent', 'AddScorecardEvent', 'DeleteScorecardEvent']
 })
-export class ScorecardListComponent implements OnInit, AfterViewInit, OnChanges {
+export class ScorecardListComponent implements OnInit, OnChanges {
   @Input() scorecards:Scorecard[];
   public SelectScorecard = new EventEmitter();
   public CopyScorecardEvent = new EventEmitter();
@@ -26,7 +26,7 @@ export class ScorecardListComponent implements OnInit, AfterViewInit, OnChanges 
   public displayedColumns = ['name', 'rating', 'slope' ,'details', 'copy', 'delete'];
   public dataSource:MatTableDataSource<Scorecard>;
 
-  @ViewChild( MatSort, {static:true} ) sort: MatSort;
+  // @ViewChild( MatSort, {static:true} ) sort: MatSort;
 
   constructor() { }
 
@@ -38,7 +38,7 @@ export class ScorecardListComponent implements OnInit, AfterViewInit, OnChanges 
   }
 
   ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
+    // this.dataSource.sort = this.sort;
   }
 
   onSelect(scard: Scorecard) {

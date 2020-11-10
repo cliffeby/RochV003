@@ -12,7 +12,7 @@ import { AuthService } from "../../services/auth.service";
 })
 export class ScoreListComponent implements OnInit {
   public SelectScore = new EventEmitter();
-  private unauth: boolean;
+  public unauth: boolean;
   constructor(private auth: AuthService) { }
 
   ngOnInit() {
