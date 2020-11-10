@@ -25,7 +25,13 @@
       ["Boolean", "Use 'boolean' instead."]
     ],
     "class-name": true,
-    "curly": [true, "ignore-same-line"],
+    "curly": [
+      true,
+      "ignore-same-line"
+    ],
+    "deprecation": {
+      "severity": "warning"
+    },
     "forin": true,
     "interface-name": [true, "never-prefix"],
     "jsdoc-format": true,
@@ -59,7 +65,6 @@
       "allow-leading-underscore",
       "allow-trailing-underscore"
     ],
-    "no-unused-variable": true,
     "restrict-plus-operands": true,
     "no-unnecessary-type-assertion":false  //changed from Google's true to avoid unsupported errors!
   }
