@@ -10,7 +10,7 @@ import {RouterTestingModule} from "@angular/router/testing";
 import {MatchDetailComponent} from "../match-detail/match-detail.component";
 import {MatchListComponent} from "../match-list/match-list.component";
 import {SearchFilterPipe} from "../../search.pipe";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MyDatePicker} from "mydatepicker";
 import {MemberBlockComponent} from "../member-block/member-block.component";
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -39,7 +39,7 @@ describe('Match Detail Comp and Service: My: TestBed', () => {
   beforeEach(async() => {
     TestBed.configureTestingModule({
       declarations: [FocusDirective, MatchDetailComponent, MatchListComponent, MemberBlockComponent, SearchFilterPipe],
-      imports: [FormsModule],
+      imports: [FormsModule, ReactiveFormsModule],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA],
       providers: [
         MatchService,

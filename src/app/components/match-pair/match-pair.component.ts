@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ScoreService } from "../../services/score.service";
 import { MatchScoreService } from "../../services/matchscore.service";
-import { MatchService } from "../../services/match.service";
+// import { MatchService } from "../../services/match.service";
 import { Match } from "../../models/match";
 import { from } from 'rxjs';
 import { ActivatedRoute, Params } from '@angular/router';
@@ -22,7 +22,7 @@ export class MatchPairComponent implements OnInit {
   constructor(
     private _scoreservice: ScoreService,
     private _matchscoreservice: MatchScoreService,
-    private _matchservice: MatchService,
+    // private _matchservice: MatchService,
     private route: ActivatedRoute
   ) {}
 

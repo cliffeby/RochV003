@@ -7,6 +7,7 @@ import {Match} from '../../models/match';
 import {ScoreService} from '../../services/score.service';
 import {AuthService} from "../../services/auth.service";
 import {MemberService} from "../../services/member.service";
+import { MatchService } from "../../services/match.service";
 import {AuthHttp} from "angular2-jwt";
 
 // Mock our Auth service
@@ -21,7 +22,7 @@ export class MockAuthHttp {
 //@formatter:on
 
 
-xdescribe('MemberBlockComponent', () => {
+describe('MemberBlockComponent', () => {
   let component: MemberBlockComponent;
   let fixture: ComponentFixture<MemberBlockComponent>;
   // let match: Array<Match>;
@@ -29,8 +30,8 @@ xdescribe('MemberBlockComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ MemberBlockComponent, SearchFilterPipe],
       imports: [FormsModule],
-      providers: [ ScoreService,
-        {provide: MemberService, useClass: MockMemberService}, 
+      providers: [ ScoreService, MatchService,
+        {provide: MemberService, useClass: MockMemberService},
         {provide: AuthService, useClass: MockAuthService},
         {provide: AuthHttp, useClass: MockAuthHttp}
       ]

@@ -4,7 +4,7 @@ import { ScorecardListComponent } from './scorecard-list.component';
 import { MatSort } from "@angular/material/sort";
 import { MatTableModule } from "@angular/material/table";
 
-xdescribe('ScorecardListComponent', () => {
+describe('ScorecardListComponent', () => {
   let component: ScorecardListComponent;
   let fixture: ComponentFixture<ScorecardListComponent>;
 

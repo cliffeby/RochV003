@@ -31,7 +31,7 @@ describe('ScoreCenterComponent', () => {
       imports: [RouterTestingModule, FormsModule],
       declarations: [ ScoreCenterComponent, ScoreDetailComponent, ScoreListComponent ],
       providers: [
-        ScoreService,
+        // ScoreService,
        { provide: ScoreService, useClass: MockScoreService},
         {provide: AuthService, useClass: MockAuthService},
         {provide: AuthHttp, useClass: MockAuthHttp}

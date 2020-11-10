@@ -35,7 +35,7 @@ export class MemberBlockComponent implements OnInit {
  console.log(
    "From member-block0",
    this.showPairBlock,
-   this.match.players,
+  //  this.match.players,
    this.score.name
  );
   }

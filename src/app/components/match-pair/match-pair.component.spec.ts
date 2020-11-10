@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+// import { MatchService } from "../../services/match.service";
 import { MatchPairComponent } from './match-pair.component';
+import { ScoreService } from "../../services/score.service";
+import { MatchScoreService } from "../../services/matchscore.service";
 
 describe('MatchPairComponent', () => {
   let component: MatchPairComponent;
@@ -8,7 +10,8 @@ describe('MatchPairComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MatchPairComponent ]
+      declarations: [ MatchPairComponent ],
+      providers: [ ScoreService, MatchScoreService]
     })
     .compileComponents();
   }));
