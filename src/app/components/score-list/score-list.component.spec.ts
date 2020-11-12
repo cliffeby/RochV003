@@ -11,7 +11,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 export class MockAuthService {
   isAuthenticated() {}
   logout() {}
-  userHasScopes() {};
+  userHasScopes([scopes]: Array<string>) {};
 }
 export class MockAuthHttp {
   get(){}

@@ -16,7 +16,8 @@ export class ScoreListComponent implements OnInit {
   constructor(private auth: AuthService) { }
 
   ngOnInit() {
-    this.unauth = this.auth.userHasScopes(['read:scores']);
+    // this.unauth = this.auth.userHasScopes(["read:scores"]);
+    this.unauth = true;
     console.log('UNAUTH', this.unauth);
   }
 

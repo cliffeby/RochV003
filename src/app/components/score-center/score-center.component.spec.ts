@@ -7,7 +7,10 @@ import { RouterTestingModule} from "@angular/router/testing";
 import {ScoreDetailComponent} from "../score-detail/score-detail.component";
 import {ScoreListComponent} from "../score-list/score-list.component";
 import { FormsModule } from "@angular/forms";
-// import { Scorecard } from 'src/app/models/scorecard';
+import { MatTableModule } from "@angular/material/table";
+import { MatTableDataSource } from "@angular/material/table";
+import { HarnessLoader } from "@angular/cdk/testing";
+import { TestbedHarnessEnvironment } from "@angular/cdk/testing/testbed";
 
 // Mock our Auth service
 export class MockAuthService {
@@ -22,30 +25,56 @@ export class MockAuthHttp {
 export class MockScoreService {
   getScores(){}
 };
-describe('ScoreCenterComponent', () => {
+
+let loader: HarnessLoader;
+
+describe("ScoreCenterComponent Harness", () => {
   let component: ScoreCenterComponent;
   let fixture: ComponentFixture<ScoreCenterComponent>;
-
-  beforeEach(async() => {
-    TestBed.configureTestingModule({
-      imports: [RouterTestingModule, FormsModule],
-      declarations: [ ScoreCenterComponent, ScoreDetailComponent, ScoreListComponent ],
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [MatTableModule],
+      declarations: [ScoreCenterComponent],
       providers: [
-        // ScoreService,
        { provide: ScoreService, useClass: MockScoreService},
         {provide: AuthService, useClass: MockAuthService},
         {provide: AuthHttp, useClass: MockAuthHttp}
       ]
-    })
-      .compileComponents();
-  });
-  beforeEach(async() => {
+    }).compileComponents();
     fixture = TestBed.createComponent(ScoreCenterComponent);
+    loader = TestbedHarnessEnvironment.loader(fixture);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
-  it('should be created ', () => {
+  it("should be created", () => {
     expect(component).toBeTruthy();
   });
 });
+
+// describe('ScoreCenterComponent', () => {
+//   let component: ScoreCenterComponent;
+//   let fixture: ComponentFixture<ScoreCenterComponent>;
+
+//   beforeEach(() => {
+//     TestBed.configureTestingModule({
+//       imports: [RouterTestingModule, FormsModule],
+//       declarations: [ ScoreCenterComponent, ScoreDetailComponent, ScoreListComponent ],
+//       providers: [
+//         // ScoreService,
+//        { provide: ScoreService, useClass: MockScoreService},
+//         {provide: AuthService, useClass: MockAuthService},
+//         {provide: AuthHttp, useClass: MockAuthHttp}
+//       ]
+//     })
+//       .compileComponents();
+//   });
+//   beforeEach(async() => {
+//     fixture = TestBed.createComponent(ScoreCenterComponent);
+//     component = fixture.componentInstance;
+//     fixture.detectChanges();
+//   });
+
+//   it('should be created ', () => {
+//     expect(component).toBeTruthy();
+//   });
+// });
