@@ -12,9 +12,21 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTableModule } from '@angular/material/table';
 import { NgModule } from '@angular/core';
 
-const MaterialComponents = [MatButtonModule, MatToolbarModule, MatIconModule, MatInputModule, MatFormFieldModule,
-   MatNativeDateModule, MatTableModule, MatSelectModule, MatListModule, MatGridListModule, MatSortModule
-]
+const MaterialComponents = [
+  MatButtonModule,
+  MatToolbarModule,
+  MatIconModule,
+  MatInputModule,
+  MatFormFieldModule,
+  MatNativeDateModule,
+  MatTableModule,
+  MatSelectModule,
+  MatListModule,
+  MatGridListModule,
+  MatSortModule,
+  MatDatepickerModule,
+  MatNativeDateModule
+];
 
 @NgModule({
 

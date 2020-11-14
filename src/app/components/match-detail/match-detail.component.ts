@@ -8,16 +8,8 @@ import { NgModel } from '@angular/forms';
 import { ValidationService } from '../../services/validation.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from '../../material.module';
+import { MyDatePicker } from 'mydatepicker';
 
-// @NgModule({
-//   imports: [
-//     MaterialModule,
-//     ReactiveFormsModule,
-//     BrowserAnimationsModule,
-//     FormsModule,
-//     ValidationService,
-//   ],
-// })
 @Component({
   selector: "match-detail",
   templateUrl: "./match-detail.component.html",
@@ -29,8 +21,9 @@ export class MatchDetailComponent implements OnInit {
   match: Match;
   selected: any;
   hidenewMatch: boolean;
-  scorecards: Array<Scorecard>;
+  scorecards: Scorecard[];
   showDetailBlock: boolean;
+  date: MyDatePicker;
   private updateMatchEvent = new EventEmitter();
   private deleteMatchEvent = new EventEmitter();
   private submitAddMatchEvent = new EventEmitter();
