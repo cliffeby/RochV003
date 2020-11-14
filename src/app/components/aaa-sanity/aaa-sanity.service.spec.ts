@@ -24,12 +24,12 @@ describe('Mock AAAService', () => {
     injector = getTestBed();
     service = TestBed.get(AAAService);
     httpMock = TestBed.get(HttpTestingController);
-  })
+  });
   afterEach(() => {
   });
   // tests here
   describe('#getUsers<User>', () => {
-    xit('should return method of GET', fakeAsync(() => {
+    it('should return method of GET', fakeAsync(() => {
       let dummyUsers: User[];
       // let users: User[];
       dummyUsers =[
