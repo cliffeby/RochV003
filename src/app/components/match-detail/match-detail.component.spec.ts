@@ -1,4 +1,4 @@
-import { async, inject, ComponentFixture, TestBed } from '@angular/core/testing';
+import { inject, ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MatchCenterComponent } from '../match-center/match-center.component';
 import {AuthService} from "../../services/auth.service";
 import {AuthHttp} from "angular2-jwt";

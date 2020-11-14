@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { ScorecardListComponent } from './scorecard-list.component';
 import { MatSort } from "@angular/material/sort";

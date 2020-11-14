@@ -26,7 +26,7 @@ const routes: Routes = [
 // {path:  'scores', component: ScoreCenterComponent, canActivate: [ScopeGuard] , data: { expectedScopes: [' read:scores']}}
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
   exports: [RouterModule],
   providers: []
 })

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MatchListComponent } from './match-list.component';
 import {FormsModule} from "@angular/forms";
 import {SearchFilterPipe} from "../../search.pipe";
@@ -51,7 +51,7 @@ describe("MatchListComponent Harness" , () => {
     rootLoader = TestbedHarnessEnvironment.documentRootLoader(fixture);
   });
 
-it('should show a sorted table', async(() => {
+it('should show a sorted table', waitForAsync(() => {
     // no need to call ngOnInit, the last fixture.detectChanges(); will call ngOnInit for us
     // component.ngOnInit();
     const compiled = fixture.debugElement.nativeElement;

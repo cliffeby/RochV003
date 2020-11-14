@@ -12,7 +12,7 @@ import {AuthService} from '../../services/auth.service';
 export class ScorecardsComponent implements OnInit {
   selectedScorecard: Scorecard;
   public hidenewScorecard = true;
-  scorecards: Array<Scorecard>;
+  scorecards:Scorecard[];
 
   constructor(private _scorecardService: ScorecardService,
               private auth: AuthService) { }
@@ -71,5 +71,5 @@ export class ScorecardsComponent implements OnInit {
     this.selectedScorecard = null;
     this._scorecardService.getScorecards()
       .subscribe(resScorecardData => this.scorecards = resScorecardData);
-  };
+  }
 }

@@ -1,4 +1,4 @@
-import {TestBed, inject, async, ComponentFixture, fakeAsync, tick} from '@angular/core/testing';
+import { TestBed, inject, ComponentFixture, fakeAsync, tick, waitForAsync } from '@angular/core/testing';
 import {AuthService} from "../../services/auth.service";
 import {MemberService} from "../../services/member.service";
 import {AuthHttp} from "angular2-jwt";
@@ -25,7 +25,7 @@ describe('MemberComponent and Service: My: TestBed', () => {
   let component: MemberCenterComponent;
   let fixture: ComponentFixture<MemberCenterComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [MemberCenterComponent, MemberDetailComponent, MemberListComponent, SearchFilterPipe],
       imports: [FormsModule],

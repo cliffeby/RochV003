@@ -4,12 +4,6 @@ import { MaterialModule } from '../../material.module';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
-// @NgModule({
-//   imports: [
-//     MaterialModule, MatTableDataSource, MatSort
-//   ]
-// })
-
 @Component({
   selector: 'scorecard-list',
   templateUrl: 'scorecard-list.component.html',

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MaterialModule } from "../../material.module";
 import { MatTableDataSource, MatTableModule } from "@angular/material/table";
 import { MatSort } from "@angular/material/sort";

@@ -1,4 +1,4 @@
-import { async, fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
+import { fakeAsync, tick, ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { AAASanityComponent } from './aaa-sanity.component';
 import {DataService} from "./shared/data.service";
 
@@ -27,13 +27,13 @@ describe('AAASanityComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it(`component.title property should equal 'Trying Again'`, async(() => {
+  it(`component.title property should equal 'Trying Again'`, waitForAsync(() => {
     const fixture = TestBed.createComponent(AAASanityComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app.title).toEqual('Trying Again');
   }));
 
-  it(`should render text 'And Again' in an <p> tag`, async(() => {
+  it(`should render text 'And Again' in an <p> tag`, waitForAsync(() => {
     const fixture = TestBed.createComponent(AAASanityComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
@@ -60,7 +60,7 @@ describe('AAASanityComponent', () => {
 
 
 describe ('Sanity Test - Access a Service', ()=> {
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [AAASanityComponent],
       providers: [DataService]
@@ -68,7 +68,7 @@ describe ('Sanity Test - Access a Service', ()=> {
       .compileComponents();
   }));
 
-  it('Should fetch data using constructor\'s DataService', async(() =>{
+  it('Should fetch data using constructor\'s DataService', waitForAsync(() =>{
     let fixture = TestBed.createComponent(AAASanityComponent);
     let component = fixture.componentInstance;
     fixture.detectChanges();
@@ -103,7 +103,7 @@ describe ('Sanity Tests Mock DataService Async', ()=> {
       .compileComponents();
   });
 
-  it('Should fetch data using constructor\'s injected MockDataService', async(() =>{
+  it('Should fetch data using constructor\'s injected MockDataService', waitForAsync(() =>{
     let fixture = TestBed.createComponent(AAASanityComponent);
     let component = fixture.componentInstance;
     fixture.detectChanges();
@@ -112,7 +112,7 @@ describe ('Sanity Tests Mock DataService Async', ()=> {
     });
   }));
 
-  it('Should fetch data using SpyOn', async(() =>{
+  it('Should fetch data using SpyOn', waitForAsync(() =>{
     let fixture = TestBed.createComponent(AAASanityComponent);
     let component = fixture.componentInstance;
     let dataService = fixture.debugElement.injector.get(DataService);
@@ -124,7 +124,7 @@ describe ('Sanity Tests Mock DataService Async', ()=> {
     });
   }));
 
-  it('MockDataService should replace DataService', async(() =>{
+  it('MockDataService should replace DataService', waitForAsync(() =>{
     let fixture = TestBed.createComponent(AAASanityComponent);
     let dataService = fixture.debugElement.injector.get(DataService);
     dataService.getDetails().then((data) =>{

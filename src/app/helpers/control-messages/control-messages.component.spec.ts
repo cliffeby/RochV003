@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ControlMessagesComponent } from './control-messages.component';
 import { ValidationService } from '../../services/validation.service';
@@ -9,7 +9,7 @@ export class MockValidationService {
   };
 }
 
-let control = new FormControl();
+const control = new FormControl();
 
 describe('ControlMessagesComponent', () => {
   let component: ControlMessagesComponent;
@@ -30,7 +30,7 @@ describe('ControlMessagesComponent', () => {
     component = fixture.componentInstance;
     component.control = control;
     fixture.detectChanges();
-    let _validationservice = new MockValidationService();
+    const _validationservice = new MockValidationService();
   });
 
   it('should be created ', () => {

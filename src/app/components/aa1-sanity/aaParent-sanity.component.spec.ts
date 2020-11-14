@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed  } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { DebugElement, ElementRef } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { Aa1SanityComponent } from '../aa1-sanity/aaParent-sanity.component';

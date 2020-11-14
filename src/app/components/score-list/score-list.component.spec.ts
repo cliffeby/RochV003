@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ScoreListComponent } from './score-list.component';
 import { FormsModule} from "@angular/forms";
 import { SearchFilterPipe} from "../../search.pipe";

@@ -3,6 +3,7 @@ import {ScorecardService} from "../services/scorecard.service";
 import { AuthService } from '../services/auth.service';
 import { AuthHttp } from 'angular2-jwt';
 import { HttpClientTestingModule} from '@angular/common/http/testing';
+import { Scorecard } from '../models/scorecard';
 // import 'rxjs/add/operator/map';
 
 class MockAuthService {
@@ -11,12 +12,12 @@ class MockAuthService {
 class MockAuthHttp {
   get() {}
 }
-
+const scorecard = new Scorecard() ;
 describe( 'ScorecardService' ,()=>{
   let service: ScorecardService;
   // let serviceDep1: MockAuthService;
   // let serviceDep2: MockAuthHttp;
-  let scorecard: any;
+
   beforeEach(()=>{
     TestBed.configureTestingModule({
       imports: [ HttpClientTestingModule],
@@ -25,7 +26,7 @@ describe( 'ScorecardService' ,()=>{
         provide: AuthHttp, useClass: MockAuthHttp
       }]
     });
-    service = TestBed.get(ScorecardService);
+    service = TestBed.inject(ScorecardService);
     // serviceDep1 = TestBed.get(AuthService);
     // serviceDep2 = TestBed.get(AuthHttp);
   });

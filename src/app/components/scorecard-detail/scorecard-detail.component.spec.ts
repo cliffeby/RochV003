@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ScorecardDetailComponent } from './scorecard-detail.component';
 import { Scorecard } from '../../models/scorecard';
 import { ErrorStateMatcher } from '@angular/material/core';
