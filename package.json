@@ -84,6 +84,7 @@
     "mocha": "^6.2.3",
     "protractor": "~7.0.0",
     "request": "^2.88.2",
+    "requirejs": "^2.3.6",
     "should": "^13.0.1",
     "supertest": "^3.0.0",
     "ts-node": "~2.0.0",
