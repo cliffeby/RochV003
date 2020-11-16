@@ -12,7 +12,7 @@ export interface User {
   _id: string;
 }
 
-describe('Mock AAAService', () => {
+xdescribe('Mock AAAService', () => {
   let injector: TestBed;
   let service: AAAService;
   let httpMock: HttpTestingController;
@@ -28,7 +28,7 @@ describe('Mock AAAService', () => {
   afterEach(() => {
   });
   // tests here
-  describe('#getUsers<User>', () => {
+  xdescribe('#getUsers<User>', () => {
     it('should return method of GET', fakeAsync(() => {
       let dummyUsers: User[];
       // let users: User[];

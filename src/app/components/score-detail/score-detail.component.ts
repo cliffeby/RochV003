@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'score-detail',
@@ -10,8 +10,8 @@ import { Component, OnInit, EventEmitter } from '@angular/core';
 export class ScoreDetailComponent implements OnInit {
   score: any;
 
-  private editTitle: boolean = false;
-  private updateScoreEvent = new EventEmitter();
+  private editTitle = false;
+  @Output() public updateScoreEvent = new EventEmitter();
   private deleteScoreEvent = new EventEmitter();
   constructor() { }
 

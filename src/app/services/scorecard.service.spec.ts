@@ -7,7 +7,7 @@ import { Scorecard } from '../models/scorecard';
 // import 'rxjs/add/operator/map';
 
 class MockAuthService {
-  isAuthenticated() {};
+  isAuthenticated() {}
 }
 class MockAuthHttp {
   get() {}
@@ -21,13 +21,13 @@ describe( 'ScorecardService' ,()=>{
   beforeEach(()=>{
     TestBed.configureTestingModule({
       imports: [ HttpClientTestingModule],
-      providers: [ScorecardService, {
+      providers: [ScorecardService, MockAuthHttp, {
         provide: AuthService, useClass: MockAuthService},{
         provide: AuthHttp, useClass: MockAuthHttp
       }]
     });
     service = TestBed.inject(ScorecardService);
-    // serviceDep1 = TestBed.get(AuthService);
+    const serviceDep1 = TestBed.inject(AuthService);
     // serviceDep2 = TestBed.get(AuthHttp);
   });
 
@@ -39,17 +39,19 @@ describe( 'ScorecardService' ,()=>{
     expect(service).toBeTruthy();
   }));
 
-  // it('should inject dependency #1', () => {
-  //   spyOn(serviceDep1, 'isAuthenticated');
-  //   serviceDep1.isAuthenticated();
-  //   expect(serviceDep1.isAuthenticated).toHaveBeenCalled();
-  // });
+  it('should inject dependency #1', () => {
+    const serviceDep1 = TestBed.inject(AuthService);
+    spyOn(serviceDep1, 'isAuthenticated');
+    serviceDep1.isAuthenticated();
+    expect(serviceDep1.isAuthenticated).toHaveBeenCalled();
+  });
 
-  // it('should inject dependency #2', () => {
-  //   spyOn(serviceDep2, 'get');
-  //   serviceDep2.get();
-  //   expect(serviceDep2.get).toHaveBeenCalled();
-  // });
+  it('should inject dependency #2', () => {
+    const serviceDep2 = TestBed.inject(MockAuthHttp);
+    spyOn(serviceDep2, 'get');
+    serviceDep2.get();
+    expect(serviceDep2.get).toHaveBeenCalled();
+  });
 
   it('should have method getScorecard(x) and do something', () => {
     spyOn(service, 'getScorecard');
