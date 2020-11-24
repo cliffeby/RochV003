@@ -1,6 +1,7 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { Score } from '../../models/score';
 import { AuthService } from "../../services/auth.service";
+import { MaterialModule } from "../../material.module";
 
 @Component({
   selector: 'score-list',

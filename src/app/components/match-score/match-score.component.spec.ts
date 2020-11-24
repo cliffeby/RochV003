@@ -19,11 +19,11 @@ let loader: HarnessLoader;
 export class MockAuthService {
   isAuthenticated() {}
   logout() {}
-  userHasScopes([scopes]: Array<string>) {}
+  userHasScopes([scopes]: string[]) {}
 }
 export class MockAuthHttp {
   get(){}
-};
+}
 
 describe("MatchScoreComponent Harness", () => {
   let component: MatchScoreComponent;

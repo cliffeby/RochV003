@@ -89,7 +89,6 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     // MyDatePickerModule,
     NoopAnimationsModule,
     MaterialModule
-
   ],
 
   providers: [

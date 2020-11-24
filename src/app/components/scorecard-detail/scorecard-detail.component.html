@@ -31,11 +31,11 @@
             <textarea matInput placeholder="YARDS - Starting at hole #1, enter hole yardage separated by commas"
              formControlName="yardsInputString">
             </textarea>
-        </mat-form-field>
+        </mat-form-field> 
         <div class = 'button-space'>
         <button *ngIf="scorecard._id" mat-raised-button color="primary" id="btnUpdate" (click)="updateScorecard()" class="btn btn-primary">Update</button>
         <button *ngIf="scorecard._id"mat-raised-button color="warn" id="btnDelete" (click)="deleteScorecard()" class="btn btn-danger">Delete</button>
-        <button *ngIf="!scorecard._id" mat-raised-button color="primary" id="btnAdd" (click)="addScorecard()">Add</button>
+        <button *ngIf="!scorecard._id" id = "addbtn1" mat-raised-button color="primary" (click)="addScorecard()">Add</button>
         <button mat-raised-button color="basic" id="btnCancel" routerLink = "../">Cancel</button>
         </div>
         <p></p>

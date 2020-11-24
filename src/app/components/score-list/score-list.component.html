@@ -29,9 +29,11 @@
           <td>{{score.partnerIds}}</td>
           <td>{{score.matchId}}</td>
           <td>{{score.memberId}}</td>
-          <a class="btn btn-primary col-sm-offset-2 " (click)="onSelectScore(score)">
+          <a class="btn btn-primary col-sm-offset-2 " mat-raised-button (click)="onSelectScore(score)">
             <i class="glyphicon glyphicon-edit"></i>
           </a>
+          <a mat-raised-button (click)="onSelectScore(score)">
+        </a>
         </tr>
         </tbody>
       </table>

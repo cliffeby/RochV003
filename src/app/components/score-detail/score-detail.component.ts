@@ -1,22 +1,22 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
+import { MaterialModule } from "../../material.module";
 
 @Component({
-  selector: 'score-detail',
-  templateUrl: './score-detail.component.html',
-  styleUrls: ['./score-detail.component.css'],
-  inputs: ['score'],
-  outputs: ['updateScoreEvent', 'deleteScoreEvent']
+  selector: "score-detail",
+  templateUrl: "./score-detail.component.html",
+  styleUrls: ["./score-detail.component.css"],
+  inputs: ["score"],
 })
 export class ScoreDetailComponent implements OnInit {
-  score: any;
+
 
   private editTitle = false;
+  @Input() score;
   @Output() public updateScoreEvent = new EventEmitter();
-  private deleteScoreEvent = new EventEmitter();
-  constructor() { }
+  @Output() public deleteScoreEvent = new EventEmitter();
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   onTitleClick() {
     this.editTitle = true;
@@ -33,6 +33,5 @@ export class ScoreDetailComponent implements OnInit {
   deleteScore() {
     this.deleteScoreEvent.emit(this.score);
   }
-
 }
 
