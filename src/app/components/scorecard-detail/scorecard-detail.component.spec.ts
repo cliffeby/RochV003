@@ -118,6 +118,9 @@ describe("ScorecardDetailComponent-Emitters", () => {
     loader = TestbedHarnessEnvironment.loader(fixture);
     component = fixture.componentInstance;
   });
+  afterEach(() => {
+  fixture.destroy();
+});
 
   it("componenet should exist", async () => {
     expect(component).toBeTruthy();
@@ -166,7 +169,9 @@ describe("ScorecardDetailComponent-Emitters", () => {
   });
    xit("should emit a Scorecard with name property Debbie on click ", async () => {
      // Clicking on the Add button event should emit a Scorecard
+     fixture.detectChanges();
      const addScorecard = new Scorecard();
+
      let temp = "";
      const button1 = await loader.getHarness(
        MatButtonHarness.with({ text: "Add" })
@@ -183,4 +188,35 @@ describe("ScorecardDetailComponent-Emitters", () => {
      console.log("name4", temp, component.scorecardForm1.controls["name"]); //value = "Debbie"
      expect(temp).toEqual("Debbie"); //ng test fails here with Expected '' to equal 'Debbie'.
    });
-  });
+   it("Update button should exist", async () => {
+     //Get Update button using text selector
+     fixture.detectChanges();
+     component.scorecard._id = "33";
+     const button3 = await loader.getAllHarnesses(
+      MatButtonHarness.with({ text: /^(Update)$/ })
+      );
+      expect(button3.length).toEqual(1);
+      expect( component.updateScorecardEvent).toBeTruthy();
+      });
+       it("Update button should exist", async () => {
+     //Get Update button using text selector
+     fixture.detectChanges();
+     component.scorecard._id = "33";
+     const button3 = await loader.getAllHarnesses(
+      MatButtonHarness.with({ text: /^(Update)$/ })
+      );
+      expect(button3.length).toEqual(1);
+      expect( component.updateScorecardEvent).toBeTruthy();
+      });
+
+      it("Delete button should exist", async () => {
+        //Get Delete button using text selector
+        fixture.detectChanges();
+        component.scorecard._id = "33";
+        const button3 = await loader.getAllHarnesses(
+          MatButtonHarness.with({ text: /^(Delete)$/ })
+        );
+        expect(button3.length).toEqual(1);
+        expect(component.updateScorecardEvent).toBeTruthy();
+      });
+});
