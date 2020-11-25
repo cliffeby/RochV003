@@ -155,7 +155,7 @@ describe("ScorecardDetailComponent-Emitters", () => {
       );
       expect( component.submitAddScorecardEvent).toBeTruthy();
    });
-  it("should emit an Add event on click ", async () => {
+  xit("should emit an Add event on click ", async () => {
     // Clicking on the Add button triggers and emits
       const button1 = await loader.getHarness(
       MatButtonHarness.with({ text: "Add" })

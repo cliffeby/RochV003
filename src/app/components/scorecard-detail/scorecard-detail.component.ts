@@ -133,7 +133,7 @@ export class ScorecardDetailComponent implements OnInit {
   addScorecard() {
     this.scorecard.name = this.scorecardForm1.controls["name"].value;
     console.log("SCControl1", this.scorecard);
-    this.submitAddScorecardEvent.emit(this.scorecard);
+
     //
     this.scorecard.rating = this.scorecardForm1.controls["rating"].value;
     this.scorecard.slope = this.scorecardForm1.controls["slope"].value;
@@ -146,7 +146,7 @@ export class ScorecardDetailComponent implements OnInit {
     this.scorecard.yardsInputString = this.scorecardForm1.controls[
       "yardsInputString"
     ].value;
-
+    this.submitAddScorecardEvent.emit(this.scorecard);
     console.log("SCControl2", this.scorecard);
   }
 
